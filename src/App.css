@@ -6,40 +6,63 @@
 }
 
 .App-header {
-  width: 100%;
-  background-color: white;
-  padding: 20px 0;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 0;
+  width: 100%;
+  padding: 10px 40px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
 }
 
-.App-header h1 {
-    margin: 0 0 10px 0;
-    font-size: 2em;
-    color: #333; 
+.App-logo-text {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #333;
+    margin: 0;
+}
+
+.App-nav-container {
+    display: flex;
+    align-items: center;
+    gap: 30px;
 }
 
 nav {
     display: flex;
-    justify-content: center;
-    width: 100%;
-    padding: 10px 0;
-    background-color: #f8f8f8; 
-    border-top: 1px solid #eee; 
-    border-bottom: 1px solid #eee;
+    justify-content: flex-end;
+    gap: 25px;
+    padding: 0;
 }
 
 nav a {
     color: #333;
     text-decoration: none;
-    padding: 0 15px;
-    font-weight: bold;
+    font-size: 1em;
+    font-weight: 500;
     transition: color 0.3s;
 }
 
 nav a:hover {
     color: #007bff;
+}
+
+.search-icon {
+    background-color: #4CAF50; 
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 1.2em;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px;
 }
