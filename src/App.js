@@ -38,6 +38,7 @@ function App() {
               <Link to="/parking">주차장</Link>
               <Link to="/community">커뮤니티</Link>
               <Link to="/news">뉴스</Link>
+              <Link to="/car">차량</Link>
             </nav>
           </div>
 
@@ -53,6 +54,7 @@ function App() {
           <Route path="/parking" element={<CategoryPage title="주차장" />} />
           <Route path="/community" element={<CategoryPage title="커뮤니티" />} />
           <Route path="/news" element={<CategoryPage title="뉴스" />} />
+          <Route path="/car" element={<CategoryPage title="차량" />} />
           
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
