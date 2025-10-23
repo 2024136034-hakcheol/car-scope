@@ -9,6 +9,9 @@ function App() {
         <p>
           Edit <code>src/App.js</code> and save to reload.
         </p>
+        <p>
+          텍스트 테스트 입니다.
+        </p>
         <a
           className="App-link"
           href="https://reactjs.org"
