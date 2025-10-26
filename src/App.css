@@ -15,6 +15,7 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   height: 60px;
   box-sizing: border-box;
+  min-width: 800px; 
 }
 
 .App-logo {
@@ -33,11 +34,13 @@
     display: flex;
     justify-content: center;
     flex-grow: 1;
+    min-width: 400px; 
 }
 
 .App-center-nav nav {
     display: flex;
     gap: 50px;
+    white-space: nowrap; 
 }
 
 .App-center-nav nav a {
@@ -64,7 +67,7 @@
     border: 1px solid #ccc;
     padding: 8px 10px;
     border-radius: 4px;
-    width: 130px; /* 검색창 너비 조정 */
+    width: 130px;
     height: 36px;
     box-sizing: border-box;
 }
@@ -82,7 +85,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    white-space: nowrap; /* ⭐ 줄바꿈 방지 핵심 속성 */
+    white-space: nowrap;
     transition: background-color 0.3s;
 }
 
