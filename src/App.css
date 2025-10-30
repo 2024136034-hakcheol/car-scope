@@ -256,7 +256,7 @@
 
 .kakao-login {
     background-color: #FEE500; 
-    color: #3C1E1E;
+    color: #3C1E1E; 
     border-color: #FEE500;
 }
 
@@ -331,7 +331,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    /* 사이드바와 리뷰 리스트 제목 수평 맞춤을 위한 마진 조정 */
+    /* 리뷰 리스트 제목과의 수평 정렬을 위한 마진 조정 */
     margin-top: 38px;
 }
 
