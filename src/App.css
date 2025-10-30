@@ -331,7 +331,6 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
-    /* 리뷰 리스트 제목과의 수평 정렬을 위한 마진 조정 */
     margin-top: 38px;
 }
 
@@ -400,7 +399,6 @@
 .list-title {
     font-size: 1.4em;
     font-weight: bold;
-    /* 사이드바와의 수평 맞춤을 위해 상단 마진을 0으로 설정 */
     margin-top: 0; 
     margin-bottom: 20px;
     border-bottom: 2px solid #eee;
@@ -469,7 +467,7 @@
 
 /* --- NewsPage Styles --- */
 .news-page-container {
-    padding: 20px 0;
+    padding: 20px 0; 
 }
 
 .breadcrumb {
@@ -487,7 +485,7 @@
 
 .news-sidebar-left {
     flex: 0 0 220px;
-    padding-left: 20px;
+    padding-left: 0px; 
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -583,7 +581,6 @@
     width: 100%;
 }
 
-/* 메인 콘텐츠 영역 */
 .news-main-content {
     flex-grow: 1;
     min-width: 600px;
@@ -651,7 +648,6 @@
     cursor: pointer;
 }
 
-/* 뉴스 아이템 리스트 */
 .news-list {
     display: flex;
     flex-direction: column;
@@ -708,13 +704,12 @@
     color: #999;
 }
 
-/* 오른쪽 사이드바 */
 .news-sidebar-right {
     flex: 0 0 300px;
+    padding-right: 0px; 
     display: flex;
     flex-direction: column;
     gap: 20px;
-    padding-right: 20px;
 }
 
 .utility-buttons-group {
