@@ -3,6 +3,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
 import logo from './logo.png';
 import LoginPage from './pages/LoginPage'; 
+import ParkingPage from './pages/ParkingPage';
 
 function HomePage() {
   return (
@@ -63,7 +64,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           
-          <Route path="/parking" element={<CategoryPage title="주차장" />} />
+          <Route path="/parking" element={<ParkingPage />} />
           <Route path="/community" element={<CategoryPage title="커뮤니티" />} />
           <Route path="/news" element={<CategoryPage title="뉴스" />} />
           <Route path="/car" element={<CategoryPage title="차량" />} />
