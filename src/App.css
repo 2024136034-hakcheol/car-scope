@@ -1,3 +1,107 @@
+.App {
+  text-align: center;
+  background-color: white;
+  min-height: 100vh;
+  color: #333; 
+}
+
+.App-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 40px;
+  background-color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
+  height: 60px;
+  box-sizing: border-box;
+  min-width: 950px; 
+}
+
+.App-logo {
+    flex: 0 0 250px;
+    flex-shrink: 0;
+    text-align: left;
+    display: flex;
+    align-items: center;
+}
+
+.App-logo img {
+    height: 40px;
+    display: block;
+}
+
+.App-center-nav {
+    display: flex;
+    justify-content: center;
+    flex-grow: 1;
+    min-width: 420px; 
+    flex-shrink: 0;
+}
+
+.App-center-nav nav {
+    display: flex;
+    gap: 50px;
+    white-space: nowrap; 
+}
+
+.App-center-nav nav a {
+    color: #333;
+    text-decoration: none;
+    font-size: 1.1em;
+    font-weight: 500;
+    transition: color 0.3s;
+}
+
+.App-center-nav nav a:hover {
+    color: #007bff;
+}
+
+.App-right-functions {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex: 0 0 250px; 
+    flex-shrink: 0; 
+    justify-content: flex-end; 
+}
+
+.search-input {
+    border: 1px solid #ccc;
+    padding: 8px 10px;
+    border-radius: 4px;
+    width: 130px;
+    height: 36px;
+    box-sizing: border-box;
+}
+
+.login-button {
+    background-color: #007bff; 
+    color: white;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap;
+    transition: background-color 0.3s;
+}
+
+.login-button:hover {
+    background-color: #0056b3;
+}
+
+.main-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 50px 20px;
+}
+
 .login-container {
     max-width: 400px;
     margin: 50px auto;
