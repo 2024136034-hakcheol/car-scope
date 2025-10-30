@@ -52,8 +52,8 @@
     font-size: 1.1em;
     font-weight: 500;
     transition: color 0.3s;
-    display: flex;
-    align-items: center; 
+    display: inline-block; 
+    text-align: center;
 }
 
 .App-center-nav nav a:hover {
