@@ -37,7 +37,8 @@ function ParkingPage() {
                     <h2 className="parking-main-title">주차장 리뷰</h2>
                 </div>
                 <div className="parking-search-group">
-                    <input type="text" placeholder="주차장 리뷰 검색" className="parking-search-input" />
+                    {/* 👇 여기서 텍스트를 "주차장 검색"으로 변경했습니다. */}
+                    <input type="text" placeholder="주차장 검색" className="parking-search-input" />
                     <button className="parking-search-button">🔍</button>
                 </div>
             </div>
