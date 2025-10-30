@@ -1,7 +1,8 @@
 import React from 'react';
 import './App.css'; 
-import { BrowserRouter as Router, Routes, Route, Link, Navigate } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
 import logo from './logo.png';
+import LoginPage from './pages/LoginPage';
 
 function HomePage() {
   return (
@@ -18,6 +19,17 @@ function CategoryPage({ title }) {
             <h2>{title} 페이지</h2>
             <p>이 페이지는 현재 개발 중이며, 여기에 기능이 추가될 예정입니다.</p>
         </div>
+    );
+}
+
+function LoginButton() {
+    const navigate = useNavigate();
+    const handleLoginClick = () => {
+        navigate('/login');
+    };
+
+    return (
+        <button className="login-button" onClick={handleLoginClick}>로그인</button>
     );
 }
 
@@ -44,7 +56,7 @@ function App() {
 
           <div className="App-right-functions">
             <input type="text" placeholder="검색" className="search-input" />
-            <button className="login-button">로그인</button>
+            <LoginButton />
           </div>
         </header>
 
@@ -56,6 +68,9 @@ function App() {
           <Route path="/news" element={<CategoryPage title="뉴스" />} />
           <Route path="/car" element={<CategoryPage title="차량" />} />
           
+          {/* 2. 로그인 페이지 라우트 추가 */}
+          <Route path="/login" element={<LoginPage />} /> 
+
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
       </div>
