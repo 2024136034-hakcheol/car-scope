@@ -4,13 +4,7 @@ import './App.css';
 import logo from './logo.png'; 
 import LoginPage from './pages/LoginPage';
 import ParkingPage from './pages/ParkingPage';
-
-const NewsPage = () => (
-  <div className="main-content">
-    <h1>뉴스 페이지</h1>
-    <p>이 페이지는 현재 개발 중이며, 여기에 뉴스 기능이 추가될 예정입니다.</p>
-  </div>
-);
+import NewsPage from './pages/NewsPage';
 
 const HomePage = () => (
   <div className="main-content">
