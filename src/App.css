@@ -5,7 +5,7 @@
   color: #333; 
 }
 
-/* 🚩 헤더 스타일 최종 안정화 */
+/* 🚩 헤더 스타일 간격 및 너비 최종 수정 */
 .App-header {
   display: flex;
   justify-content: space-between;
@@ -35,16 +35,15 @@
 .App-center-nav {
     display: flex;
     justify-content: center;
-    flex-grow: 1; /* 남은 공간을 모두 차지하도록 함 */
+    flex-grow: 1; 
     flex-shrink: 1;
-    min-width: 400px;
     height: 100%; 
     align-items: center;
 }
 
 .App-center-nav nav {
     display: flex;
-    gap: 50px;
+    gap: 70px; /* 🚩 간격 더 넓게 조정 (50px -> 70px) */
     white-space: nowrap; 
     align-items: center;
 }
@@ -67,8 +66,8 @@
 .App-right-functions {
     display: flex;
     align-items: center;
-    gap: 15px;
-    flex: 0 0 250px; /* 너비 고정 */
+    gap: 10px; /* 검색창과 로그인 버튼 간격 조정 */
+    flex: 0 0 200px; /* 🚩 검색 + 로그인 버튼에 맞게 너비 조정 */
     flex-shrink: 0; 
     justify-content: flex-end; 
 }
@@ -77,7 +76,7 @@
     border: 1px solid #ccc;
     padding: 8px 10px;
     border-radius: 4px;
-    width: 130px;
+    width: 100px; /* 🚩 너비 조정 */
     height: 36px;
     box-sizing: border-box;
 }
