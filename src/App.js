@@ -2,7 +2,7 @@ import React from 'react';
 import './App.css'; 
 import { BrowserRouter as Router, Routes, Route, Link, Navigate, useNavigate } from 'react-router-dom';
 import logo from './logo.png';
-import LoginPage from './pages/LoginPage';
+import LoginPage from './pages/LoginPage'; 
 
 function HomePage() {
   return (
@@ -68,7 +68,6 @@ function App() {
           <Route path="/news" element={<CategoryPage title="뉴스" />} />
           <Route path="/car" element={<CategoryPage title="차량" />} />
           
-          {/* 2. 로그인 페이지 라우트 추가 */}
           <Route path="/login" element={<LoginPage />} /> 
 
           <Route path="*" element={<Navigate to="/" replace />} />
