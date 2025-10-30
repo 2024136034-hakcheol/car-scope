@@ -5,6 +5,7 @@
   color: #333; 
 }
 
+/* 🚩 헤더 스타일 최종 안정화 */
 .App-header {
   display: flex;
   justify-content: space-between;
@@ -15,11 +16,11 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); 
   height: 60px;
   box-sizing: border-box;
-  min-width: 950px; 
+  min-width: 1000px; 
 }
 
 .App-logo {
-    flex: 0 0 250px;
+    flex: 0 0 150px; 
     flex-shrink: 0;
     text-align: left;
     display: flex;
@@ -34,15 +35,18 @@
 .App-center-nav {
     display: flex;
     justify-content: center;
-    flex-grow: 1;
-    min-width: 420px; 
-    flex-shrink: 0;
+    flex-grow: 1; /* 남은 공간을 모두 차지하도록 함 */
+    flex-shrink: 1;
+    min-width: 400px;
+    height: 100%; 
+    align-items: center;
 }
 
 .App-center-nav nav {
     display: flex;
     gap: 50px;
     white-space: nowrap; 
+    align-items: center;
 }
 
 .App-center-nav nav a {
@@ -51,6 +55,9 @@
     font-size: 1.1em;
     font-weight: 500;
     transition: color 0.3s;
+    display: flex;
+    align-items: center; 
+    height: 100%; 
 }
 
 .App-center-nav nav a:hover {
@@ -61,7 +68,7 @@
     display: flex;
     align-items: center;
     gap: 15px;
-    flex: 0 0 250px; 
+    flex: 0 0 250px; /* 너비 고정 */
     flex-shrink: 0; 
     justify-content: flex-end; 
 }
