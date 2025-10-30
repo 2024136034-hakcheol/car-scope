@@ -141,7 +141,7 @@
 
 .login-submit-button {
     width: 100%;
-    background-color: #007bff;
+    background-color: #007bff; 
     color: white;
     border: none;
     padding: 12px;
@@ -250,8 +250,8 @@
 }
 
 .google-login {
-    background-color: #DB4437; 
-    border-color: #DB4437;
+    background-color: #3a89f0; 
+    border-color: #3a89f0;
 }
 
 .kakao-login {
@@ -263,4 +263,10 @@
 .naver-login {
     background-color: #03C75A; 
     border-color: #03C75A;
+}
+
+.apple-login {
+    background-color: #000000; /* Apple Black */
+    border-color: #000000;
+    color: #ffffff;
 }

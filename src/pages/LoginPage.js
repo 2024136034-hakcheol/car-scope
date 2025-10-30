@@ -55,6 +55,7 @@ function LoginPage() {
             <button className="social-button google-login">Google로 로그인</button>
             <button className="social-button kakao-login">Kakao로 로그인</button>
             <button className="social-button naver-login">Naver로 로그인</button>
+            <button className="social-button apple-login">Apple로 로그인</button> {/* Apple 버튼 추가 */}
         </div>
         
       </div>
