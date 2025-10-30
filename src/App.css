@@ -271,8 +271,6 @@
     color: #ffffff;
 }
 
-/* --- ParkingPage Styles --- */
-
 .parking-page-container {
     padding: 20px;
 }
@@ -325,6 +323,7 @@
     display: flex;
     gap: 30px;
     align-items: flex-start;
+    padding-top: 10px;
 }
 
 .parking-sidebar {
@@ -332,6 +331,7 @@
     display: flex;
     flex-direction: column;
     gap: 20px;
+    margin-top: 0;
 }
 
 .sidebar-section {
@@ -393,6 +393,7 @@
 .parking-review-list {
     flex-grow: 1;
     min-width: 600px;
+    padding-top: 0; 
 }
 
 .list-title {
