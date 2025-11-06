@@ -79,18 +79,20 @@ const HomePage = () => {
           style={{ transform: `translateX(-${currentSlide * 100}%)` }}
         >
           {dummyBanners.map((banner) => (
-            <Link 
+            <div 
               key={banner.id} 
-              to={banner.link} 
               className="slide-item" 
               style={{ backgroundColor: banner.color }}
             >
-              <div className="banner-content">
-                <h2>{banner.title}</h2>
-                <p>{banner.subtitle}</p>
-                <span className="banner-cta">자세히 보기 &gt;</span>
-              </div>
-            </Link>
+              {/* Link 컴포넌트가 배너 내용을 감싸도록 변경 */}
+              <Link to={banner.link} className="banner-link-wrapper">
+                <div className="banner-content">
+                  <h2>{banner.title}</h2>
+                  <p>{banner.subtitle}</p>
+                  <span className="banner-cta">자세히 보기 &gt;</span>
+                </div>
+              </Link>
+            </div>
           ))}
         </div>
         
