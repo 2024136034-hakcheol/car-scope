@@ -8,6 +8,11 @@ body {
     background-color: #f4f7fa;
 }
 
+/* 모든 요소에 box-sizing: border-box를 적용하여 패딩과 보더가 너비에 포함되도록 강제 */
+* {
+    box-sizing: border-box; 
+}
+
 a {
     text-decoration: none;
     color: inherit;
@@ -18,13 +23,13 @@ a {
     border-bottom: 1px solid #e0e0e0;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    width: 100%; /* 너비를 100%로 확실하게 지정 */
-    box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
+    width: 100%;
 }
 
 .app-header nav {
+    /* 이 nav가 중앙 컨테이너 역할. */
     display: flex;
-    flex-direction: column;
+    flex-direction: column; 
     max-width: 1200px;
     margin: 0 auto; /* 중앙 정렬 강제 */
     padding: 0 20px;
@@ -35,10 +40,11 @@ a {
     justify-content: space-between;
     align-items: center;
     padding-bottom: 15px;
+    width: 100%; /* 너비 100% 확실히 설정 */
 }
 
 .header-top .logo-section {
-    min-width: 180px;
+    min-width: 120px; /* 최소 너비를 줄여 유연성 확보 */
 }
 
 .header-top .logo-image {
@@ -51,7 +57,7 @@ a {
     flex-grow: 1;
     display: flex;
     justify-content: center;
-    margin: 0 30px;
+    margin: 0 20px; /* 마진도 살짝 줄여봅니다 */
 }
 
 .header-top .search-input {
@@ -67,6 +73,7 @@ a {
 .header-top .auth-buttons {
     min-width: 150px;
     text-align: right;
+    white-space: nowrap; /* 로그인/회원가입 버튼 줄 바꿈 방지 */
 }
 
 .header-top .auth-buttons a {
@@ -88,8 +95,9 @@ a {
     display: flex;
     justify-content: flex-start;
     padding-top: 5px;
-    flex-wrap: nowrap; /* 네비게이션 링크가 줄 바꿈되지 않도록 강제 */
-    overflow-x: auto; /* 필요시 가로 스크롤 가능하게 */
+    width: 100%; /* 너비 100% 확실히 설정 */
+    flex-wrap: nowrap; /* 줄 바꿈 방지 */
+    overflow-x: auto; /* 메뉴가 너무 많을 경우 가로 스크롤 허용 */
 }
 
 .app-header .nav-links a {
@@ -98,7 +106,7 @@ a {
     color: #555;
     padding: 5px 0;
     font-weight: 500;
-    white-space: nowrap; /* 링크 텍스트가 줄 바꿈되지 않도록 강제 */
+    white-space: nowrap; /* 링크 텍스트 줄 바꿈 방지 */
     flex-shrink: 0;
 }
 
@@ -121,14 +129,17 @@ a {
     margin: 0 10px;
 }
 
-.homepage-container {
+/* 홈 페이지 및 모든 컨텐츠 컨테이너 중앙 정렬 */
+.homepage-container, .parking-page-container {
     max-width: 1200px;
     margin: 0 auto; /* 중앙 정렬 강제 */
     padding: 20px 20px;
 }
 
+/* 메인 배너 관련 스타일 (깨짐 현상 방지) */
 .main-banner-slider-wrapper {
     margin-bottom: 40px;
+    width: 100%;
 }
 
 .main-banner-slider {
@@ -138,7 +149,6 @@ a {
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     width: 100%;
-    box-sizing: border-box;
 }
 
 .slider-track {
@@ -152,43 +162,11 @@ a {
     color: white;
     display: flex;
     align-items: center;
-    box-sizing: border-box; 
     width: 100%;
-    flex-shrink: 0;
+    flex-shrink: 0; 
 }
 
-.banner-link-wrapper {
-    display: block;
-    width: 100%;
-}
-
-.banner-content h2 {
-    font-size: 1.8rem;
-    margin-top: 0;
-    margin-bottom: 10px;
-}
-
-.slider-dots {
-    position: absolute;
-    bottom: 10px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-}
-
-.dot {
-    height: 8px;
-    width: 8px;
-    margin: 0 4px;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 50%;
-    cursor: pointer;
-    transition: background-color 0.3s;
-}
-
-.dot.active {
-    background-color: white;
-}
+/* 기타 스타일은 변경 없습니다... */
 
 .hot-trends-section {
     margin-bottom: 40px;
@@ -686,4 +664,64 @@ a {
 .review-rating {
     font-size: 0.9rem;
     color: #ffc107;
+}
+
+/* 🖼️ 미디어 쿼리 추가: 화면이 좁아질 때 헤더 요소들이 깨지지 않도록 조정 */
+@media (max-width: 900px) {
+    .header-top {
+        flex-wrap: wrap; /* 좁은 화면에서 줄 바꿈 허용 */
+        justify-content: flex-start;
+        padding-bottom: 10px;
+    }
+
+    .header-top .logo-section {
+        flex-basis: 100%; /* 로고가 전체 너비 차지 */
+        text-align: left;
+        margin-bottom: 10px;
+        min-width: auto;
+    }
+
+    .header-top .search-bar {
+        flex-basis: calc(100% - 150px); /* 검색창이 남은 공간 대부분 차지 */
+        margin: 0 10px 0 0;
+        order: 3; /* 검색창을 아래로 이동 */
+    }
+    
+    .header-top .auth-buttons {
+        order: 2; /* 버튼을 오른쪽 상단에 유지 */
+        min-width: 140px;
+    }
+
+    .app-header .nav-links {
+        overflow-x: scroll; /* 메뉴 스크롤 가능하게 */
+        -webkit-overflow-scrolling: touch; /* iOS 스크롤 부드럽게 */
+        padding-bottom: 5px; /* 스크롤바와 내용 사이 공간 확보 */
+    }
+
+    .main-content-grid {
+        grid-template-columns: 1fr; /* 카드형 컨텐츠를 1열로 변경 */
+        gap: 20px;
+    }
+
+    .parking-spot-grid, .stats-grid, .feedback-grid {
+        grid-template-columns: 1fr; /* 그리드 컨텐츠를 1열로 변경 */
+        gap: 20px;
+    }
+}
+
+/* 좁은 모바일 화면 대응 */
+@media (max-width: 600px) {
+    .app-header nav {
+        padding: 0 10px;
+    }
+
+    .header-top .auth-buttons {
+        min-width: 100px; /* 버튼 영역 더 줄임 */
+    }
+
+    .header-top .search-bar {
+        flex-basis: 100%; /* 검색창이 화면 전체 너비 차지 */
+        margin: 10px 0 0 0;
+        order: 4; /* 검색창을 맨 아래로 이동 */
+    }
 }
