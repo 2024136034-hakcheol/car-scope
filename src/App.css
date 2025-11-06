@@ -456,13 +456,18 @@ a {
     border: 1px solid #ccc;
     border-radius: 4px;
     overflow: hidden;
-    align-items: center; 
+    align-items: center;
+    width: 100%; 
+    box-sizing: border-box;
 }
 
 .password-input-group .login-input {
     border: none;
-    flex-grow: 1;
-    padding: 10px; 
+    padding: 10px;
+    flex-grow: 1; 
+    flex-basis: 0;
+    min-width: 0;
+    width: auto;
 }
 
 .show-password-btn {
@@ -471,9 +476,9 @@ a {
     padding: 10px 15px;
     cursor: pointer;
     font-size: 0.9rem;
-    height: 100%; 
-    min-width: 60px; 
+    height: 100%;
     box-sizing: border-box;
+    flex-shrink: 0; 
 }
 
 .login-submit-btn {
