@@ -674,7 +674,7 @@
 
 .slider-track {
     display: flex;
-    width: 300%; 
+    width: 300%;
     height: 100%;
     transition: transform 0.5s ease-in-out;
 }
@@ -691,6 +691,9 @@
     padding: 0 50px;
     box-sizing: border-box;
     position: relative;
+    
+    /* 명확한 너비 재지정 */
+    max-width: calc(100% / 3);
 }
 
 .banner-link-wrapper {
@@ -706,6 +709,9 @@
     position: absolute;
     top: 0;
     left: 0;
+    
+    /* 명확한 너비 재지정 */
+    max-width: 100%;
 }
 
 .banner-content h2 {
@@ -739,6 +745,7 @@
     transform: translateX(-50%);
     display: flex;
     gap: 8px;
+    z-index: 10; 
 }
 
 .dot {
