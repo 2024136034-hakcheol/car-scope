@@ -1,7 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
+    const [showPassword, setShowPassword] = useState(false);
+
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
         <div className="login-page-container">
             <div className="login-box">
@@ -19,11 +25,17 @@ const LoginPage = () => {
                     <label htmlFor="password">비밀번호</label>
                     <div className="password-input-group">
                         <input 
-                            type="password" 
+                            type={showPassword ? "text" : "password"} 
                             id="password" 
                             className="login-input" 
                         />
-                        <button className="show-password-btn">보이기</button>
+                        <button 
+                            type="button" 
+                            onClick={togglePasswordVisibility} 
+                            className="show-password-btn"
+                        >
+                            {showPassword ? "숨기기" : "보이기"}
+                        </button>
                     </div>
                 </div>
                 
