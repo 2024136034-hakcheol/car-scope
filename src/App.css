@@ -16,7 +16,7 @@ a {
 .app-header {
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
-    padding: 10px 40px;
+    padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
@@ -25,6 +25,7 @@ a {
     flex-direction: column;
     max-width: 1200px;
     margin: 0 auto;
+    padding: 0 20px;
 }
 
 .header-top {
@@ -93,6 +94,7 @@ a {
     color: #555;
     padding: 5px 0;
     font-weight: 500;
+    white-space: nowrap;
 }
 
 .app-header .membership-link {
@@ -130,6 +132,9 @@ a {
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    /* 중앙 정렬을 위해 너비를 100%로 설정하고 컨테이너의 제한을 받게 함 */
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .slider-track {
@@ -145,6 +150,7 @@ a {
     align-items: center;
     box-sizing: border-box; 
     width: 100%;
+    flex-shrink: 0; /* 슬라이드가 줄어들지 않도록 강제 */
 }
 
 .banner-link-wrapper {
