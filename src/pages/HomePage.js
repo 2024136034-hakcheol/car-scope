@@ -4,7 +4,7 @@ const HomePage = () => {
     return (
         <div className="homepage-container">
             <div className="main-banner-slider-wrapper">
-                <div className="main-banner-slider" style={{ backgroundColor: 'blue', width: '100%' }}>
+                <div className="main-banner-slider banner-blue">
                     <div className="slider-track">
                         <div className="slide-item">
                             <div className="banner-link-wrapper">
@@ -16,11 +16,9 @@ const HomePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="slider-dots">
-                        <div className="dot active"></div>
-                    </div>
                 </div>
-                <div className="main-banner-slider" style={{ backgroundColor: 'green', width: '100%', marginTop: '10px' }}>
+
+                <div className="main-banner-slider banner-green">
                     <div className="slider-track">
                         <div className="slide-item">
                             <div className="banner-link-wrapper">
@@ -32,11 +30,9 @@ const HomePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className="slider-dots">
-                        <div className="dot active"></div>
-                    </div>
                 </div>
-                <div className="main-banner-slider" style={{ backgroundColor: 'orange', width: '100%', marginTop: '10px' }}>
+
+                <div className="main-banner-slider banner-orange">
                     <div className="slider-track">
                         <div className="slide-item">
                             <div className="banner-link-wrapper">
@@ -47,9 +43,6 @@ const HomePage = () => {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div className="slider-dots">
-                        <div className="dot active"></div>
                     </div>
                 </div>
             </div>
