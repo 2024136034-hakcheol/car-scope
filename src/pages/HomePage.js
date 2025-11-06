@@ -8,9 +8,9 @@ const dummyBanners = [
 ];
 
 const dummyReviews = [
-  { id: 1, user: "김**수", car: "제네시스 GV80", rating: 5, content: "딜러 추천받고 차량 구매까지 일사천리! 덕분에 시간 절약했어요.", date: "2024.10.01" },
-  { id: 2, user: "이**민", car: "BMW 530i", rating: 4, content: "주차장 실시간 정보가 정말 정확해서 매번 잘 사용하고 있습니다.", date: "2024.09.28" },
-  { id: 3, user: "박**영", car: "기아 EV6", rating: 5, content: "복잡한 서류 없이 바로 딜러와 연결되어서 편했습니다.", date: "2024.09.25" },
+  { id: 1, user: "김**수", car: "제네시스 GV80", rating: 5, content: "실제 차주들의 생생한 리뷰 덕분에 차량 고민을 바로 해결했습니다!", date: "2024.10.01" },
+  { id: 2, user: "이**민", car: "BMW 530i", rating: 4, content: "주차장 정보의 정확도가 높고 실시간 예약이 편리해 매번 잘 이용합니다.", date: "2024.09.28" },
+  { id: 3, user: "박**영", car: "기아 EV6", rating: 5, content: "궁금했던 차량 질문을 커뮤니티에서 바로 해결했어요. 정보 교류 최고!", date: "2024.09.25" },
 ];
 
 const dummyParkingSpots = [
