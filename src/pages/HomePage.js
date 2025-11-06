@@ -65,7 +65,8 @@ const HomePage = () => {
   }, []);
   
   const handleDotClick = (e, index) => {
-      e.stopPropagation();
+      e.preventDefault(); 
+      e.stopPropagation(); 
       setCurrentSlide(index);
   };
 
