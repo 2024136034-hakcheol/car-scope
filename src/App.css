@@ -32,6 +32,7 @@ a {
     margin: 0 auto;
     padding: 0 20px;
     width: 100%;
+    min-width: 0;
 }
 
 .header-top {
@@ -113,7 +114,6 @@ a {
     flex-shrink: 0;
 }
 
-/* 추가된 부분: 메뉴 호버 효과 */
 .app-header .nav-links a:hover {
     color: #007bff; 
 }
@@ -188,15 +188,15 @@ a {
 }
 
 .banner-content p {
-    animation: fadeInSlide 1s ease-out forwards;
-    animation-delay: 0.1s;
+    animation: fadeInSlide 0.8s ease-out forwards;
+    animation-delay: 0.2s;
 }
 
 .banner-content a {
     color: white;
     text-decoration: underline;
-    animation: fadeInSlide 1.2s ease-out forwards;
-    animation-delay: 0.2s;
+    animation: fadeInSlide 0.8s ease-out forwards;
+    animation-delay: 0.4s;
 }
 
 .slider-dots {
