@@ -163,7 +163,7 @@ const HomePage = () => {
                     <div className="feedback-card">
                         <div className="feedback-rating">⭐️⭐️⭐️⭐️⭐️</div>
                         <p className="feedback-content">"내가 제일 맘에 안 들었던 부분까지 체크해줘서 좋았어요. 다만, 대중교통 이용객에게는 좀..."</p>
-                        <div className="feedback-info">갑**진 · 람보르기니 아벤타도르 S 이용</div>
+                        <div className="feedback-info">김**진 · 람보르기니 아벤타도르 S 이용</div>
                     </div>
                     <div className="feedback-card">
                         <div className="feedback-rating">⭐️⭐️⭐️</div>
