@@ -246,7 +246,7 @@ const HomePage = () => {
       <div className="company-stats-section">
         <div className="stats-header">
           <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
-          <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
+          <p>CarScope는 주차장 관련 정보, 리뷰 및 커뮤니티 서비스를 중심으로 성장하고 있습니다.</p>
         </div>
         <div className="stats-grid">
           <div className="stat-item">
