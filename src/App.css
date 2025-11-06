@@ -226,8 +226,16 @@ a {
     background-color: #ffffff;
     padding: 25px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* 수정된 부분: 경계를 더 명확하게 */
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s;
 }
+
+.card:hover {
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+}
+/* END: 수정된 부분 */
 
 .card h3 {
     margin-top: 0;
@@ -274,7 +282,11 @@ a {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+    /* 수정된 부분: 경계를 더 명확하게 */
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    transition: box-shadow 0.3s;
+    /* END: 수정된 부분 */
     text-align: left;
 }
 
@@ -320,14 +332,17 @@ a {
     background-color: #ffffff;
     padding: 20px;
     border-radius: 8px;
-    border: 1px solid #eee;
-    transition: transform 0.2s;
+    /* 수정된 부분: 경계를 더 명확하게 */
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.2s, box-shadow 0.3s;
 }
 
 .parking-spot-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
 }
+/* END: 수정된 부분 */
 
 .spot-header {
     display: flex;
@@ -384,7 +399,10 @@ a {
     background-color: #ffffff;
     padding: 30px 20px;
     border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    /* 수정된 부분: 경계를 더 명확하게 */
+    border: 1px solid #e0e0e0;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    /* END: 수정된 부분 */
 }
 
 .stat-value {
