@@ -551,7 +551,7 @@ a {
     background-color: #007bff;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 44px;
     font-size: 1rem;
     cursor: pointer;
     margin-top: 10px;
@@ -847,16 +847,17 @@ a {
     background-color: #2a49cc;
 }
 
-.membership-box .contact-info {
+.membership-page-container .contact-info {
     margin-top: 20px;
     font-size: 0.9rem;
     color: #777;
 }
 
-.membership-box .contact-info a {
-    color: #007bff;
+.membership-page-container .contact-info a {
+    color: #007bff; /* 로그인 링크 파란색으로 변경 */
     font-weight: 500;
 }
+
 
 @keyframes fadeInSlide {
     from {
