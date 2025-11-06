@@ -655,13 +655,13 @@ a {
 
 .recommendation-list {
     display: block; 
-    gap: 15px;
     margin-bottom: 40px;
 }
 
 .item-grid-card {
-    display: flex;
-    justify-content: space-between;
+    /* Grid 레이아웃으로 변경: 이름 섹션(자동 크기)과 오른쪽 섹션(고정 너비) 분리 */
+    display: grid;
+    grid-template-columns: 1fr 170px; /* 1fr: item-details, 170px: item-right-section */
     align-items: center;
     background-color: #f9f9f9;
     padding: 15px;
@@ -671,10 +671,9 @@ a {
 }
 
 .item-details {
-    flex-grow: 1;
-    min-width: 0; 
+    /* Grid 첫 번째 컬럼: 이름 섹션 */
     overflow: hidden; 
-    margin-right: 20px; 
+    padding-right: 20px; /* 오른쪽 섹션과의 간격 */
 }
 
 .item-name {
@@ -683,7 +682,7 @@ a {
     margin: 0;
     white-space: nowrap; 
     overflow: hidden; 
-    text-overflow: ellipsis;
+    text-overflow: ellipsis; /* 긴 텍스트는 ... 처리 */
 }
 
 .item-info {
@@ -693,12 +692,12 @@ a {
 }
 
 .item-right-section {
+    /* Grid 두 번째 컬럼: 가격/버튼 섹션 */
     display: flex;
     flex-direction: column; 
     align-items: flex-end; 
     gap: 8px; 
-    width: 170px; 
-    flex-shrink: 0; 
+    width: 100%; /* Grid 컬럼 너비 170px 사용 */
 }
 
 .item-price {
@@ -706,7 +705,6 @@ a {
     color: #e67e22;
     margin: 0;
     white-space: nowrap; 
-    flex-shrink: 0;
     text-align: right;
     font-size: 1rem; 
 }
@@ -720,7 +718,6 @@ a {
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.9rem;
-    flex-shrink: 0;
 }
 
 .review-list-section h2 {
