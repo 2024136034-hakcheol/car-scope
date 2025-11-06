@@ -1,72 +1,53 @@
-import React, { useState } from 'react';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
-function LoginPage() {
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [showPassword, setShowPassword] = useState(false);
-
-    const handleLogin = (e) => {
-        e.preventDefault();
-        console.log('로그인 시도:', { email, password });
-        // 여기에 실제 로그인 로직을 추가합니다.
-    };
-
+const LoginPage = () => {
     return (
-        <div className="main-content">
-            <div className="login-container">
-                <h2 className="login-title">로그인</h2>
-                <form className="login-form" onSubmit={handleLogin}>
-                    <div className="form-group">
-                        <label htmlFor="email">아이디 / 이메일</label>
-                        <input
-                            type="text"
-                            id="email"
-                            placeholder="아이디 또는 이메일 주소"
-                            value={email}
-                            onChange={(e) => setEmail(e.target.value)}
-                            required
+        <div className="login-page-container">
+            <div className="login-box">
+                <h1>로그인</h1>
+                <div className="input-group">
+                    <label htmlFor="username">아이디 / 이메일</label>
+                    <input 
+                        type="text" 
+                        id="username" 
+                        placeholder="아이디 또는 이메일 주소" 
+                        className="login-input" 
+                    />
+                </div>
+                <div className="input-group">
+                    <label htmlFor="password">비밀번호</label>
+                    <div className="password-input-group">
+                        <input 
+                            type="password" 
+                            id="password" 
+                            className="login-input" 
                         />
+                        <button className="show-password-btn">보이기</button>
                     </div>
-                    <div className="form-group">
-                        <label htmlFor="password">비밀번호</label>
-                        <div className="password-input-group">
-                            <input
-                                type={showPassword ? "text" : "password"}
-                                id="password"
-                                placeholder="비밀번호"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                required
-                            />
-                            <button
-                                type="button"
-                                className="password-toggle-button"
-                                onClick={() => setShowPassword(!showPassword)}
-                            >
-                                {showPassword ? "숨기기" : "보이기"}
-                            </button>
-                        </div>
-                    </div>
-                    <button type="submit" className="login-submit-button">
-                        로그인
-                    </button>
-                </form>
-
-                <div className="login-links">
-                    <a href="#">아이디 찾기</a> | <a href="#">비밀번호 찾기</a> | <a href="#">회원가입</a>
+                </div>
+                
+                <button className="login-submit-btn">로그인</button>
+                
+                <div className="link-section">
+                    <Link to="/find-id">아이디 찾기</Link> | 
+                    <Link to="/find-pw">비밀번호 찾기</Link> | 
+                    <Link to="/join">회원가입</Link>
+                </div>
+                
+                <div className="social-login-separator">
+                    <span>또는</span>
                 </div>
 
-                <div className="social-login-separator">또는</div>
-                
                 <div className="social-login-buttons">
-                    <button className="social-button google-login">Google로 로그인</button>
-                    <button className="social-button kakao-login">Kakao로 로그인</button>
-                    <button className="social-button naver-login">Naver로 로그인</button>
-                    <button className="social-button apple-login">Apple로 로그인</button>
+                    <button className="social-btn google-btn">Google로 로그인</button>
+                    <button className="social-btn kakao-btn">Kakao로 로그인</button>
+                    <button className="social-btn naver-btn">Naver로 로그인</button>
+                    <button className="social-btn apple-btn">Apple로 로그인</button>
                 </div>
             </div>
         </div>
     );
-}
+};
 
 export default LoginPage;

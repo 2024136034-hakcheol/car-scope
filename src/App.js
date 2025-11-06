@@ -46,7 +46,7 @@ const Header = () => {
 const Footer = () => {
     return (
         <footer className="app-footer">
-            <p>&copy; 2024 CarScope. All rights reserved.</p>
+            <p>© 2024 CarScope. All rights reserved.</p>
             <div>
                 <Link to="/policy">개인정보처리방침</Link> | 
                 <Link to="/terms">이용약관</Link> | 
