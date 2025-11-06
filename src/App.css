@@ -673,7 +673,7 @@ a {
 }
 
 .item-details {
-    /* 이름 섹션이 남은 공간을 모두 차지하도록 설정 */
+    /* 이름 섹션이 남은 공간을 최대한 차지하도록 설정 */
     flex-grow: 1;
     /* 내용이 길면 줄바꿈이 되도록 최소 너비 설정 해제 */
     min-width: 0; 
@@ -682,19 +682,21 @@ a {
 
 .item-right-section {
     display: flex;
-    flex-direction: column; /* 가격과 버튼을 세로로 정렬 */
-    align-items: flex-end; /* 오른쪽으로 정렬 */
-    gap: 5px; /* 가격과 버튼 사이의 간격 */
+    /* 요소를 가로로 정렬 (원래 디자인 복원) */
+    align-items: center;
+    /* 가격과 버튼 사이의 간격 */
+    gap: 15px; 
     /* 오른쪽 섹션은 절대 축소되지 않도록 설정 */
     flex-shrink: 0; 
-    /* 가격과 버튼이 깨지지 않도록 충분한 최소 너비 확보 */
-    min-width: 160px; 
+    /* 오른쪽 섹션 내 요소가 깨지지 않도록 충분한 최소 너비 확보 */
+    min-width: 200px; 
 }
 
 .item-name {
     font-weight: bold;
     font-size: 1.1rem;
     margin: 0;
+    /* 이름이 길면 줄바꿈 허용 */
     word-break: break-word; 
 }
 
@@ -708,6 +710,7 @@ a {
     font-weight: 500;
     color: #e67e22;
     margin: 0;
+    /* 가격 텍스트가 줄어들거나 깨지지 않도록 설정 */
     white-space: nowrap; 
     flex-shrink: 0;
     text-align: right;
@@ -717,10 +720,11 @@ a {
     background-color: #007bff;
     color: white;
     border: none;
-    padding: 6px 12px;
+    padding: 8px 15px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 0.85rem;
+    font-size: 0.9rem;
+    /* 버튼 크기가 줄어들지 않도록 설정 */
     flex-shrink: 0;
 }
 
