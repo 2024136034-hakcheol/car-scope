@@ -115,9 +115,10 @@ a {
 }
 
 .homepage-container {
+    /* 홈 페이지 콘텐츠를 중앙에 정렬하고 최대 너비 설정 */
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px;
+    padding: 20px; /* 양쪽에 여백을 주어 가장자리에 붙는 것을 방지 */
 }
 
 .main-banner-slider-wrapper {
@@ -144,6 +145,7 @@ a {
     display: flex;
     align-items: center;
     box-sizing: border-box; 
+    width: 100%; /* 너비 100% 적용 */
 }
 
 .banner-link-wrapper {
@@ -653,8 +655,6 @@ a {
     flex-shrink: 0;
 }
 
-/* 주차장 목록 관련 CSS 모두 삭제 */
-
 .review-list-section h2 {
     border-bottom: 1px solid #eee;
     padding-bottom: 10px;
@@ -666,7 +666,7 @@ a {
     border-radius: 6px;
     background-color: #fff;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-    margin-bottom: 10px; /* 리뷰 항목 간 간격 추가 */
+    margin-bottom: 10px;
 }
 
 .review-parking-name {
