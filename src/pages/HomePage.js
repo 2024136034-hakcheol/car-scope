@@ -72,14 +72,14 @@ const NumberCounter = ({ endValue, duration = 2000 }) => {
 };
 
 const StarRating = ({ rating }) => {
-    const fullStars = Math.floor(rating);
-    const halfStar = rating % 1 >= 0.5 ? 1 : 0; // 0.5 이상이면 반쪽 별 1개
-    const emptyStars = 5 - fullStars - halfStar;
+    // Math.round를 사용하여 별점을 가장 가까운 정수(0~5)로 반올림합니다.
+    const roundedRating = Math.round(rating);
+    const fullStars = Math.min(5, Math.max(0, roundedRating));
+    const emptyStars = 5 - fullStars;
     
     return (
         <div className="star-rating">
             {'★'.repeat(fullStars)}
-            {halfStar === 1 ? '½' : ''} 
             {'☆'.repeat(emptyStars)}
         </div>
     );
