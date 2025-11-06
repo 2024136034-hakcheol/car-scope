@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom'; // <--- 이 부분을 수정했습니다.
+import { Link } from 'react-router-dom';
 
 const dummyBanners = [
   { id: 1, title: "CarScope 첫 오픈 기념!", subtitle: "프리미엄 리뷰를 7일간 무료로 경험하세요.", color: "#007bff", link: "/event/open" },
@@ -64,7 +64,8 @@ const HomePage = () => {
     return () => clearInterval(interval);
   }, []);
   
-  const handleDotClick = (index) => {
+  const handleDotClick = (e, index) => {
+      e.stopPropagation();
       setCurrentSlide(index);
   };
 
@@ -97,7 +98,7 @@ const HomePage = () => {
             <span
               key={index}
               className={`dot ${currentSlide === index ? 'active' : ''}`}
-              onClick={() => handleDotClick(index)}
+              onClick={(e) => handleDotClick(e, index)}
             ></span>
           ))}
         </div>
