@@ -672,19 +672,26 @@ a {
 
 .item-details {
     flex-grow: 1;
+    /* 이름과 정보가 깨지지 않도록 최소 너비 설정 해제 및 줄바꿈 허용 */
+    min-width: 0; 
 }
 
 .item-right-section {
     display: flex;
     align-items: center;
     gap: 20px;
-    flex-shrink: 0;
+    /* 오른쪽 섹션이 절대 축소되지 않도록 설정 */
+    flex-shrink: 0; 
+    /* 오른쪽 섹션 내 요소가 한 줄로 유지되도록 공간을 확보 */
+    min-width: 250px; 
 }
 
 .item-name {
     font-weight: bold;
     font-size: 1.1rem;
     margin: 0;
+    /* 긴 이름도 필요하면 줄바꿈되도록 설정 */
+    word-break: break-word; 
 }
 
 .item-info {
@@ -697,6 +704,8 @@ a {
     font-weight: 500;
     color: #e67e22;
     margin: 0;
+    /* 가격 텍스트가 줄어들거나 깨지지 않도록 설정 */
+    white-space: nowrap; 
     flex-shrink: 0;
 }
 
@@ -708,6 +717,7 @@ a {
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.9rem;
+    /* 버튼 크기가 줄어들지 않도록 설정 */
     flex-shrink: 0;
 }
 
