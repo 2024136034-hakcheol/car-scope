@@ -33,9 +33,7 @@ const Header = () => {
                 </div>
 
                 <div className="nav-links">
-                    <Link to="/">홈</Link>
-                    <Link to="/reviews">리뷰</Link>
-                    <Link to="/parking">주차장</Link>
+                    <Link to="/parking">주차</Link>
                     <Link to="/community">커뮤니티</Link>
                     <Link to="/news">뉴스</Link>
                     <Link to="/membership" className="membership-link">멤버십</Link>
@@ -48,7 +46,7 @@ const Header = () => {
 const Footer = () => {
     return (
         <footer className="app-footer">
-            <p>© 2024 CarScope. All rights reserved.</p>
+            <p>&copy; 2024 CarScope. All rights reserved.</p>
             <div>
                 <Link to="/policy">개인정보처리방침</Link> | 
                 <Link to="/terms">이용약관</Link> | 
@@ -81,4 +79,4 @@ function App() {
   );
 }
 
-export default App;
+export default App; 
