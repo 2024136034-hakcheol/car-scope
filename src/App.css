@@ -680,11 +680,11 @@
 }
 
 .slide-item {
-    /* 겹침 해결: Flexbox 축소 방지 및 명확한 너비 설정 */
-    flex: 0 0 33.333333%; 
-    width: 33.333333%; 
-    min-width: 33.333333%;
+    /* Flexbox 강제 고정 및 너비 재정의 */
+    flex: 0 0 calc(100% / 3); 
+    width: calc(100% / 3); 
     flex-shrink: 0;
+    min-width: 0; 
     
     height: 100%;
     display: flex;
@@ -695,7 +695,7 @@
     padding: 0 50px;
     box-sizing: border-box;
     position: relative;
-    max-width: 33.333333%;
+    max-width: calc(100% / 3);
 }
 
 .banner-link-wrapper {
