@@ -8,12 +8,9 @@ const dummyBanners = [
 ];
 
 const dummyReviews = [
-  // 별점 5 (정수)로 조정, 커뮤니티 주제에 맞게 수정
-  { id: 1, user: "김**진", car: "람보르기니 아벤타도르 S", rating: 5, content: "프리미엄 차주들과의 커뮤니티 덕분에 좋은 정보를 많이 얻었습니다.", date: "2024.10.01" },
-  // 별점 4.5 -> 4 (정수)로 조정, 긍정적인 내용으로 수정
-  { id: 2, user: "문**철", car: "아반떼 N", rating: 4, content: "차량 리뷰가 상세하고 객관적이라 선택에 큰 도움이 되었어요.", date: "2024.09.28" },
-  // 별점 3.5 -> 3 (정수)로 조정, 주차장 관련 긍정적인 내용으로 수정
-  { id: 3, user: "황**현", car: "제네시스 G90", rating: 3, content: "주차장 위치 정보가 정확해서 복잡한 시내에서 빠르게 찾았습니다.", date: "2024.09.25" },
+  { id: 1, user: "김**진", car: "람보르기니 아벤타도르 S", rating: 5, content: "내가 제일 최고라는것을 커뮤니티 보고 알았네요. 다들 대중교통 이용하세요~", date: "2024.10.01" },
+  { id: 2, user: "문**철", car: "아반떼 N", rating: 4.5, content: "카스코프 최고다 맨쓰~ 맨쓰~~", date: "2024.09.28" },
+  { id: 3, user: "황**현", car: "제네시스 G90", rating: 3.5, content: "주차장 쓰레기가 너무 많아요 X발!!", date: "2024.09.25" },
 ];
 
 const dummyParkingSpots = [
@@ -75,10 +72,15 @@ const NumberCounter = ({ endValue, duration = 2000 }) => {
 };
 
 const StarRating = ({ rating }) => {
+    const fullStars = Math.floor(rating);
+    const halfStar = rating % 1 >= 0.5 ? 1 : 0; // 0.5 이상이면 반쪽 별 1개
+    const emptyStars = 5 - fullStars - halfStar;
+    
     return (
         <div className="star-rating">
-            {'★'.repeat(rating)}
-            {'☆'.repeat(5 - rating)}
+            {'★'.repeat(fullStars)}
+            {halfStar === 1 ? '½' : ''} 
+            {'☆'.repeat(emptyStars)}
         </div>
     );
 };
