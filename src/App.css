@@ -74,7 +74,7 @@ a {
 }
 
 
-/* ============== HomePage 스타일 ============== */
+/* HomePage 스타일 */
 
 .homepage-container {
     max-width: 1200px;
@@ -419,7 +419,7 @@ a {
     margin-top: 5px;
 }
 
-/* ============== MembershipPage 스타일 ============== */
+/* MembershipPage 스타일 */
 
 .membership-page-container {
     padding: 40px 20px;
@@ -516,7 +516,6 @@ a {
 .tier-features {
     list-style: none;
     padding: 0;
-    margin-bottom: 30px;
 }
 
 .tier-features li {
