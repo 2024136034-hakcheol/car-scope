@@ -123,43 +123,48 @@ const HomePage = () => {
   return (
     <div className="homepage-container">
       
-      <div className="main-banner-slider" ref={sliderRef}>
+      <div className="main-banner-slider-wrapper">
         <div 
-          className="slider-track"
-          style={{ 
-            width: `${trackWidth}px`, 
-            transform: transformValue 
-          }}
+          className="main-banner-slider" 
+          ref={sliderRef}
         >
-          {dummyBanners.map((banner) => (
-            <div 
-              key={banner.id} 
-              className="slide-item" 
-              style={{ 
-                  backgroundColor: banner.color,
-                  width: `${slideWidth}px`,
-                  flexShrink: 0
-              }}
-            >
-              <Link to={banner.link} className="banner-link-wrapper">
-                <div className="banner-content">
-                  <h2>{banner.title}</h2>
-                  <p>{banner.subtitle}</p>
-                  <span className="banner-cta">자세히 보기 &gt;</span>
-                </div>
-              </Link>
-            </div>
-          ))}
-        </div>
-        
-        <div className="slider-dots">
-          {dummyBanners.map((_, index) => (
-            <span
-              key={index}
-              className={`dot ${currentSlide === index ? 'active' : ''}`}
-              onClick={(e) => handleDotClick(e, index)}
-            ></span>
-          ))}
+          <div 
+            className="slider-track"
+            style={{ 
+              width: `${trackWidth}px`, 
+              transform: transformValue 
+            }}
+          >
+            {dummyBanners.map((banner) => (
+              <div 
+                key={banner.id} 
+                className="slide-item" 
+                style={{ 
+                    backgroundColor: banner.color,
+                    width: `${slideWidth}px`,
+                    flexShrink: 0
+                }}
+              >
+                <Link to={banner.link} className="banner-link-wrapper">
+                  <div className="banner-content">
+                    <h2>{banner.title}</h2>
+                    <p>{banner.subtitle}</p>
+                    <span className="banner-cta">자세히 보기 &gt;</span>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
+          
+          <div className="slider-dots">
+            {dummyBanners.map((_, index) => (
+              <span
+                key={index}
+                className={`dot ${currentSlide === index ? 'active' : ''}`}
+                onClick={(e) => handleDotClick(e, index)}
+              ></span>
+            ))}
+          </div>
         </div>
       </div>
 

@@ -14,7 +14,9 @@ a {
     color: inherit;
 }
 
-/* Header 스타일 */
+/* ==================================== */
+/* Header 스타일: 로고, 검색창, 버튼 복구 */
+/* ==================================== */
 .app-header {
     background-color: #ffffff;
     border-bottom: 1px solid #e0e0e0;
@@ -24,20 +26,80 @@ a {
 
 .app-header nav {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-.app-header .logo {
-    font-size: 1.8rem;
+.header-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-bottom: 10px;
+}
+
+.header-top .logo-section {
+    display: flex;
+    align-items: center;
+}
+
+.header-top .logo-image {
+    width: 150px;
+    height: auto;
+    margin-right: 15px;
+    
+}
+
+.header-top .search-bar {
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    margin: 0 20px;
+}
+
+.header-top .search-input {
+    width: 100%;
+    max-width: 500px;
+    padding: 10px 15px;
+    border: 2px solid #007bff;
+    border-radius: 25px;
+    font-size: 1rem;
+    outline: none;
+    transition: box-shadow 0.3s;
+}
+
+.header-top .search-input:focus {
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+.header-top .auth-buttons a {
+    margin-left: 10px;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
     font-weight: bold;
-    color: #007bff;
+    transition: background-color 0.2s;
+}
+
+.header-top .auth-buttons .login-btn {
+    background-color: #f0f0f0;
+    color: #333;
+}
+
+.header-top .auth-buttons .join-btn {
+    background-color: #007bff;
+    color: white;
+}
+
+.app-header .nav-links {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 10px;
+    border-top: 1px solid #f0f0f0;
 }
 
 .app-header .nav-links a {
-    margin-left: 25px;
+    margin-right: 30px;
     font-size: 1rem;
     color: #555;
     padding: 5px 0;
@@ -74,7 +136,9 @@ a {
 }
 
 
-/* HomePage 스타일 */
+/* ==================================== */
+/* HomePage 스타일: 그라데이션 및 칸(그리드) 복구 */
+/* ==================================== */
 
 .homepage-container {
     max-width: 1200px;
@@ -82,14 +146,20 @@ a {
     padding: 20px;
 }
 
-/* 메인 배너 슬라이더 */
+/* 메인 배너 슬라이더 - 그라데이션 스타일 복구 */
+.main-banner-slider-wrapper {
+    background: linear-gradient(135deg, #0056b3, #007bff);
+    padding: 10px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
 .main-banner-slider {
     overflow: hidden;
     position: relative;
-    border-radius: 12px;
-    margin-bottom: 40px;
+    border-radius: 10px;
     height: 180px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
 }
 
 .slider-track {
@@ -191,7 +261,7 @@ a {
     color: #333;
 }
 
-/* 메인 콘텐츠 그리드 (인기 리뷰/뉴스 등) */
+/* 메인 콘텐츠 그리드 (칸 레이아웃) */
 .main-content-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
@@ -419,7 +489,9 @@ a {
     margin-top: 5px;
 }
 
+/* ==================================== */
 /* MembershipPage 스타일 */
+/* ==================================== */
 
 .membership-page-container {
     padding: 40px 20px;
