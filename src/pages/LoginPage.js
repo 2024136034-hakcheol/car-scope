@@ -79,6 +79,13 @@ const LoginPage = () => {
                     </button>
                 </form>
 
+                {/* 아이디 찾기/비밀번호 찾기/회원가입 링크를 로그인 버튼 바로 아래에 배치 */}
+                <div className="link-section">
+                    <a href="/find-id">아이디 찾기</a> | 
+                    <a href="/find-password">비밀번호 찾기</a> | 
+                    <a href="/join">회원가입</a>
+                </div>
+
                 <div className="social-login-separator">
                     <span>또는</span>
                 </div>
@@ -88,12 +95,6 @@ const LoginPage = () => {
                     <button type="button" className="social-btn kakao-btn">카카오로 로그인</button>
                     <button type="button" className="social-btn naver-btn">네이버로 로그인</button>
                     <button type="button" className="social-btn apple-btn">Apple로 로그인</button>
-                </div>
-
-                <div className="link-section">
-                    <a href="/find-id">아이디 찾기</a> | 
-                    <a href="/find-password">비밀번호 찾기</a> | 
-                    <a href="/join">회원가입</a>
                 </div>
             </div>
         </div>
