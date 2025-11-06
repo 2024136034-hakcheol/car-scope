@@ -171,22 +171,22 @@ const HomePage = () => {
             <span className="stat-value">
               <NumberCounter endValue={250000} />+
             </span>
-            <span className="stat-label">사용자 누적 예약 수</span>
             <span className="stat-description">편리하게 이용된 주차 서비스 횟수</span>
+            <span className="stat-label">사용자 누적 예약 수</span>
           </div>
           <div className="stat-item">
             <span className="stat-value">
               <NumberCounter endValue={5000} />+
             </span>
-            <span className="stat-label">주차장 제휴 수</span>
             <span className="stat-description">전국 실시간 주차 정보 제공 파트너</span>
+            <span className="stat-label">주차장 제휴 수</span>
           </div>
           <div className="stat-item">
             <span className="stat-value">
               <NumberCounter endValue={490000} />+
             </span>
-            <span className="stat-label">사용자 평가 총점</span>
             <span className="stat-description">누적된 사용자 리뷰의 총점</span>
+            <span className="stat-label">사용자 평가 총점</span>
           </div>
         </div>
       </div>
