@@ -675,21 +675,11 @@ a {
 .item-details {
     /* 이름 섹션이 남은 공간을 최대한 차지하도록 설정 */
     flex-grow: 1;
+    /* 긴 텍스트가 오른쪽 섹션을 밀어내지 않도록 overflow 처리 */
+    overflow: hidden; 
     /* 내용이 길면 줄바꿈이 되도록 최소 너비 설정 해제 */
     min-width: 0; 
     margin-right: 20px; /* 오른쪽 섹션과의 간격 확보 */
-}
-
-.item-right-section {
-    display: flex;
-    /* 요소를 가로로 정렬 (원래 디자인 복원) */
-    align-items: center;
-    /* 가격과 버튼 사이의 간격 */
-    gap: 15px; 
-    /* 오른쪽 섹션은 절대 축소되지 않도록 설정 */
-    flex-shrink: 0; 
-    /* 오른쪽 섹션 내 요소가 깨지지 않도록 충분한 최소 너비 확보 */
-    min-width: 200px; 
 }
 
 .item-name {
@@ -698,12 +688,25 @@ a {
     margin: 0;
     /* 이름이 길면 줄바꿈 허용 */
     word-break: break-word; 
+    /* 만약 줄바꿈이 일어나지 않기를 원하면: white-space: nowrap; text-overflow: ellipsis; overflow: hidden; */
 }
 
 .item-info {
     font-size: 0.9rem;
     color: #777;
     margin: 5px 0 0 0;
+}
+
+.item-right-section {
+    display: flex;
+    /* 요소를 가로로 정렬 */
+    align-items: center;
+    /* 가격과 버튼 사이의 간격 */
+    gap: 15px; 
+    /* 오른쪽 섹션은 절대 축소되지 않도록 설정 */
+    flex-shrink: 0; 
+    /* 오른쪽 섹션 내 요소가 깨지지 않도록 충분한 최소 너비 확보 */
+    min-width: 200px; 
 }
 
 .item-price {
