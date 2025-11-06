@@ -9,8 +9,8 @@ const dummyBanners = [
 
 const dummyReviews = [
   { id: 1, user: "김**진", car: "람보르기니 아벤타도르 S", rating: 5, content: "내가 제일 최고라는것을 커뮤니티 보고 알았네요. 다들 대중교통 이용하세요~", date: "2024.10.01" },
-  { id: 2, user: "이**민", car: "BMW 530i", rating: 4, content: "주차장 정보의 정확도가 높고 실시간 예약이 편리해 매번 잘 이용합니다.", date: "2024.09.28" },
-  { id: 3, user: "박**영", car: "기아 EV6", rating: 5, content: "궁금했던 차량 질문을 커뮤니티에서 바로 해결했어요. 카스코프 최고!", date: "2024.09.25" },
+  { id: 2, user: "문**철", car: "아반떼 N", rating: 4.5, content: "카스코프 최고다 맨쓰~ 맨쓰~~", date: "2024.09.28" },
+  { id: 3, user: "황**현", car: "제네시스 G90", rating: 3.5, content: "주차장 쓰레기가 너무 많아요 X발!!", date: "2024.09.25" },
 ];
 
 const dummyParkingSpots = [
