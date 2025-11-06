@@ -654,40 +654,36 @@ a {
 }
 
 .recommendation-list {
-    display: flex;
-    flex-direction: column;
+    display: block; 
     gap: 15px;
     margin-bottom: 40px;
 }
 
-.recommendation-item {
+.item-grid-card {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
     background-color: #f9f9f9;
     padding: 15px;
     border-radius: 6px;
     border: 1px solid #eee;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    /* 항목 내부의 요소들이 수축되지 않도록 설정 */
-    flex-wrap: nowrap;
+    margin-bottom: 15px;
 }
 
 .item-details {
-    /* 이름 섹션이 남은 공간을 최대한 차지하도록 설정 */
     flex-grow: 1;
-    /* 긴 텍스트가 오른쪽 섹션을 밀어내지 않도록 overflow 처리 */
-    overflow: hidden; 
-    /* 내용이 길면 줄바꿈이 되도록 최소 너비 설정 해제 */
     min-width: 0; 
-    margin-right: 20px; /* 오른쪽 섹션과의 간격 확보 */
+    overflow: hidden; 
+    margin-right: 20px; 
 }
 
 .item-name {
     font-weight: bold;
     font-size: 1.1rem;
     margin: 0;
-    /* 이름이 길면 줄바꿈 허용 */
-    word-break: break-word; 
+    white-space: nowrap; 
+    overflow: hidden; 
+    text-overflow: ellipsis;
 }
 
 .item-info {
@@ -698,40 +694,32 @@ a {
 
 .item-right-section {
     display: flex;
-    /* 요소를 세로로 정렬 */
     flex-direction: column; 
-    align-items: flex-end; /* 오른쪽으로 정렬 */
-    /* 가격과 버튼 사이의 간격 */
+    align-items: flex-end; 
     gap: 8px; 
-    /* 오른쪽 섹션은 절대 축소되지 않도록 설정 */
+    width: 170px; 
     flex-shrink: 0; 
-    /* 오른쪽 섹션 내 요소가 깨지지 않도록 충분한 최소 너비 확보 */
-    min-width: 160px; 
 }
 
 .item-price {
     font-weight: 500;
     color: #e67e22;
     margin: 0;
-    /* 가격 텍스트가 줄어들거나 깨지지 않도록 설정 */
     white-space: nowrap; 
     flex-shrink: 0;
     text-align: right;
-    font-size: 1rem; /* 텍스트 크기 일관성 유지 */
+    font-size: 1rem; 
 }
 
 .parking-reserve-btn {
     background-color: #007bff;
     color: white;
     border: none;
-    /* 버튼 크기를 고정하여 세로 정렬 시 깨지지 않도록 함 */
     padding: 8px 15px;
     width: 100%;
-    max-width: 150px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.9rem;
-    /* 버튼 크기가 줄어들지 않도록 설정 */
     flex-shrink: 0;
 }
 

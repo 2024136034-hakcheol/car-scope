@@ -20,7 +20,8 @@ const ParkingPage = () => {
                 <h2>이런 주차장은 어떠세요?</h2>
                 
                 <div className="recommendation-list">
-                    <div className="recommendation-item">
+                    {/* Grid 스타일 적용을 위해 item-grid-card 클래스 사용 */}
+                    <div className="item-grid-card">
                         <div className="item-details">
                             <p className="item-name">카카오 T AK플라자 분당</p>
                             <p className="item-info">377건 · 32m</p>
@@ -30,7 +31,7 @@ const ParkingPage = () => {
                             <button className="parking-reserve-btn">주차장 예약하기</button>
                         </div>
                     </div>
-                    <div className="recommendation-item">
+                    <div className="item-grid-card">
                         <div className="item-details">
                             <p className="item-name">아반포트 서현265 주차장</p>
                             <p className="item-info">273건 · 101m</p>
