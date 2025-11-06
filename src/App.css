@@ -800,3 +800,69 @@
 .more-link:hover {
     color: #007bff;
 }
+
+/* Company Stats Section */
+.company-stats-section {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 40px 20px;
+    text-align: center;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.stats-header h2 {
+    font-size: 2.5em;
+    color: #333;
+    margin-bottom: 15px;
+    font-weight: 700;
+}
+
+.stats-header p {
+    font-size: 1.1em;
+    color: #666;
+    margin-bottom: 40px;
+    line-height: 1.6;
+}
+
+.stats-grid {
+    display: flex;
+    justify-content: space-around;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.stat-item {
+    flex: 1;
+    min-width: 250px;
+    padding: 30px 20px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease-in-out;
+}
+
+.stat-item:hover {
+    transform: translateY(-5px);
+}
+
+.stat-value {
+    font-size: 3em;
+    font-weight: bold;
+    color: #007bff;
+    margin-bottom: 10px;
+    display: block;
+}
+
+.stat-label {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: #555;
+    margin-bottom: 8px;
+}
+
+.stat-description {
+    font-size: 0.9em;
+    color: #888;
+}

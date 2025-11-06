@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 
 const dummyBanners = [
@@ -6,6 +6,50 @@ const dummyBanners = [
   { id: 2, title: "🚘 2024년 신차 트렌드 리포트", subtitle: "올해 주목해야 할 전기차, 하이브리드 모델 분석!", color: "#28a745", link: "/news/newcar" },
   { id: 3, title: "🅿️ 주차장 예약 최대 50% 할인!", subtitle: "지금 바로 가까운 주차장을 예약하세요.", color: "#ffc107", link: "/parking" },
 ];
+
+const NumberCounter = ({ endValue, duration = 2000 }) => {
+  const [count, setCount] = useState(0);
+  const ref = useRef(null);
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.5 } 
+    );
+
+    if (ref.current) {
+      observer.observe(ref.current);
+    }
+
+    return () => {
+      if (ref.current) {
+        observer.unobserve(ref.current);
+      }
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isVisible) return;
+
+    let startTimestamp = null;
+    const animateCount = (timestamp) => {
+      if (!startTimestamp) startTimestamp = timestamp;
+      const progress = (timestamp - startTimestamp) / duration;
+      setCount(Math.min(endValue, Math.floor(progress * endValue)));
+      if (progress < 1) {
+        requestAnimationFrame(animateCount);
+      }
+    };
+    requestAnimationFrame(animateCount);
+  }, [endValue, duration, isVisible]);
+
+  return <span ref={ref}>{count.toLocaleString()}</span>;
+};
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -54,39 +98,37 @@ const HomePage = () => {
           ))}
         </div>
       </div>
-      
-      <div className="main-content-grid">
-        <div className="card latest-news">
-          <h3>최신 자동차 뉴스</h3>
-          <ul>
-            <li><Link to="/news/1">테슬라 '모델 Y' 출고 대란... [이슈]</Link></li>
-            <li><Link to="/news/2">신형 '아이오닉 7' 디자인 티저 공개 [신차]</Link></li>
-            <li><Link to="/news/3">BMW 'M4 CSL' 트랙 시승기 [시승기]</Link></li>
-          </ul>
-          <Link to="/news" className="more-link">뉴스 더보기 &gt;</Link>
+
+      <div className="company-stats-section">
+        <div className="stats-header">
+          <h2>CarScope의 놀라운 성장 지표</h2>
+          <p>저희는 항상 투명하고 신뢰할 수 있는 정보를 제공합니다.</p>
         </div>
-        
-        <div className="card hot-parking">
-          <h3>인기 주차장 리뷰</h3>
-          <ul>
-            <li><Link to="/parking/1">희망대 근린공원 주차장 (4.5/5)</Link></li>
-            <li><Link to="/parking/2">서현역 공영주차장 (4.2/5)</Link></li>
-            <li><Link to="/parking/3">백현동 카페거리 주차장 (4.7/5)</Link></li>
-          </ul>
-          <Link to="/parking" className="more-link">주차장 리뷰 전체 보기 &gt;</Link>
-        </div>
-        
-        <div className="card popular-community">
-          <h3>인기 커뮤니티 주제</h3>
-          <ul>
-            <li><Link to="/community/1">내 차 연비 챌린지 공유 이벤트</Link></li>
-            <li><Link to="/community/2">전기차 충전소 꿀팁 공유</Link></li>
-            <li><Link to="/community/3">신차 출고 대기 인증</Link></li>
-          </ul>
-          <Link to="/community" className="more-link">커뮤니티 가기 &gt;</Link>
+        <div className="stats-grid">
+          <div className="stat-item">
+            <div className="stat-value">
+              <NumberCounter endValue={125000} />대
+            </div>
+            <div className="stat-label">누적 차량 거래 수</div>
+            <div className="stat-description">연간 평균 20% 성장 중</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-value">
+              <NumberCounter endValue={50000000000} />원
+            </div>
+            <div className="stat-label">총 거래액 (누적)</div>
+            <div className="stat-description">신뢰를 기반으로 한 투명한 거래</div>
+          </div>
+          <div className="stat-item">
+            <div className="stat-value">
+              <NumberCounter endValue={98} />%
+            </div>
+            <div className="stat-label">고객 만족도</div>
+            <div className="stat-description">최고의 서비스 품질을 약속합니다.</div>
+          </div>
         </div>
       </div>
-
+      
     </div>
   );
 };
