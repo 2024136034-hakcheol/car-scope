@@ -35,7 +35,9 @@ const Header = () => {
                 <div className="nav-links">
                     <Link to="/">홈</Link>
                     <Link to="/reviews">리뷰</Link>
-                    <Link to="/parking">주차</Link>
+                    <Link to="/parking">주차장</Link>
+                    <Link to="/community">커뮤니티</Link>
+                    <Link to="/news">뉴스</Link>
                     <Link to="/membership" className="membership-link">멤버십</Link>
                 </div>
             </nav>

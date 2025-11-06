@@ -71,7 +71,6 @@ const NumberCounter = ({ endValue, duration = 2000 }) => {
   return <span ref={ref}>{count.toLocaleString()}</span>;
 };
 
-// StarRating 컴포넌트 삭제
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
