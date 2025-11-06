@@ -53,6 +53,21 @@ const NumberCounter = ({ endValue, duration = 2000 }) => {
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
+  const sliderRef = useRef(null);
+  const [slideWidth, setSlideWidth] = useState(0);
+
+  useEffect(() => {
+    const updateWidth = () => {
+      if (sliderRef.current) {
+        setSlideWidth(sliderRef.current.offsetWidth);
+      }
+    };
+    
+    updateWidth();
+    window.addEventListener('resize', updateWidth);
+
+    return () => window.removeEventListener('resize', updateWidth);
+  }, []); 
 
   useEffect(() => {
     const interval = setInterval(() => {
@@ -69,22 +84,31 @@ const HomePage = () => {
       e.stopPropagation(); 
       setCurrentSlide(index);
   };
+  
+  const trackWidth = slideWidth * dummyBanners.length;
+  const transformValue = `translateX(-${currentSlide * slideWidth}px)`;
 
   return (
     <div className="homepage-container">
       
-      <div className="main-banner-slider">
+      <div className="main-banner-slider" ref={sliderRef}>
         <div 
           className="slider-track"
-          style={{ transform: `translateX(-${currentSlide * 100}%)` }}
+          style={{ 
+            width: `${trackWidth}px`, 
+            transform: transformValue 
+          }}
         >
           {dummyBanners.map((banner) => (
             <div 
               key={banner.id} 
               className="slide-item" 
-              style={{ backgroundColor: banner.color }}
+              style={{ 
+                  backgroundColor: banner.color,
+                  width: `${slideWidth}px`,
+                  flexShrink: 0
+              }}
             >
-              {/* Link 컴포넌트가 배너 내용을 감싸도록 변경 */}
               <Link to={banner.link} className="banner-link-wrapper">
                 <div className="banner-content">
                   <h2>{banner.title}</h2>
@@ -107,32 +131,62 @@ const HomePage = () => {
         </div>
       </div>
 
+      <div className="main-content-grid">
+        <div className="card">
+          <h3>인기 리뷰</h3>
+          <ul>
+            <li><Link to="/review/1">현대 쏘나타 2024 시승기</Link></li>
+            <li><Link to="/review/2">BMW 5시리즈, 진정한 혁신인가?</Link></li>
+            <li><Link to="/review/3">가성비 최고의 전기차 TOP 5</Link></li>
+          </ul>
+          <Link to="/reviews" className="more-link">더보기</Link>
+        </div>
+        <div className="card">
+          <h3>최신 뉴스</h3>
+          <ul>
+            <li><Link to="/news/1">테슬라, 새로운 자율주행 기술 공개</Link></li>
+            <li><Link to="/news/2">내연기관차 생산 중단 시점은?</Link></li>
+            <li><Link to="/news/3">정부, 전기차 보조금 정책 발표</Link></li>
+          </ul>
+          <Link to="/news" className="more-link">더보기</Link>
+        </div>
+        <div className="card">
+          <h3>인기 주차장</h3>
+          <ul>
+            <li><Link to="/parking/1">강남역 민영 주차장</Link></li>
+            <li><Link to="/parking/2">홍대입구역 24시간 주차장</Link></li>
+            <li><Link to="/parking/3">김포공항 장기 주차 꿀팁</Link></li>
+          </ul>
+          <Link to="/parking" className="more-link">더보기</Link>
+        </div>
+      </div>
+
       <div className="company-stats-section">
         <div className="stats-header">
-          <h2>CarScope의 놀라운 성장 지표</h2>
-          <p>저희는 항상 투명하고 신뢰할 수 있는 정보를 제공합니다.</p>
+          <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
+          <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
         </div>
         <div className="stats-grid">
           <div className="stat-item">
-            <div className="stat-value">
-              <NumberCounter endValue={55000} />건
-            </div>
-            <div className="stat-label">주차장 예약 수</div>
-            <div className="stat-description">월 평균 10% 이상 증가</div>
+            <span className="stat-value">
+              <NumberCounter endValue={1500} />+
+            </span>
+            <span className="stat-label">등록 차량 리뷰</span>
+            <span className="stat-description">신뢰도 높은 전문 리뷰어의 평가</span>
           </div>
           <div className="stat-item">
-            <div className="stat-value">
-              <NumberCounter endValue={850} />개
-            </div>
-            <div className="stat-label">주차장 제휴 업체 수</div>
-            <div className="stat-description">전국 주요 지역 커버</div>
+            <span className="stat-value">
+              <NumberCounter endValue={250} />K+
+            </span>
+            <span className="stat-label">월간 활성 이용자</span>
+            <span className="stat-description">매달 CarScope를 찾는 운전자 수</span>
           </div>
           <div className="stat-item">
-            <div className="stat-value">
-              <NumberCounter endValue={98} />%
-            </div>
-            <div className="stat-label">고객 만족도</div>
-            <div className="stat-description">최고의 서비스 품질을 약속합니다.</div>
+            <span className="stat-value">
+              <NumberCounter endValue={5000} />+
+            </span>
+            <span className="stat-label">주차장 데이터</span>
+            <span className="stat-description">전국 실시간 주차 정보 제공</span>
           </div>
         </div>
       </div>
