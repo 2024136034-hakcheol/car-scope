@@ -854,10 +854,63 @@ a {
 }
 
 .membership-page-container .contact-info a {
-    color: #007bff; /* 로그인 링크 파란색으로 변경 */
+    color: #007bff;
     font-weight: 500;
 }
 
+/* 404 Not Found Page Style */
+.not-found-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 180px);
+    text-align: center;
+    padding: 50px 20px;
+}
+
+.not-found-container .error-code {
+    font-size: 8rem;
+    font-weight: 900;
+    color: #ff6b6b;
+    margin: 0 0 10px 0;
+    animation: fadeIn 1s ease-out;
+}
+
+.not-found-container .error-message {
+    font-size: 2rem;
+    color: #333;
+    margin-bottom: 15px;
+    animation: fadeIn 1.2s ease-out 0.2s forwards;
+    opacity: 0;
+}
+
+.not-found-container .error-description {
+    font-size: 1.1rem;
+    color: #777;
+    margin-bottom: 30px;
+    max-width: 400px;
+    animation: fadeIn 1.2s ease-out 0.4s forwards;
+    opacity: 0;
+}
+
+.not-found-container .home-link-button {
+    display: inline-block;
+    padding: 12px 25px;
+    background-color: #007bff;
+    color: white;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: background-color 0.3s, transform 0.2s;
+    animation: fadeIn 1.2s ease-out 0.6s forwards;
+    opacity: 0;
+}
+
+.not-found-container .home-link-button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
 
 @keyframes fadeInSlide {
     from {
