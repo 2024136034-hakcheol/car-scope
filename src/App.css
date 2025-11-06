@@ -336,13 +336,39 @@ a {
 }
 
 .star-rating {
+    display: inline-flex;
+    position: relative;
     font-size: 1.2rem;
-    color: gold;
-    margin-bottom: 10px;
+    color: #ffd700;
 }
 
-.star-rating span {
-    color: gray;
+.star-rating .star-icon {
+    position: relative;
+    overflow: hidden;
+    width: 1em;
+    height: 1em;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.star-rating .star-icon.empty {
+    color: #ccc;
+}
+
+.star-rating .star-icon.half {
+    color: #ffd700;
+}
+
+.star-rating .star-icon.half::after {
+    content: '★';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 50%;
+    overflow: hidden;
+    color: #ccc;
+    z-index: 1; 
 }
 
 .feedback-content {

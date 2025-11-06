@@ -9,8 +9,8 @@ const dummyBanners = [
 
 const dummyReviews = [
   { id: 1, user: "김**진", car: "람보르기니 아벤타도르 S", rating: 5, content: "내가 제일 최고라는것을 커뮤니티 보고 알았네요. 다들 대중교통 이용하세요~", date: "2024.10.01" },
-  { id: 2, user: "문**철", car: "아반떼 N", rating: 4, content: "카스코프 최고다 맨쓰~ 맨쓰~~", date: "2024.09.28" },
-  { id: 3, user: "황**현", car: "제네시스 G90", rating: 3, content: "주차장이 너무 더럽네요...", date: "2024.09.25" },
+  { id: 2, user: "문**철", car: "아반떼 N", rating: 4.5, content: "카스코프 최고다 맨쓰~ 맨쓰~~", date: "2024.09.28" },
+  { id: 3, user: "황**현", car: "제네시스 G90", rating: 3.5, content: "주차장이 너무 더럽네요...", date: "2024.09.25" },
 ];
 
 const dummyParkingSpots = [
@@ -72,13 +72,23 @@ const NumberCounter = ({ endValue, duration = 2000 }) => {
 };
 
 const StarRating = ({ rating }) => {
-    const fullStars = Math.floor(rating);
-    const emptyStars = 5 - fullStars;
+    const stars = [];
+    const maxRating = 5;
+    
+    for (let i = 1; i <= maxRating; i++) {
+        let className = 'star-icon empty';
+        if (i <= rating) {
+            className = 'star-icon full';
+        } else if (i - 0.5 === rating) {
+            className = 'star-icon half';
+        }
+        
+        stars.push(<span key={i} className={className}>★</span>);
+    }
     
     return (
         <div className="star-rating">
-            {'★'.repeat(fullStars)}
-            {'☆'.repeat(emptyStars)}
+            {stars}
         </div>
     );
 };
@@ -218,7 +228,7 @@ const HomePage = () => {
           {dummyReviews.map(review => (
             <div key={review.id} className="feedback-card">
               <StarRating rating={review.rating} />
-              <p className="feedback-content">"{review.content}"</p>
+              <div className="feedback-content">"{review.content}"</div>
               <div className="feedback-info">
                 <span className="feedback-user">{review.user}</span>
                 <span className="feedback-car">| {review.car} 이용</span>
