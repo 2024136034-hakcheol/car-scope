@@ -5,6 +5,7 @@ import ParkingPage from './pages/ParkingPage';
 import NewsPage from './pages/NewsPage';
 import LoginPage from './pages/LoginPage';
 import './App.css'; 
+import logo from './logo.svg';
 
 const App = () => {
   return (
@@ -13,7 +14,7 @@ const App = () => {
         <header className="App-header">
           <div className="App-logo">
             <Link to="/">
-              <span className="logo-text">CarScope</span>
+              <img src={logo} className="App-logo-img" alt="CarScope logo" />
             </Link>
           </div>
           <div className="App-center-nav">
