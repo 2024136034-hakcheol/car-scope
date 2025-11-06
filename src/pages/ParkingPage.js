@@ -26,7 +26,7 @@ const ParkingPage = () => {
                             <p className="item-info">377건 · 32m</p>
                         </div>
                         <div className="item-right-section">
-                            <p className="item-price">심야권 4,000원 외 1개</p>
+                            <div className="item-price">심야권 4,000원 외 1개</div>
                             <button className="parking-reserve-btn">주차장 예약하기</button>
                         </div>
                     </div>
@@ -36,7 +36,7 @@ const ParkingPage = () => {
                             <p className="item-info">273건 · 101m</p>
                         </div>
                         <div className="item-right-section">
-                            <p className="item-price">심야권 2,900원 외 1개</p>
+                            <div className="item-price">심야권 2,900원 외 1개</div>
                             <button className="parking-reserve-btn">주차장 예약하기</button>
                         </div>
                     </div>

@@ -688,7 +688,6 @@ a {
     margin: 0;
     /* 이름이 길면 줄바꿈 허용 */
     word-break: break-word; 
-    /* 만약 줄바꿈이 일어나지 않기를 원하면: white-space: nowrap; text-overflow: ellipsis; overflow: hidden; */
 }
 
 .item-info {
@@ -699,14 +698,15 @@ a {
 
 .item-right-section {
     display: flex;
-    /* 요소를 가로로 정렬 */
-    align-items: center;
+    /* 요소를 세로로 정렬 */
+    flex-direction: column; 
+    align-items: flex-end; /* 오른쪽으로 정렬 */
     /* 가격과 버튼 사이의 간격 */
-    gap: 15px; 
+    gap: 8px; 
     /* 오른쪽 섹션은 절대 축소되지 않도록 설정 */
     flex-shrink: 0; 
     /* 오른쪽 섹션 내 요소가 깨지지 않도록 충분한 최소 너비 확보 */
-    min-width: 200px; 
+    min-width: 160px; 
 }
 
 .item-price {
@@ -717,13 +717,17 @@ a {
     white-space: nowrap; 
     flex-shrink: 0;
     text-align: right;
+    font-size: 1rem; /* 텍스트 크기 일관성 유지 */
 }
 
 .parking-reserve-btn {
     background-color: #007bff;
     color: white;
     border: none;
+    /* 버튼 크기를 고정하여 세로 정렬 시 깨지지 않도록 함 */
     padding: 8px 15px;
+    width: 100%;
+    max-width: 150px;
     border-radius: 4px;
     cursor: pointer;
     font-size: 0.9rem;
