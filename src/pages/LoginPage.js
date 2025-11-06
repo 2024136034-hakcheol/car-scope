@@ -48,7 +48,7 @@ const LoginPage = () => {
                             className="login-input"
                             value={id}
                             onChange={handleIdChange}
-                            placeholder="아이디 / 이메일 (영어, 특수문자만)"
+                            placeholder="아이디 / 이메일"
                             required
                         />
                     </div>
@@ -61,7 +61,7 @@ const LoginPage = () => {
                                 className="login-input"
                                 value={password}
                                 onChange={handlePasswordChange}
-                                placeholder="비밀번호 (영어, 특수문자만)"
+                                placeholder="비밀번호"
                                 required
                             />
                             <button
