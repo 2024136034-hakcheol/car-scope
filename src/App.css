@@ -113,6 +113,11 @@ a {
     flex-shrink: 0;
 }
 
+/* 추가된 부분: 메뉴 호버 효과 */
+.app-header .nav-links a:hover {
+    color: #007bff; 
+}
+
 .app-header .membership-link {
     color: #ffc107;
     font-weight: bold;

@@ -166,14 +166,14 @@ const HomePage = () => {
                         <div className="feedback-info">갑**진 · 람보르기니 아벤타도르 S 이용</div>
                     </div>
                     <div className="feedback-card">
-                        <div className="feedback-rating">⭐️⭐️⭐️⭐️</div>
-                        <p className="feedback-content">"주차장이 너무 넓네요."</p>
+                        <div className="feedback-rating">⭐️⭐️⭐️</div>
+                        <p className="feedback-content">"주차장에 쓰레기가 너무 많아요..."</p>
                         <div className="feedback-info">황**현 · 제네시스 G90 이용</div>
                     </div>
                     <div className="feedback-card">
-                        <div className="feedback-rating">⭐️⭐️⭐️⭐️⭐️</div>
+                        <div className="feedback-rating">⭐️⭐️⭐️⭐️</div>
                         <p className="feedback-content">"카스쿠프 최고! 깔끔하고 센스 굿"</p>
-                        <div className="feedback-info">문**진 · 아반떼 N 이용</div>
+                        <div className="feedback-info">문**철 · 아반떼 N 이용</div>
                     </div>
                 </div>
                 <a href="#" className="feedback-more-link">모든 후기 보기 &gt;</a>
@@ -226,7 +226,7 @@ const HomePage = () => {
                         <span className="stat-description">전국 주요 주차장과 함께합니다.</span>
                     </div>
                     <div className="stat-item">
-                        <StatCounter endValue="490,000+" />
+                        <StatCounter endValue="500,000+" />
                         <span className="stat-label">사용자 평가 및 평점</span>
                         <span className="stat-description">운전자의 생생한 후기</span>
                     </div>
