@@ -10,7 +10,7 @@ const dummyBanners = [
 const dummyReviews = [
   { id: 1, user: "김**진", car: "람보르기니 아벤타도르 S", rating: 5, content: "내가 제일 최고라는것을 커뮤니티 보고 알았네요. 다들 대중교통 이용하세요~", date: "2024.10.01" },
   { id: 2, user: "문**철", car: "아반떼 N", rating: 4.5, content: "카스코프 최고다 맨쓰~ 맨쓰~~", date: "2024.09.28" },
-  { id: 3, user: "황**현", car: "제네시스 G90", rating: 3.5, content: "주차장 쓰레기가 너무 많아요 X발!!", date: "2024.09.25" },
+  { id: 3, user: "황**현", car: "제네시스 G90", rating: 3.5, content: "주차장이 너무 더럽네요...", date: "2024.09.25" },
 ];
 
 const dummyParkingSpots = [
@@ -72,7 +72,7 @@ const NumberCounter = ({ endValue, duration = 2000 }) => {
 };
 
 const StarRating = ({ rating }) => {
-    // Math.round를 사용하여 별점을 가장 가까운 정수(0~5)로 반올림합니다.
+    // 소수점 별점(4.5, 3.5)을 가장 가까운 정수(5, 4)로 반올림합니다.
     const roundedRating = Math.round(rating);
     const fullStars = Math.min(5, Math.max(0, roundedRating));
     const emptyStars = 5 - fullStars;
