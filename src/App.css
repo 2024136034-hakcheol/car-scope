@@ -875,9 +875,11 @@
     font-weight: 600;
     color: #555;
     margin-bottom: 8px;
+    display: block;
 }
 
 .stat-description {
     font-size: 0.9em;
     color: #888;
+    display: block;
 }
