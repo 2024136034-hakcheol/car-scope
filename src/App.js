@@ -7,6 +7,7 @@ import LoginPage from './pages/LoginPage';
 import MembershipPage from './pages/MembershipPage';
 import ParkingPage from './pages/ParkingPage';
 import NotFoundPage from './pages/NotFoundPage';
+import NewsPage from './pages/NewsPage';
 import './App.css';
 
 const App = () => {
