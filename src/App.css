@@ -659,21 +659,22 @@ a {
 }
 
 .item-grid-card {
-    /* Grid 레이아웃으로 변경: 이름 섹션(자동 크기)과 오른쪽 섹션(고정 너비) 분리 */
-    display: grid;
-    grid-template-columns: 1fr 170px; /* 1fr: item-details, 170px: item-right-section */
-    align-items: center;
+    /* Absolute Positioning의 기준점 */
+    position: relative; 
     background-color: #f9f9f9;
-    padding: 15px;
+    /* item-right-section이 들어갈 공간 확보를 위해 패딩 확장 */
+    padding: 15px 190px 15px 15px; 
     border-radius: 6px;
     border: 1px solid #eee;
     margin-bottom: 15px;
+    min-height: 80px; /* 최소 높이 설정으로 구조 안정화 */
 }
 
 .item-details {
-    /* Grid 첫 번째 컬럼: 이름 섹션 */
-    overflow: hidden; 
-    padding-right: 20px; /* 오른쪽 섹션과의 간격 */
+    /* 이름 섹션: 전체 공간을 차지하되, 넘치지 않도록 숨김 */
+    width: 100%; 
+    box-sizing: border-box;
+    overflow: hidden;
 }
 
 .item-name {
@@ -692,12 +693,18 @@ a {
 }
 
 .item-right-section {
-    /* Grid 두 번째 컬럼: 가격/버튼 섹션 */
+    /* 절대 위치로 고정 */
+    position: absolute;
+    top: 50%; /* 수직 중앙 정렬을 위해 50% 이동 */
+    right: 15px; /* 오른쪽 패딩(15px)만큼 안쪽으로 */
+    transform: translateY(-50%); /* 정확한 수직 중앙 정렬 */
+    
     display: flex;
     flex-direction: column; 
     align-items: flex-end; 
     gap: 8px; 
-    width: 100%; /* Grid 컬럼 너비 170px 사용 */
+    width: 170px; 
+    flex-shrink: 0; 
 }
 
 .item-price {

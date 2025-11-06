@@ -20,12 +20,13 @@ const ParkingPage = () => {
                 <h2>이런 주차장은 어떠세요?</h2>
                 
                 <div className="recommendation-list">
-                    {/* Grid 스타일 적용을 위해 item-grid-card 클래스 사용 */}
+                    {/* item-grid-card에 position: relative 적용 예정 */}
                     <div className="item-grid-card">
                         <div className="item-details">
-                            <p className="item-name">카카오 T AK플라자 분당</p>
+                            <p className="item-name">카카오 T AK플라자 분당 주차장 이름이 아주 긴 경우 테스트</p>
                             <p className="item-info">377건 · 32m</p>
                         </div>
+                        {/* item-right-section에 position: absolute 적용 예정 */}
                         <div className="item-right-section">
                             <div className="item-price">심야권 4,000원 외 1개</div>
                             <button className="parking-reserve-btn">주차장 예약하기</button>
