@@ -48,7 +48,7 @@ const LoginPage = () => {
                             className="login-input"
                             value={id}
                             onChange={handleIdChange}
-                            placeholder="아이디(영어, 특수문자만)"
+                            placeholder="아이디 / 이메일 (영어, 특수문자만)"
                             required
                         />
                     </div>
@@ -61,7 +61,7 @@ const LoginPage = () => {
                                 className="login-input"
                                 value={password}
                                 onChange={handlePasswordChange}
-                                placeholder="비밀번호(영어, 특수문자만)"
+                                placeholder="비밀번호 (영어, 특수문자만)"
                                 required
                             />
                             <button
@@ -79,7 +79,6 @@ const LoginPage = () => {
                     </button>
                 </form>
 
-                {/* 아이디 찾기/비밀번호 찾기/회원가입 링크를 로그인 버튼 바로 아래에 배치 */}
                 <div className="link-section">
                     <a href="/find-id">아이디 찾기</a> | 
                     <a href="/find-password">비밀번호 찾기</a> | 
