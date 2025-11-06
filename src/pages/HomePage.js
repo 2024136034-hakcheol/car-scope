@@ -1,4 +1,56 @@
 import React, { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
+
+const StatCounter = ({ endValue, duration = 2000 }) => {
+    const [count, setCount] = useState(0);
+    const value = parseInt(endValue.replace(/\D/g, ''));
+    const isIntersecting = useVisibility(value);
+
+    useEffect(() => {
+        if (!isIntersecting) return;
+
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            setCount(Math.floor(progress * value));
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            }
+        };
+
+        window.requestAnimationFrame(step);
+        return () => setCount(0);
+    }, [value, duration, isIntersecting]);
+
+    const formattedCount = count.toLocaleString() + (endValue.includes('+') ? '+' : '');
+
+    return <span className="stat-value">{formattedCount}</span>;
+};
+
+const useVisibility = (value) => {
+    const [isVisible, setIsVisible] = useState(false);
+    const location = useLocation();
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setIsVisible(true);
+                    observer.unobserve(entry.target);
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        const statElements = document.querySelectorAll('.stat-item');
+        statElements.forEach(el => observer.observe(el));
+
+        return () => observer.disconnect();
+    }, [location.pathname, value]);
+
+    return isVisible;
+};
 
 const HomePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -36,7 +88,7 @@ const HomePage = () => {
 
     return (
         <div className="homepage-container">
-            <div className="main-banner-slider-wrapper">
+            <div className="main-banner-slider-wrapper animate-slide-in">
                 <div className="main-banner-slider">
                     <div className="slider-track" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
                         {slides.map((slide, index) => (
@@ -63,7 +115,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className="hot-trends-section">
+            <div className="hot-trends-section animate-fade-up">
                 <h2>🔥 실시간 인기 검색어</h2>
                 <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
                 <div className="trend-list-container">
@@ -75,7 +127,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className="main-content-grid">
+            <div className="main-content-grid animate-fade-up">
                 <div className="card">
                     <h3>인기 리뷰</h3>
                     <ul>
@@ -105,7 +157,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <div className="user-feedback-section">
+            <div className="user-feedback-section animate-fade-up">
                 <h2>⭐️ 최신 사용자 피드백</h2>
                 <div className="feedback-grid">
                     <div className="feedback-card">
@@ -127,7 +179,7 @@ const HomePage = () => {
                 <a href="#" className="feedback-more-link">모든 후기 보기 &gt;</a>
             </div>
 
-            <div className="parking-recommendation-section">
+            <div className="parking-recommendation-section animate-fade-up">
                 <h2>📌 지금 인기 있는 지역 주차장</h2>
                 <p>내 주변, 혹은 방문하려는 지역의 주차장을 빠르게 확인하세요.</p>
                 <div className="parking-spot-grid">
@@ -159,22 +211,22 @@ const HomePage = () => {
                 <a href="#" className="parking-more-link">다른 지역 주차장 찾기 &gt;</a>
             </div>
 
-            <div className="company-stats-section">
+            <div className="company-stats-section animate-fade-up">
                 <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
                 <div className="stats-grid">
                     <div className="stat-item">
-                        <span className="stat-value">250,000+</span>
+                        <StatCounter endValue="250,000+" />
                         <span className="stat-label">사용자 누적 예약 수</span>
                         <span className="stat-description">가장 인기 있는 주차 예약 서비스</span>
                     </div>
                     <div className="stat-item">
-                        <span className="stat-value">5,000+</span>
+                        <StatCounter endValue="5,000+" />
                         <span className="stat-label">주차장 제휴 수</span>
                         <span className="stat-description">전국 주요 주차장과 함께합니다.</span>
                     </div>
                     <div className="stat-item">
-                        <span className="stat-value">490,000+</span>
+                        <StatCounter endValue="490,000+" />
                         <span className="stat-label">사용자 평가 및 평점</span>
                         <span className="stat-description">운전자의 생생한 후기</span>
                     </div>
