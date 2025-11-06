@@ -18,13 +18,15 @@ a {
     border-bottom: 1px solid #e0e0e0;
     padding: 10px 0;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    width: 100%; /* 너비를 100%로 확실하게 지정 */
+    box-sizing: border-box; /* 패딩이 너비에 포함되도록 설정 */
 }
 
 .app-header nav {
     display: flex;
     flex-direction: column;
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto; /* 중앙 정렬 강제 */
     padding: 0 20px;
 }
 
@@ -86,6 +88,8 @@ a {
     display: flex;
     justify-content: flex-start;
     padding-top: 5px;
+    flex-wrap: nowrap; /* 네비게이션 링크가 줄 바꿈되지 않도록 강제 */
+    overflow-x: auto; /* 필요시 가로 스크롤 가능하게 */
 }
 
 .app-header .nav-links a {
@@ -94,7 +98,8 @@ a {
     color: #555;
     padding: 5px 0;
     font-weight: 500;
-    white-space: nowrap;
+    white-space: nowrap; /* 링크 텍스트가 줄 바꿈되지 않도록 강제 */
+    flex-shrink: 0;
 }
 
 .app-header .membership-link {
@@ -118,7 +123,7 @@ a {
 
 .homepage-container {
     max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 auto; /* 중앙 정렬 강제 */
     padding: 20px 20px;
 }
 
@@ -132,7 +137,6 @@ a {
     overflow: hidden;
     border-radius: 8px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-    /* 중앙 정렬을 위해 너비를 100%로 설정하고 컨테이너의 제한을 받게 함 */
     width: 100%;
     box-sizing: border-box;
 }
@@ -150,7 +154,7 @@ a {
     align-items: center;
     box-sizing: border-box; 
     width: 100%;
-    flex-shrink: 0; /* 슬라이드가 줄어들지 않도록 강제 */
+    flex-shrink: 0;
 }
 
 .banner-link-wrapper {
