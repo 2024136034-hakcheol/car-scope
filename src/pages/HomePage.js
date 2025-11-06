@@ -9,8 +9,10 @@ const dummyBanners = [
 
 const dummyReviews = [
   { id: 1, user: "김**진", car: "람보르기니 아벤타도르 S", rating: 5, content: "내가 제일 최고라는것을 커뮤니티 보고 알았네요. 다들 대중교통 이용하세요~", date: "2024.10.01" },
-  { id: 2, user: "문**철", car: "아반떼 N", rating: 4.5, content: "카스코프 최고다 맨쓰~ 맨쓰~~", date: "2024.09.28" },
-  { id: 3, user: "황**현", car: "제네시스 G90", rating: 3.5, content: "주차장이 너무 더럽네요...", date: "2024.09.25" },
+  // 4.5 -> 4로 수정
+  { id: 2, user: "문**철", car: "아반떼 N", rating: 4, content: "카스코프 최고다 맨쓰~ 맨쓰~~", date: "2024.09.28" },
+  // 3.5 -> 3으로 수정
+  { id: 3, user: "황**현", car: "제네시스 G90", rating: 3, content: "주차장이 너무 더럽네요...", date: "2024.09.25" },
 ];
 
 const dummyParkingSpots = [
@@ -72,9 +74,7 @@ const NumberCounter = ({ endValue, duration = 2000 }) => {
 };
 
 const StarRating = ({ rating }) => {
-    // 소수점 별점(4.5, 3.5)을 가장 가까운 정수(5, 4)로 반올림하여 별 모양이 깨지지 않게 합니다.
-    const roundedRating = Math.round(rating);
-    const fullStars = Math.min(5, Math.max(0, roundedRating));
+    const fullStars = Math.floor(rating);
     const emptyStars = 5 - fullStars;
     
     return (
@@ -251,7 +251,7 @@ const HomePage = () => {
       <div className="company-stats-section">
         <div className="stats-header">
           <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
-          <p>CarScope는 주차장 관련 정보, 리뷰 및 커뮤니티 서비스를 중심으로 성장하고 있습니다.</p>
+          <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
         </div>
         <div className="stats-grid">
           <div className="stat-item">
