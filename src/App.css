@@ -335,40 +335,31 @@ a {
     text-align: left;
 }
 
-.star-rating {
-    display: inline-flex;
+/* -------------------------------------- */
+/* ⭐️ 별점 (StarRating) 최종 디자인 */
+/* -------------------------------------- */
+
+.star-rating-container {
     position: relative;
+    display: inline-block;
     font-size: 1.2rem;
-    color: #ffd700;
+    line-height: 1; /* 글꼴에 의한 줄 높이 문제 해결 */
+    margin-bottom: 10px;
 }
 
-.star-rating .star-icon {
-    position: relative;
-    overflow: hidden;
-    width: 1em;
-    height: 1em;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.star-rating .star-icon.empty {
-    color: #ccc;
-}
-
-.star-rating .star-icon.half {
-    color: #ffd700;
-}
-
-.star-rating .star-icon.half::after {
-    content: '★';
+.stars-empty,
+.stars-fill {
+    color: #ccc; /* 회색(빈 별) */
     position: absolute;
     top: 0;
     left: 0;
-    width: 50%;
-    overflow: hidden;
-    color: #ccc;
-    z-index: 1; 
+    white-space: nowrap; /* 별이 줄바꿈되지 않도록 */
+    overflow: hidden; /* stars-fill에만 적용하여 너비 조절 */
+}
+
+.stars-fill {
+    color: #ffd700; /* 노란색(채워진 별) */
+    width: 0%; /* JS에서 계산된 width로 제어됨 */
 }
 
 .feedback-content {

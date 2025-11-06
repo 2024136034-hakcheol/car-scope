@@ -71,27 +71,22 @@ const NumberCounter = ({ endValue, duration = 2000 }) => {
   return <span ref={ref}>{count.toLocaleString()}</span>;
 };
 
+// 별점을 CSS width로 제어하는 방식으로 완전히 변경
 const StarRating = ({ rating }) => {
-    const stars = [];
-    const maxRating = 5;
-    
-    for (let i = 1; i <= maxRating; i++) {
-        let className = 'star-icon empty';
-        if (i <= rating) {
-            className = 'star-icon full';
-        } else if (i - 0.5 === rating) {
-            className = 'star-icon half';
-        }
-        
-        stars.push(<span key={i} className={className}>★</span>);
-    }
-    
+    const starWidthPercentage = (rating / 5) * 100;
+
     return (
-        <div className="star-rating">
-            {stars}
+        <div className="star-rating-container" title={`${rating}점`}>
+            {/* 회색 별 5개 (배경) */}
+            <div className="stars-empty">★★★★★</div>
+            {/* 노란색 별 (rating에 따라 너비 제어) */}
+            <div className="stars-fill" style={{ width: `${starWidthPercentage}%` }}>
+                ★★★★★
+            </div>
         </div>
     );
 };
+
 
 const HomePage = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
