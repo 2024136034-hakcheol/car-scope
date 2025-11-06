@@ -1,48 +1,64 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const HomePage = () => {
+    const [currentSlide, setCurrentSlide] = useState(0);
+    const slides = [
+        {
+            bgColor: '#4263ec',
+            title: 'CarScope 첫 오픈 기념!',
+            description: '프리미엄 리뷰를 7일간 무료로 경험하세요.',
+            link: '#',
+        },
+        {
+            bgColor: '#219150',
+            title: '2024 신차 트렌드 리포트',
+            description: '올해 주목해야 할 전기차, 하이브리드 모델 분석!',
+            link: '#',
+        },
+        {
+            bgColor: '#f28d35',
+            title: '🅿 주차장 예약 최대 50% 할인!',
+            description: '지금 바로 가까운 주차장을 예약하세요.',
+            link: '#',
+        },
+    ];
+
+    useEffect(() => {
+        const slideInterval = setInterval(() => {
+            setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
+        }, 5000); // 5초마다 슬라이드 변경
+        return () => clearInterval(slideInterval);
+    }, [slides.length]);
+
+    const goToSlide = (index) => {
+        setCurrentSlide(index);
+    };
+
     return (
         <div className="homepage-container">
             <div className="main-banner-slider-wrapper">
-                <div className="main-banner-slider banner-blue">
-                    <div className="slider-track">
-                        <div className="slide-item">
-                            <div className="banner-link-wrapper">
-                                <div className="banner-content">
-                                    <h2>CarScope 첫 오픈 기념!</h2>
-                                    <p>프리미엄 리뷰를 7일간 무료로 경험하세요.</p>
-                                    <a href="#">자세히 보기 &gt;</a>
+                <div className="main-banner-slider">
+                    <div className="slider-track" style={{ transform: `translateX(-${currentSlide * 100}%)` }}>
+                        {slides.map((slide, index) => (
+                            <div key={index} className="slide-item" style={{ backgroundColor: slide.bgColor }}>
+                                <div className="banner-link-wrapper">
+                                    <div className="banner-content">
+                                        <h2>{slide.title}</h2>
+                                        <p>{slide.description}</p>
+                                        <a href={slide.link}>자세히 보기 &gt;</a>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        ))}
                     </div>
-                </div>
-
-                <div className="main-banner-slider banner-green">
-                    <div className="slider-track">
-                        <div className="slide-item">
-                            <div className="banner-link-wrapper">
-                                <div className="banner-content">
-                                    <h2>2024 신차 트렌드 리포트</h2>
-                                    <p>올해 주목해야 할 전기차, 하이브리드 모델 분석!</p>
-                                    <a href="#">자세히 보기 &gt;</a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className="main-banner-slider banner-orange">
-                    <div className="slider-track">
-                        <div className="slide-item">
-                            <div className="banner-link-wrapper">
-                                <div className="banner-content">
-                                    <h2>🅿 주차장 예약 최대 50% 할인!</h2>
-                                    <p>지금 바로 가까운 주차장을 예약하세요.</p>
-                                    <a href="#">자세히 보기 &gt;</a>
-                                </div>
-                            </div>
-                        </div>
+                    <div className="slider-dots">
+                        {slides.map((_, index) => (
+                            <div
+                                key={index}
+                                className={`dot ${currentSlide === index ? 'active' : ''}`}
+                                onClick={() => goToSlide(index)}
+                            ></div>
+                        ))}
                     </div>
                 </div>
             </div>
