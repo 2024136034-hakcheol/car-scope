@@ -721,87 +721,129 @@ a {
 }
 
 .membership-page-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: calc(100vh - 180px); 
+    max-width: 1000px;
+    margin: 0 auto;
     padding: 50px 20px;
+    text-align: center;
+}
+
+.membership-page-container h1 {
+    font-size: 2rem;
+    color: #4263ec;
+    margin-bottom: 10px;
+}
+
+.membership-page-container .subtitle {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+.pricing-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-bottom: 30px;
 }
 
 .membership-box {
     background-color: #ffffff;
-    padding: 40px;
+    padding: 30px;
     border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 600px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
-.membership-box h1 {
-    font-size: 2rem;
+.premium-plan {
+    border: 3px solid #4263ec;
+    transform: scale(1.05);
+    box-shadow: 0 8px 25px rgba(66, 99, 236, 0.3);
+}
+
+.membership-box:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+}
+
+.plan-header {
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.plan-header h2 {
+    font-size: 1.8rem;
+    margin: 0 0 5px 0;
+    color: #333;
+}
+
+.premium-plan h2 {
     color: #4263ec;
-    margin-bottom: 20px;
 }
 
-.membership-box .description {
-    font-size: 1.1rem;
-    color: #555;
-    margin-bottom: 30px;
+.plan-price {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #e67e22;
+    margin: 0;
 }
 
-.membership-box .feature-list {
+.feature-list {
     text-align: left;
     margin-bottom: 30px;
-    padding: 20px;
-    background-color: #f8f9fa;
-    border-radius: 8px;
+    padding-top: 10px;
 }
 
-.membership-box .feature-list h2 {
-    font-size: 1.4rem;
-    color: #333;
-    border-bottom: 2px solid #ddd;
-    padding-bottom: 10px;
+.feature-list h3 {
+    font-size: 1.2rem;
+    color: #444;
     margin-top: 0;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    border-bottom: 1px dashed #ddd;
+    padding-bottom: 5px;
 }
 
-.membership-box .feature-list ul {
+.feature-list ul {
     list-style: none;
     padding: 0;
 }
 
-.membership-box .feature-list li {
+.feature-list li {
     font-size: 1rem;
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     line-height: 1.5;
     color: #333;
 }
 
-.membership-box .pricing-info {
-    margin-bottom: 30px;
+.feature-list .disabled {
+    color: #aaa;
+    text-decoration: line-through;
 }
 
-.membership-box .price-tag {
-    font-size: 1.6rem;
-    font-weight: 700;
-    color: #e67e22;
-}
-
-.membership-box .cta-button {
-    display: inline-block;
+.cta-button {
+    display: block;
     width: 100%;
-    padding: 15px;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    transition: opacity 0.3s;
+    text-align: center;
+}
+
+.basic-button {
+    background-color: #cccccc;
+    color: #555;
+    cursor: default;
+}
+
+.premium-button {
     background-color: #4263ec;
     color: white;
-    border-radius: 8px;
-    font-size: 1.2rem;
-    font-weight: bold;
-    transition: background-color 0.3s;
 }
 
-.membership-box .cta-button:hover {
+.premium-button:hover {
     background-color: #2a49cc;
 }
 
@@ -894,6 +936,14 @@ a {
     .parking-spot-grid, .stats-grid, .feedback-grid {
         grid-template-columns: 1fr;
         gap: 20px;
+    }
+    
+    .pricing-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .premium-plan {
+        transform: scale(1.02);
     }
 }
 
