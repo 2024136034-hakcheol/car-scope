@@ -22,8 +22,6 @@ const Header = () => {
                     </div>
                 </div>
                 <div className="nav-links">
-                    <Link to="/" className="membership-link">홈</Link>
-                    <Link to="/review">리뷰</Link>
                     <Link to="/parking">주차장</Link>
                     <Link to="/community">커뮤니티</Link>
                     <Link to="/news">뉴스</Link>
