@@ -1,0 +1,20 @@
+{
+  "version": "0.2",
+  "language": "en",
+  "words": [
+    "kakao",
+    "readmore",
+    "webfonts",
+    "newcar",
+    "CarScope",
+    "ipg",
+    "verce",
+    "iptime"
+  ],
+  "ignorePaths": [
+    "node_modules",
+    "package.json",
+    "package-lock.json",
+    "build"
+  ]
+}

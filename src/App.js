@@ -2,16 +2,10 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
 import './App.css';
 import logo from './logo.png'; 
+import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import ParkingPage from './pages/ParkingPage';
 import NewsPage from './pages/NewsPage';
-
-const HomePage = () => (
-  <div className="main-content">
-    <h1>CarScope에 오신 것을 환영합니다!</h1>
-    <p>신뢰할 수 있는 차량 및 주차장 리뷰를 확인하세요.</p>
-  </div>
-);
 
 const CommunityPage = () => (
   <div className="main-content">
