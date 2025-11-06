@@ -1116,3 +1116,170 @@
 .trend-keyword {
     font-size: 1em;
 }
+
+.membership-page-container {
+    padding: 40px 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.membership-page-container h1 {
+    font-size: 2.5rem;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.page-subtitle {
+    color: #666;
+    margin-bottom: 40px;
+    font-size: 1.1rem;
+}
+
+.current-status-card {
+    background-color: #f8f9fa;
+    padding: 25px;
+    border-radius: 12px;
+    margin-bottom: 40px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    border: 1px solid #eee;
+}
+
+.current-status-card h2 {
+    font-size: 1.3rem;
+    color: #555;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.status-premium .tier-name {
+    color: #28a745;
+    font-weight: bold;
+}
+
+.status-basic .tier-name {
+    color: #007bff;
+    font-weight: bold;
+}
+
+.membership-tiers-grid {
+    display: flex;
+    gap: 30px;
+    margin-bottom: 50px;
+}
+
+.tier-card {
+    flex: 1;
+    background: #fff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.tier-card:hover:not(.current-tier) {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+.tier-card h3 {
+    font-size: 1.8rem;
+    color: #007bff;
+    margin-top: 0;
+}
+
+.tier-card.current-tier {
+    border: 3px solid #28a745;
+    box-shadow: 0 0 20px rgba(40, 167, 69, 0.3);
+}
+
+.tier-price {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+    margin: 15px 0 20px;
+}
+
+.tier-card hr {
+    border: 0;
+    border-top: 1px solid #eee;
+    margin-bottom: 20px;
+}
+
+.tier-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 30px;
+}
+
+.tier-features li {
+    padding: 8px 0;
+    color: #555;
+    font-size: 1.05rem;
+}
+
+.tier-features li::before {
+    content: '✅';
+    margin-right: 10px;
+}
+
+.cta-button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.primary-cta {
+    background-color: #007bff;
+    color: white;
+}
+
+.primary-cta:hover {
+    background-color: #0056b3;
+}
+
+.current-cta {
+    background-color: #28a745;
+    color: white;
+    cursor: default;
+}
+
+.faq-section {
+    text-align: left;
+    padding: 20px;
+    border-top: 1px solid #eee;
+}
+
+.faq-section h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.8rem;
+}
+
+.faq-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.faq-section li {
+    background: #f1f1f1;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.faq-link {
+    display: block;
+    text-align: center;
+    margin-top: 20px;
+    color: #007bff;
+    font-weight: bold;
+    text-decoration: none;
+}
