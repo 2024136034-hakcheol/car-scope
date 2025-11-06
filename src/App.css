@@ -674,14 +674,12 @@
 
 .slider-track {
     display: flex;
-    /* width와 transform은 JS 인라인 스타일로 제어 */
     height: 100%;
     transition: transform 0.5s ease-in-out;
     flex-wrap: nowrap;
 }
 
 .slide-item {
-    /* width와 flex-shrink는 JS 인라인 스타일로 제어 */
     height: 100%;
     display: flex;
     align-items: center;

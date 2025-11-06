@@ -169,24 +169,24 @@ const HomePage = () => {
         <div className="stats-grid">
           <div className="stat-item">
             <span className="stat-value">
-              <NumberCounter endValue={1500} />+
+              <NumberCounter endValue={250000} />+
             </span>
-            <span className="stat-label">등록 차량 리뷰</span>
-            <span className="stat-description">신뢰도 높은 전문 리뷰어의 평가</span>
-          </div>
-          <div className="stat-item">
-            <span className="stat-value">
-              <NumberCounter endValue={250} />K+
-            </span>
-            <span className="stat-label">월간 활성 이용자</span>
-            <span className="stat-description">매달 CarScope를 찾는 운전자 수</span>
+            <span className="stat-label">사용자 누적 예약 수</span>
+            <span className="stat-description">편리하게 이용된 주차 서비스 횟수</span>
           </div>
           <div className="stat-item">
             <span className="stat-value">
               <NumberCounter endValue={5000} />+
             </span>
-            <span className="stat-label">주차장 데이터</span>
-            <span className="stat-description">전국 실시간 주차 정보 제공</span>
+            <span className="stat-label">주차장 제휴 수</span>
+            <span className="stat-description">전국 실시간 주차 정보 제공 파트너</span>
+          </div>
+          <div className="stat-item">
+            <span className="stat-value">
+              <NumberCounter endValue={490000} />+
+            </span>
+            <span className="stat-label">사용자 평가 총점</span>
+            <span className="stat-description">누적된 사용자 리뷰의 총점</span>
           </div>
         </div>
       </div>
