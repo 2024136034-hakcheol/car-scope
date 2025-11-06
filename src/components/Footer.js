@@ -1,29 +1,16 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import LoginPage from './pages/LoginPage';
-import MembershipPage from './pages/MembershipPage';
-import ParkingPage from './pages/ParkingPage';
-import NotFoundPage from './pages/NotFoundPage';
-import './App.css';
 
-const App = () => {
+const Footer = () => {
     return (
-        <Router>
-            <Header />
-            <Routes>
-                <Route path="/" element={<HomePage />} />
-                <Route path="/login" element={<LoginPage />} />
-                <Route path="/join" element={<MembershipPage />} />
-                <Route path="/membership" element={<MembershipPage />} />
-                <Route path="/parking" element={<ParkingPage />} />
-                <Route path="*" element={<NotFoundPage />} />
-            </Routes>
-            <Footer />
-        </Router>
+        <footer className="app-footer">
+            <p>&copy; 2025 CarScope. All rights reserved.</p>
+            <div>
+                <a href="/policy">개인정보처리방침</a> | 
+                <a href="/terms">이용약관</a> | 
+                <a href="/contact">문의하기</a>
+            </div>
+        </footer>
     );
 };
 
-export default App;
+export default Footer;
