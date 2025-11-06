@@ -107,17 +107,17 @@ const HomePage = () => {
         <div className="stats-grid">
           <div className="stat-item">
             <div className="stat-value">
-              <NumberCounter endValue={125000} />대
+              <NumberCounter endValue={55000} />건
             </div>
-            <div className="stat-label">누적 차량 거래 수</div>
-            <div className="stat-description">연간 평균 20% 성장 중</div>
+            <div className="stat-label">주차장 예약 수</div>
+            <div className="stat-description">월 평균 10% 이상 증가</div>
           </div>
           <div className="stat-item">
             <div className="stat-value">
-              <NumberCounter endValue={50000000000} />원
+              <NumberCounter endValue={850} />개
             </div>
-            <div className="stat-label">총 거래액 (누적)</div>
-            <div className="stat-description">신뢰를 기반으로 한 투명한 거래</div>
+            <div className="stat-label">주차장 제휴 업체 수</div>
+            <div className="stat-description">전국 주요 지역 커버</div>
           </div>
           <div className="stat-item">
             <div className="stat-value">
