@@ -15,7 +15,7 @@ a {
 }
 
 /* ==================================== */
-/* Header 스타일: 로고, 검색창, 버튼 복구 */
+/* Header 스타일: 로고, 검색창, 버튼 및 네비게이션 복원 */
 /* ==================================== */
 .app-header {
     background-color: #ffffff;
@@ -104,10 +104,12 @@ a {
     color: #555;
     padding: 5px 0;
     transition: color 0.2s;
+    font-weight: 500;
 }
 
 .app-header .nav-links a:hover {
     color: #007bff;
+    border-bottom: 2px solid #007bff;
 }
 
 .app-header .membership-link {
@@ -160,6 +162,7 @@ a {
     position: relative;
     border-radius: 10px;
     height: 180px;
+    background-color: #007bff;
 }
 
 .slider-track {
@@ -173,6 +176,7 @@ a {
     color: white;
     display: flex;
     align-items: center;
+    box-sizing: border-box; 
 }
 
 .banner-link-wrapper {
