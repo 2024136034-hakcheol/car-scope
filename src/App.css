@@ -674,14 +674,16 @@
 
 .slider-track {
     display: flex;
-    width: 300%;
+    /* 배너 개수(3개)에 맞게 300% 설정 */
+    width: 300%; 
     height: 100%;
     transition: transform 0.5s ease-in-out;
 }
 
 .slide-item {
-    flex: 0 0 calc(100% / 3); 
-    width: calc(100% / 3); 
+    /* 각 슬라이드가 정확히 100% / 3 (즉 33.333%)을 차지하도록 */
+    flex: 0 0 33.333333%; 
+    width: 33.333333%; 
     height: 100%;
     display: flex;
     align-items: center;
@@ -691,9 +693,7 @@
     padding: 0 50px;
     box-sizing: border-box;
     position: relative;
-    
-    /* 명확한 너비 재지정 */
-    max-width: calc(100% / 3);
+    max-width: 33.333333%;
 }
 
 .banner-link-wrapper {
@@ -709,8 +709,6 @@
     position: absolute;
     top: 0;
     left: 0;
-    
-    /* 명확한 너비 재지정 */
     max-width: 100%;
 }
 
