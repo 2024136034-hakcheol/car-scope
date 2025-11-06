@@ -674,16 +674,18 @@
 
 .slider-track {
     display: flex;
-    /* 배너 개수(3개)에 맞게 300% 설정 */
     width: 300%; 
     height: 100%;
     transition: transform 0.5s ease-in-out;
 }
 
 .slide-item {
-    /* 각 슬라이드가 정확히 100% / 3 (즉 33.333%)을 차지하도록 */
+    /* 겹침 해결: Flexbox 축소 방지 및 명확한 너비 설정 */
     flex: 0 0 33.333333%; 
     width: 33.333333%; 
+    min-width: 33.333333%;
+    flex-shrink: 0;
+    
     height: 100%;
     display: flex;
     align-items: center;
