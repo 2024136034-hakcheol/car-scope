@@ -3,7 +3,6 @@ import React from 'react';
 const HomePage = () => {
     return (
         <div className="homepage-container">
-            {/* 메인 배너 슬라이더 */}
             <div className="main-banner-slider-wrapper">
                 <div className="main-banner-slider" style={{ backgroundColor: 'blue', width: '100%' }}>
                     <div className="slider-track">
@@ -55,7 +54,6 @@ const HomePage = () => {
                 </div>
             </div>
 
-            {/* 실시간 인기 검색어 */}
             <div className="hot-trends-section">
                 <h2>🔥 실시간 인기 검색어</h2>
                 <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
@@ -68,7 +66,6 @@ const HomePage = () => {
                 </div>
             </div>
 
-            {/* 메인 콘텐츠 그리드 */}
             <div className="main-content-grid">
                 <div className="card">
                     <h3>인기 리뷰</h3>
@@ -99,7 +96,6 @@ const HomePage = () => {
                 </div>
             </div>
 
-            {/* 사용자 피드백 섹션 */}
             <div className="user-feedback-section">
                 <h2>⭐️ 최신 사용자 피드백</h2>
                 <div className="feedback-grid">
@@ -122,7 +118,6 @@ const HomePage = () => {
                 <a href="#" className="feedback-more-link">모든 후기 보기 &gt;</a>
             </div>
 
-            {/* 인기 지역 주차장 섹션 */}
             <div className="parking-recommendation-section">
                 <h2>📌 지금 인기 있는 지역 주차장</h2>
                 <p>내 주변, 혹은 방문하려는 지역의 주차장을 빠르게 확인하세요.</p>
@@ -155,7 +150,6 @@ const HomePage = () => {
                 <a href="#" className="parking-more-link">다른 지역 주차장 찾기 &gt;</a>
             </div>
 
-            {/* 회사 통계 섹션 */}
             <div className="company-stats-section">
                 <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>

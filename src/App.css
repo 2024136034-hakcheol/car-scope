@@ -115,10 +115,9 @@ a {
 }
 
 .homepage-container {
-    /* 홈 페이지 콘텐츠를 중앙에 정렬하고 최대 너비 설정 */
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px; /* 양쪽에 여백을 주어 가장자리에 붙는 것을 방지 */
+    padding: 20px 20px;
 }
 
 .main-banner-slider-wrapper {
@@ -145,7 +144,7 @@ a {
     display: flex;
     align-items: center;
     box-sizing: border-box; 
-    width: 100%; /* 너비 100% 적용 */
+    width: 100%;
 }
 
 .banner-link-wrapper {
@@ -432,12 +431,11 @@ a {
     color: #777;
 }
 
-
 .login-page-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 60vh;
+    min-height: calc(100vh - 180px); 
     padding: 50px 0;
 }
 
@@ -491,7 +489,7 @@ a {
     flex-grow: 1; 
     flex-basis: 0;
     min-width: 0;
-    width: auto;
+    width: 100%;
 }
 
 .show-password-btn {
