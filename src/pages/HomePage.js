@@ -72,7 +72,7 @@ const NumberCounter = ({ endValue, duration = 2000 }) => {
 };
 
 const StarRating = ({ rating }) => {
-    // 소수점 별점(4.5, 3.5)을 가장 가까운 정수(5, 4)로 반올림합니다.
+    // 소수점 별점(4.5, 3.5)을 가장 가까운 정수(5, 4)로 반올림하여 별 모양이 깨지지 않게 합니다.
     const roundedRating = Math.round(rating);
     const fullStars = Math.min(5, Math.max(0, roundedRating));
     const emptyStars = 5 - fullStars;
