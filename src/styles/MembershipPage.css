@@ -135,31 +135,22 @@
     border-radius: 10px;
 }
 
-.login-prompt-section h3 {
-    font-size: 1.5rem;
-    color: var(--text-primary);
-    margin-bottom: 10px;
-}
-
 .login-prompt-section p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
-    margin-bottom: 20px;
+    margin: 0;
+    line-height: 1.6;
 }
 
-.login-prompt-button {
-    display: inline-block;
-    background-color: var(--primary-color);
-    color: white;
-    padding: 10px 25px;
-    border-radius: 6px;
-    text-decoration: none;
+.login-link {
+    color: var(--primary-color);
     font-weight: 600;
-    transition: background-color 0.3s;
+    text-decoration: none;
+    margin: 0 4px;
 }
 
-.login-prompt-button:hover {
-    background-color: #3b74b8;
+.login-link:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {

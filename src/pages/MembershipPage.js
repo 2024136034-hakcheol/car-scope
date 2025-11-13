@@ -36,9 +36,11 @@ const MembershipPage = () => {
             </div>
 
             <div className="login-prompt-section">
-                <h3>이미 회원이신가요?</h3>
-                <p>로그인하고 CarScope의 모든 혜택을 바로 이용하세요.</p>
-                <Link to="/login" className="login-prompt-button">로그인</Link>
+                <p>
+                    혹시 로그인 안하셨나요? 
+                    <Link to="/login" className="login-link">로그인</Link>
+                    하여 카스코프의 혜택을 누려보세요!
+                </p>
             </div>
         </div>
     );
