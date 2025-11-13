@@ -102,7 +102,8 @@
 
 .login-button {
     background-color: var(--primary-color);
-    padding: 8px 70px;
+    /* 패딩을 극단적으로 늘리고 !important를 사용하여 다른 스타일을 강제로 덮어씁니다. */
+    padding: 8px 100px !important;
     border-radius: 6px;
     color: var(--text-light) !important;
     font-weight: 700;
