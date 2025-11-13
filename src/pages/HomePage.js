@@ -10,8 +10,6 @@ const generateStars = (rating) => {
     return stars;
 };
 
-// ... (mainBanners, hotTrends, latestNews, topReviews, recommendedParking 상수 정의)
-
 const mainBanners = [
     { id: 1, title: '2024 신차 트렌드 리포트', subtitle: '올해 주목해야 할 전기차, 하이브리드 모델 분석!', cta: '자세히 보기', bgColor: '#1E90FF' },
     { id: 2, title: 'CarScope 첫 오픈 기념!', subtitle: '프리미엄 리뷰를 7일간 무료로 경험하세요.', cta: '자세히 보기', bgColor: '#007bff' },
@@ -44,13 +42,13 @@ const recommendedParking = [
     { id: 3, area: '영등포구', name: '여의도 더현대 파크', price: '4,000원/30분', link: '/parking/3' },
 ];
 
-// 💡 빌드 오류를 해결하기 위해 HomePage 함수 외부에 정의된 AnimatedNumber 컴포넌트
 const AnimatedNumber = ({ end, duration = 2000, suffix = '' }) => {
     const [count, setCount] = useState(0);
     const ref = useRef(null);
     const [isVisible, setIsVisible] = useState(false);
 
     useEffect(() => {
+        const currentRef = ref.current;
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
@@ -61,13 +59,13 @@ const AnimatedNumber = ({ end, duration = 2000, suffix = '' }) => {
             { threshold: 0.5 }
         );
 
-        if (ref.current) {
-            observer.observe(ref.current);
+        if (currentRef) {
+            observer.observe(currentRef);
         }
 
         return () => {
-            if (ref.current) {
-                observer.unobserve(ref.current);
+            if (currentRef) {
+                observer.unobserve(currentRef);
             }
         };
     }, []);
@@ -227,7 +225,7 @@ const HomePage = () => {
                     <div className="stat-item">
                         <span className="stat-value"><AnimatedNumber end={250000} suffix='+' /></span>
                         <span className="stat-label">사용자 누적 예약 수</span>
-                    <span className="stat-description">가장 인기 있는 주차 예약 서비스</span>
+                        <span className="stat-description">가장 인기 있는 주차 예약 서비스</span>
                     </div>
                     <div className="stat-item">
                         <span className="stat-value"><AnimatedNumber end={5000} suffix='+' /></span>
