@@ -9,6 +9,7 @@ import MembershipPage from './pages/MembershipPage';
 import ParkingPage from './pages/ParkingPage';
 import NotFoundPage from './pages/NotFoundPage';
 import NewsPage from './pages/NewsPage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 
 import './App.css';
 
@@ -22,6 +23,7 @@ const App = () => {
         <Route path="/membership" element={<MembershipPage />} />
         <Route path="/parking" element={<ParkingPage />} />
         <Route path="/news" element={<NewsPage />} />
+        <Route path="/privacy-policy" element={<PrivacyPolicyPage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
