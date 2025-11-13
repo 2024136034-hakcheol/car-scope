@@ -15,6 +15,7 @@
 .header-container {
     background-color: #ffffff;
     color: var(--text-primary);
+    /* 오른쪽 여백 확보 유지 */
     padding: 15px 40px; 
     display: flex;
     justify-content: space-between;
@@ -102,7 +103,8 @@
 
 .login-button {
     background-color: var(--primary-color);
-    padding: 8px 20px;
+    /* 좌우 패딩을 20px에서 25px로 늘려 파란색 영역 확장 */
+    padding: 8px 25px; 
     border-radius: 6px;
     color: var(--text-light) !important;
     font-weight: 700;
