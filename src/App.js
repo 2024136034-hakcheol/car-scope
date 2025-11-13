@@ -8,6 +8,7 @@ import NotFoundPage from './pages/NotFoundPage';
 import MembershipPage from './pages/MembershipPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
+import NewsPage from './pages/NewsPage';
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
           <Route path="/membership" element={<MembershipPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
+          <Route path="/news" element={<NewsPage />} />
           
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
