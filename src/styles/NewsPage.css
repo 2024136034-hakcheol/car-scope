@@ -162,6 +162,7 @@
     padding: 5px;
     border-radius: 5px;
     transition: color 0.2s;
+    line-height: 1;
 }
 
 .like-button:hover {
@@ -170,6 +171,10 @@
 
 .like-button .heart-icon {
     font-size: 1.2rem;
+    line-height: 1;
+    display: inline-block;
+    width: 1em;
+    text-align: center;
 }
 
 .like-button.liked {
