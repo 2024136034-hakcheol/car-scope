@@ -1,9 +1,9 @@
 :root {
     --primary-color: #4A90E2;
-    --secondary-color: #50E3C2;
+    --secondary-color: #5D6C7C;
     --text-primary: #333;
     --text-secondary: #666;
-    --background-light: #f9f9f9;
+    --background-light: #F9F9F9;
     --background-dark: #3a4750;
     --border-color: #ddd;
 }
@@ -62,7 +62,7 @@
     border-radius: 20px;
     padding: 5px;
     transition: background-color 0.3s;
-    max-width: 300px; 
+    max-width: 500px;
     width: 100%;
 }
 
@@ -215,6 +215,7 @@
 
     .search-bar {
         width: 100%;
+        max-width: none;
     }
 
     .search-input {
