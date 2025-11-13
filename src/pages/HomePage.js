@@ -65,6 +65,7 @@ const HomePage = () => {
     };
 
     return (
+        // 🚨 homepage-container -> homepageContainer (CamelCase) 수정
         <div className={`${styles.homepageContainer} page-content`}>
             <div className={styles.mainBannerSliderWrapper}>
                 <div className={styles.mainBannerSlider}>
@@ -148,7 +149,7 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <section className={`${styles.parkingRecommendationSection} ${styles.animateSlideIn}`}>
+            <section className={styles.parkingRecommendationSection}>
                 <h2>📍 추천 주차장</h2>
                 <p>내 주변 혹은 방문하려는 지역의 주차장을 빠르게 확인하세요.</p>
                 <div className={styles.parkingSpotGrid}>
@@ -168,7 +169,7 @@ const HomePage = () => {
                 </div>
             </section>
 
-            <section className={`${styles.companyStatsSection} ${styles.animateSlideIn}`} style={{ animationDelay: '0.2s' }}>
+            <section className={styles.companyStatsSection}>
                 <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
                 <div className={styles.statsGrid}>
