@@ -197,7 +197,6 @@ body {
     text-decoration: none;
     font-weight: 600;
     transition: background-color 0.3s;
-    /* button reset */
     border: none;
     cursor: pointer;
     font-size: 16px;
