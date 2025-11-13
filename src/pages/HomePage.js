@@ -11,9 +11,9 @@ const generateStars = (rating) => {
 };
 
 const mainBanners = [
-    { id: 1, title: '2024 신차 트렌드 리포트', subtitle: '올해 주목해야 할 전기차, 하이브리드 모델 분석!', cta: '자세히 보기', bgColor: '#4CAF50' },
-    { id: 2, title: 'CarScope 첫 오픈 기념!', subtitle: '프리미엄 리뷰를 7일간 무료로 경험하세요.', cta: '자세히 보기', bgColor: '#6200EE' },
-    { id: 3, title: '🚗 주차장 예약 최대 50% 할인!', subtitle: '지금 바로 가까운 주차장을 예약하세요.', cta: '자세히 보기', bgColor: '#F28D35' },
+    { id: 1, title: '2024 신차 트렌드 리포트', subtitle: '올해 주목해야 할 전기차, 하이브리드 모델 분석!', cta: '자세히 보기', bgColor: '#1E90FF' },
+    { id: 2, title: 'CarScope 첫 오픈 기념!', subtitle: '프리미엄 리뷰를 7일간 무료로 경험하세요.', cta: '자세히 보기', bgColor: '#007bff' },
+    { id: 3, title: '🚗 주차장 예약 최대 50% 할인!', subtitle: '지금 바로 가까운 주차장을 예약하세요.', cta: '자세히 보기', bgColor: '#17a2b8' },
 ];
 
 const hotTrends = [
