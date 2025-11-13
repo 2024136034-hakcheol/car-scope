@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../cssModules/HomePage.module.css';
+import '../styles/HomePage.css';
 
 const generateStars = (rating) => {
     let stars = '';
@@ -65,23 +65,23 @@ const HomePage = () => {
     };
 
     return (
-        <div className={`${styles.homepageContainer} page-content`}>
-            <div className={styles.mainBannerSliderWrapper}>
-                <div className={styles.mainBannerSlider}>
+        <div className={`homepage-container page-content`}> 
+            <div className="main-banner-slider-wrapper">
+                <div className="main-banner-slider">
                     <div 
-                        className={styles.sliderTrack}
+                        className="slider-track"
                         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                     >
                         {mainBanners.map((banner, index) => (
                             <div 
                                 key={banner.id}
-                                className={styles.slideItem}
+                                className="slide-item"
                                 style={{ backgroundColor: banner.bgColor }}
                             >
-                                <div className={styles.bannerContent}>
+                                <div className="banner-content">
                                     <h2>{banner.title}</h2>
                                     <p>{banner.subtitle}</p>
-                                    <Link to={banner.id === 3 ? "/parking" : "/news"} className={styles.bannerCta}>
+                                    <Link to={banner.id === 3 ? "/parking" : "/news"} className="banner-cta">
                                         {banner.cta}
                                     </Link>
                                 </div>
@@ -89,103 +89,103 @@ const HomePage = () => {
                         ))}
                     </div>
                 </div>
-                <div className={styles.sliderNavArrows}>
-                    <button className={`${styles.arrow} ${styles.prev}`} onClick={prevSlide}>&lt;</button>
-                    <button className={`${styles.arrow} ${styles.next}`} onClick={nextSlide}>&gt;</button>
+                <div className="slider-nav-arrows">
+                    <button className={`arrow prev`} onClick={prevSlide}>&lt;</button>
+                    <button className={`arrow next`} onClick={nextSlide}>&gt;</button>
                 </div>
-                <div className={styles.sliderDots}>
+                <div className="slider-dots">
                     {mainBanners.map((_, index) => (
                         <span
                             key={index}
-                            className={`${styles.dot} ${index === currentSlide ? styles.active : ''}`}
+                            className={`dot ${index === currentSlide ? 'active' : ''}`}
                             onClick={() => goToSlide(index)}
                         ></span>
                     ))}
                 </div>
             </div>
 
-            <section className={styles.hotTrendsSection}>
+            <section className="hot-trends-section">
                 <h2>🔥 실시간 인기 검색어</h2>
                 <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
-                <div className={styles.trendListContainer}>
+                <div className="trend-list-container">
                     {hotTrends.map(trend => (
-                        <div key={trend.id} className={styles.trendItemCard}>
-                            <span className={styles.trendRank}>{trend.rank}</span>
+                        <div key={trend.id} className="trend-item-card">
+                            <span className="trend-rank">{trend.rank}</span>
                             <span>{trend.keyword}</span> 
                         </div>
                     ))}
                 </div>
             </section>
 
-            <div className={styles.mainContentGrid}>
-                <div className={`${styles.card} ${styles.animateFadeUp}`}>
+            <div className="main-content-grid">
+                <div className={`card animate-fade-up`}>
                     <h3>최신 뉴스</h3>
                     <ul>
                         {latestNews.map(news => (
                             <li key={news.id}>
-                                <Link to={news.link} className={styles.moreLink}>{news.title}</Link> ({news.date})
+                                <Link to={news.link} className="more-link">{news.title}</Link> ({news.date})
                             </li>
                         ))}
                     </ul>
                     <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                        <Link to="/news" className={styles.moreLink}>전체 뉴스 보기 &gt;</Link>
+                        <Link to="/news" className="more-link">전체 뉴스 보기 &gt;</Link>
                     </div>
                 </div>
 
-                <div className={`${styles.card} ${styles.animateFadeUp}`} style={{ animationDelay: '0.1s' }}>
+                <div className={`card animate-fade-up`} style={{ animationDelay: '0.1s' }}>
                     <h3>인기 리뷰</h3>
                     <ul>
                         {topReviews.map(review => (
                             <li key={review.id}>
                                 {generateStars(review.rating)} 
-                                <Link to={review.link} className={styles.moreLink}>{review.title}</Link>
+                                <Link to={review.link} className="more-link">{review.title}</Link>
                             </li>
                         ))}
                     </ul>
                     <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                        <Link to="/news" className={styles.moreLink}>전체 리뷰 보기 &gt;</Link>
+                        <Link to="/news" className="more-link">전체 리뷰 보기 &gt;</Link>
                     </div>
                 </div>
             </div>
 
-            <section className={styles.parkingRecommendationSection}>
+            <section className="parking-recommendation-section">
                 <h2>📍 추천 주차장</h2>
                 <p>내 주변 혹은 방문하려는 지역의 주차장을 빠르게 확인하세요.</p>
-                <div className={styles.parkingSpotGrid}>
+                <div className="parking-spot-grid">
                     {recommendedParking.map(spot => (
-                        <div key={spot.id} className={styles.parkingSpotCard}>
-                            <div className={styles.spotHeader}>
-                                <span className={styles.spotArea}>{spot.area}</span>
-                                <span className={styles.spotPrice}>{spot.price}</span>
+                        <div key={spot.id} className="parking-spot-card">
+                            <div className="spot-header">
+                                <span className="spot-area">{spot.area}</span>
+                                <span className="spot-price">{spot.price}</span>
                             </div>
-                            <h4 className={styles.spotName}>{spot.name}</h4>
-                            <Link to={spot.link} className={styles.spotCta}>예약/정보 확인 &gt;</Link>
+                            <h4 className="spot-name">{spot.name}</h4>
+                            <Link to={spot.link} className="spot-cta">예약/정보 확인 &gt;</Link>
                         </div>
                     ))}
                 </div>
                 <div style={{ textAlign: 'center', marginTop: '30px' }}>
-                    <Link to="/parking" className={styles.parkingMoreLink}>다른 지역 주차장 찾기 &gt;</Link>
+                    <Link to="/parking" className="parking-more-link">다른 지역 주차장 찾기 &gt;</Link>
                 </div>
             </section>
 
-            <section className={styles.companyStatsSection}>
+            <section className="company-stats-section">
                 <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
-                <div className={styles.statsGrid}>
-                    <div className={styles.statItem}>
-                        <span className={styles.statValue}>250,000+</span>
-                        <span className={styles.statLabel}>사용자 누적 예약 수</span>
-                        <span className={styles.statDescription}>가장 인기 있는 주차 예약 서비스</span>
+                <div className="stats-grid">
+                    <div className="stat-item">
+                        <span className="stat-value">250,000+</span>
+                        <span className="stat-label">사용자 누적 예약 수</span>
+                        <span className="stat-description">가장 인기 있는 주차 예약 서비스</span>
                     </div>
-                    <div className={styles.statItem}>
-                        <span className={styles.statValue}>5,000+</span>
-                        <span className={styles.statLabel}>주차장 제휴 수</span>
-                        <span className={styles.statDescription}>전국 주요 주차장과 함께합니다.</span>
+                    <div className="stat-item">
+                        <span className="stat-value">5,000+</span>
+                        <span className="stat-label">주차장 제휴 수</span>
+                        <span className="stat-description">전국 주요 주차장과 함께합니다.</span>
                     </div>
-                    <div className={styles.statItem}>
-                        <span className={styles.statValue}>500,000+</span>
-                        <span className={styles.statLabel}>사용자 평가 및 평점</span>
-                        <span className={styles.statDescription}>운전자의 생생한 후기</span>
+                    <div className="stat-item">
+                        <span className="stat-value">500,000+</span>
+                        <span className="stat-label">사용자 평가 및 평점</span>
+                        <span className="stat-description">운전자의 생생한 후기</span>
                     </div>
                 </div>
             </section>
