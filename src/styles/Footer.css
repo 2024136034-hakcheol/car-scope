@@ -1,56 +1,83 @@
-.footer {
-    background-color: var(--background-dark); 
-    color: white;
-    padding-top: 20px;
+:root {
+    --primary-color: #4A90E2;
+    --secondary-color: #5D6C7C;
+    --text-primary: #333;
+    --text-secondary: #666;
+    --background-light: #F9F9F9;
+    --background-dark: #3a4750;
+    --border-color: #ddd;
+    --footer-bg-main: #3a4750;
+    --footer-text-color: #ffffff;
 }
 
-.footer-links-only {
+.footer-container {
+    background-color: var(--footer-bg-main);
+    color: var(--footer-text-color);
+    padding-top: 50px;
+    font-size: 0.95rem;
+}
+
+.footer-content {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 20px 20px 30px; 
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1); 
-}
-
-.footer-links-only ul {
-    list-style: none;
+    padding: 0 20px 40px;
     display: flex;
-    justify-content: center;
-    padding: 0;
-    margin: 0;
+    justify-content: space-between;
     flex-wrap: wrap;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.footer-links-only li {
-    margin: 0 15px;
+.footer-section {
+    min-width: 150px;
+    margin-bottom: 20px;
 }
 
-.footer-links-only a {
+.footer-section h4 {
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: #ffffff;
+}
+
+.footer-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.footer-section li {
+    margin-bottom: 8px;
+}
+
+.footer-section a,
+.footer-contact p {
+    color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
-    color: rgba(255, 255, 255, 0.8);
-    font-size: 0.95rem;
     transition: color 0.2s;
-    white-space: nowrap;
 }
 
-.footer-links-only a:hover {
-    color: var(--secondary-color);
+.footer-section a:hover {
+    color: var(--primary-color);
 }
 
-.copyright {
+.footer-contact p {
+    margin: 5px 0;
+}
+
+.footer-copyright {
+    background-color: var(--footer-bg-main); 
+    padding: 20px 0;
     text-align: center;
-    padding: 15px 0;
     font-size: 0.85rem;
     color: rgba(255, 255, 255, 0.5);
-    background-color: #2c363f; 
 }
 
 @media (max-width: 768px) {
-    .footer-links-only ul {
+    .footer-content {
         flex-direction: column;
-        align-items: center;
+        padding: 0 20px 30px;
     }
 
-    .footer-links-only li {
-        margin: 8px 0;
+    .footer-section {
+        min-width: 100%;
     }
 }
