@@ -31,6 +31,7 @@
 
 .input-group {
     width: 100%;
+    position: relative;
 }
 
 .input-group input {
@@ -40,6 +41,30 @@
     border: 1px solid var(--border-color);
     border-radius: 6px;
     box-sizing: border-box;
+}
+
+.password-input-group input {
+    padding-right: 70px;
+}
+
+.password-toggle-btn {
+    position: absolute;
+    right: 0px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    padding: 12px 15px;
+    height: 100%;
+    transition: color 0.2s;
+}
+
+.password-toggle-btn:hover {
+    color: var(--primary-color);
 }
 
 .login-button-primary {

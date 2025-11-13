@@ -5,6 +5,7 @@ import '../styles/LoginPage.css';
 const LoginPage = () => {
     const [userId, setUserId] = useState('');
     const [password, setPassword] = useState('');
+    const [showPassword, setShowPassword] = useState(false);
 
     const handleInputChange = (e, setter) => {
         const value = e.target.value;
@@ -38,6 +39,10 @@ const LoginPage = () => {
         alert(`${platform} 소셜 로그인 시도`);
     };
 
+    const togglePasswordVisibility = () => {
+        setShowPassword(!showPassword);
+    };
+
     return (
         <div className="login-page-container">
             <div className="login-card">
@@ -53,15 +58,22 @@ const LoginPage = () => {
                             required
                         />
                     </div>
-                    <div className="input-group">
+                    <div className="input-group password-input-group">
                         <input
-                            type="password"
+                            type={showPassword ? "text" : "password"}
                             name="password"
                             placeholder="비밀번호"
                             value={password}
                             onChange={(e) => handleInputChange(e, setPassword)}
                             required
                         />
+                        <button 
+                            type="button" 
+                            className="password-toggle-btn" 
+                            onClick={togglePasswordVisibility}
+                        >
+                            {showPassword ? "숨기기" : "보이기"}
+                        </button>
                     </div>
                     <button type="submit" className="login-button-primary">로그인</button>
                 </form>
