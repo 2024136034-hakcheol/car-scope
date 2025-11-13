@@ -49,6 +49,7 @@ const AnimatedNumber = ({ endValue, duration = 2000, suffix = '' }) => {
     const animationFrameRef = useRef(null);
 
     useEffect(() => {
+        const currentRef = observerRef.current;
         const observer = new IntersectionObserver(
             ([entry]) => {
                 if (entry.isIntersecting) {
@@ -59,12 +60,12 @@ const AnimatedNumber = ({ endValue, duration = 2000, suffix = '' }) => {
             { threshold: 0.1 }
         );
 
-        if (observerRef.current) {
-            observer.observe(observerRef.current);
+        if (currentRef) {
+            observer.observe(currentRef);
         }
 
         return () => {
-            if (observerRef.current) {
+            if (currentRef) {
                 observer.disconnect();
             }
         };
@@ -73,7 +74,6 @@ const AnimatedNumber = ({ endValue, duration = 2000, suffix = '' }) => {
     useEffect(() => {
         if (!inView) return;
 
-        let startValue = 0;
         const startTime = Date.now();
 
         const animate = () => {
