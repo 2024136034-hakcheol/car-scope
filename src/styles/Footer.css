@@ -63,7 +63,7 @@
 }
 
 .footer-copyright {
-    background-color: #3a4750; 
+    background-color: #3a4750 !important; 
     padding: 20px 0;
     text-align: center;
     font-size: 0.85rem;
