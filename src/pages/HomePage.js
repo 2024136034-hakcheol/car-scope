@@ -57,7 +57,7 @@ const AnimatedNumber = ({ endValue, duration = 2000, suffix = '' }) => {
                 ([entry]) => {
                     if (entry.isIntersecting) {
                         setInView(true);
-                        observer.unobserve(entry.target);
+                        if (observer) observer.unobserve(entry.target);
                     }
                 },
                 { threshold: 0.1 }
