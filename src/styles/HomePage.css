@@ -216,6 +216,14 @@ section p {
     text-decoration: underline;
 }
 
+.parking-recommendation-section {
+    background-color: var(--background-light);
+    padding: 60px 20px;
+    margin: 50px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
 .parking-spot-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -290,7 +298,7 @@ section p {
 }
 
 .company-stats-section {
-    background-color: white; 
+    background-color: #f8f8f8; 
     padding: 60px 20px; 
     margin: 80px auto; 
     border-radius: 12px;
@@ -327,12 +335,15 @@ section p {
     margin-bottom: 5px;
 }
 
-.stat-label {
-    font-size: 1.2rem;
+.stat-label-box {
+    display: inline-block;
+    background-color: rgba(74, 144, 226, 0.1); 
+    color: var(--primary-color);
     font-weight: 600;
-    color: var(--text-primary);
-    display: block;
+    padding: 8px 15px;
+    border-radius: 8px;
     margin-bottom: 5px;
+    font-size: 1.1rem;
 }
 
 .stat-description {
@@ -387,5 +398,9 @@ section p {
     
     .stat-value {
         font-size: 3rem;
+    }
+    .stat-label-box {
+        font-size: 1rem;
+        padding: 6px 12px;
     }
 }

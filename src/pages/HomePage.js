@@ -71,6 +71,9 @@ const AnimatedNumber = ({ endValue, duration = 2000, suffix = '' }) => {
         }
 
         return () => {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
             if (observer && currentRef) {
                 observer.unobserve(currentRef);
             }
@@ -248,21 +251,21 @@ const HomePage = () => {
                         <span className="stat-value">
                             <AnimatedNumber endValue={250000} suffix="+" />
                         </span>
-                        <span className="stat-label">사용자 누적 예약 수</span>
+                        <span className="stat-label-box">사용자 누적 예약 수</span>
                         <span className="stat-description">가장 인기 있는 주차 예약 서비스</span>
                     </div>
                     <div className="stat-item">
                         <span className="stat-value">
                             <AnimatedNumber endValue={5000} suffix="+" />
                         </span>
-                        <span className="stat-label">주차장 제휴 수</span>
+                        <span className="stat-label-box">주차장 제휴 수</span>
                         <span className="stat-description">전국 주요 주차장과 함께합니다.</span>
                     </div>
                     <div className="stat-item">
                         <span className="stat-value">
                             <AnimatedNumber endValue={500000} suffix="+" />
                         </span>
-                        <span className="stat-label">사용자 평가 및 평점</span>
+                        <span className="stat-label-box">사용자 평가 및 평점</span>
                         <span className="stat-description">운전자의 생생한 후기</span>
                     </div>
                 </div>
