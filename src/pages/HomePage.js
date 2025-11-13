@@ -50,23 +50,29 @@ const AnimatedNumber = ({ endValue, duration = 2000, suffix = '' }) => {
 
     useEffect(() => {
         const currentRef = observerRef.current;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setInView(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.1 }
-        );
+        let observer;
 
-        if (currentRef) {
+        if (window.IntersectionObserver) {
+            observer = new IntersectionObserver(
+                ([entry]) => {
+                    if (entry.isIntersecting) {
+                        setInView(true);
+                        observer.unobserve(entry.target);
+                    }
+                },
+                { threshold: 0.1 }
+            );
+        } else {
+            setInView(true);
+        }
+
+        if (currentRef && observer) {
             observer.observe(currentRef);
         }
 
         return () => {
-            if (currentRef) {
-                observer.disconnect();
+            if (observer && currentRef) {
+                observer.unobserve(currentRef);
             }
         };
     }, []);
