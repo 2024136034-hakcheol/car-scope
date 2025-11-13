@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../styles/HomePage.module.css'; 
+import styles from '../styles/HomePage.module.css';
 
 const generateStars = (rating) => {
     let stars = '';
@@ -31,15 +31,15 @@ const latestNews = [
 ];
 
 const topReviews = [
-    { id: 1, title: '제네시스 GV80: 압도적인 디자인과 성능', rating: 5, link: '/news' },
-    { id: 2, title: '기아 EV6: 완벽한 밸런스를 갖춘 전기차', rating: 4, link: '/news' },
-    { id: 3, title: '벤츠 E클래스: 시대를 초월하는 클래식', rating: 5, link: '/news' },
+    { id: 1, title: '제네시스 GV80: 압도적인 디자인과 성능', rating: 5, link: '/news/1' },
+    { id: 2, title: '기아 EV6: 완벽한 밸런스를 갖춘 전기차', rating: 4, link: '/news/2' },
+    { id: 3, title: '벤츠 E클래스: 시대를 초월하는 클래식', rating: 5, link: '/news/3' },
 ];
 
 const recommendedParking = [
-    { id: 1, area: '강남구', name: '강남 N 타워 주차장', price: '500원/5분', link: '/parking' },
-    { id: 2, area: '마포구', name: '홍대입구역 인근', price: '1,500원/10분', link: '/parking' },
-    { id: 3, area: '영등포구', name: '여의도 더현대 파크', price: '4,000원/30분', link: '/parking' },
+    { id: 1, area: '강남구', name: '강남 N 타워 주차장', price: '500원/5분', link: '/parking/1' },
+    { id: 2, area: '마포구', name: '홍대입구역 인근', price: '1,500원/10분', link: '/parking/2' },
+    { id: 3, area: '영등포구', name: '여의도 더현대 파크', price: '4,000원/30분', link: '/parking/3' },
 ];
 
 const HomePage = () => {
@@ -111,7 +111,7 @@ const HomePage = () => {
                     {hotTrends.map(trend => (
                         <div key={trend.id} className={styles.trendItemCard}>
                             <span className={styles.trendRank}>{trend.rank}</span>
-                            <span>{trend.keyword}</span>
+                            <span>{trend.keyword}</span> 
                         </div>
                     ))}
                 </div>
@@ -137,7 +137,8 @@ const HomePage = () => {
                     <ul>
                         {topReviews.map(review => (
                             <li key={review.id}>
-                                {generateStars(review.rating)} {review.title}
+                                {generateStars(review.rating)} 
+                                <Link to={review.link} className={styles.moreLink}>{review.title}</Link>
                             </li>
                         ))}
                     </ul>
