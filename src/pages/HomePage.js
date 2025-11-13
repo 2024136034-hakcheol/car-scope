@@ -52,7 +52,7 @@ const AnimatedNumber = ({ endValue, duration = 2000, suffix = '' }) => {
         const currentRef = observerRef.current;
         let observer;
 
-        if (window.IntersectionObserver) {
+        if (typeof window !== 'undefined' && window.IntersectionObserver) {
             observer = new IntersectionObserver(
                 ([entry]) => {
                     if (entry.isIntersecting) {
@@ -147,7 +147,7 @@ const HomePage = () => {
                         className="slider-track"
                         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                     >
-                        {mainBanners.map((banner, index) => (
+                        {mainBanners.map((banner) => (
                             <div 
                                 key={banner.id}
                                 className="slide-item"
@@ -193,7 +193,7 @@ const HomePage = () => {
             </section>
 
             <div className="main-content-grid">
-                <div className={`card animate-fade-up`}>
+                <div className={`card`}>
                     <h3>최신 뉴스</h3>
                     <ul>
                         {latestNews.map(news => (
@@ -207,7 +207,7 @@ const HomePage = () => {
                     </div>
                 </div>
 
-                <div className={`card animate-fade-up`} style={{ animationDelay: '0.1s' }}>
+                <div className={`card`}>
                     <h3>인기 리뷰</h3>
                     <ul>
                         {topReviews.map(review => (
