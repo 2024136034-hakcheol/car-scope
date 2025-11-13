@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/HomePage.css';
 
@@ -41,6 +41,72 @@ const recommendedParking = [
     { id: 2, area: '마포구', name: '홍대입구역 인근', price: '1,500원/10분', link: '/parking/2' },
     { id: 3, area: '영등포구', name: '여의도 더현대 파크', price: '4,000원/30분', link: '/parking/3' },
 ];
+
+const AnimatedNumber = ({ endValue, duration = 2000, suffix = '' }) => {
+    const [currentValue, setCurrentValue] = useState(0);
+    const observerRef = useRef(null);
+    const [inView, setInView] = useState(false);
+    const animationFrameRef = useRef(null);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (entry.isIntersecting) {
+                    setInView(true);
+                    observer.disconnect();
+                }
+            },
+            { threshold: 0.1 }
+        );
+
+        if (observerRef.current) {
+            observer.observe(observerRef.current);
+        }
+
+        return () => {
+            if (observerRef.current) {
+                observer.disconnect();
+            }
+        };
+    }, []);
+
+    useEffect(() => {
+        if (!inView) return;
+
+        let startValue = 0;
+        const startTime = Date.now();
+
+        const animate = () => {
+            const now = Date.now();
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            const animated = Math.floor(progress * endValue);
+            setCurrentValue(animated);
+
+            if (progress < 1) {
+                animationFrameRef.current = requestAnimationFrame(animate);
+            }
+        };
+
+        animationFrameRef.current = requestAnimationFrame(animate);
+
+        return () => {
+            if (animationFrameRef.current) {
+                cancelAnimationFrame(animationFrameRef.current);
+            }
+        };
+    }, [endValue, duration, inView]);
+
+    const formatNumber = (num) => {
+        return num.toLocaleString();
+    };
+
+    return (
+        <span ref={observerRef} className="animated-number">
+            {formatNumber(currentValue)}{suffix}
+        </span>
+    );
+};
 
 const HomePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -173,17 +239,23 @@ const HomePage = () => {
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
                 <div className="stats-grid">
                     <div className="stat-item">
-                        <span className="stat-value">250,000+</span>
+                        <span className="stat-value">
+                            <AnimatedNumber endValue={250000} suffix="+" />
+                        </span>
                         <span className="stat-label">사용자 누적 예약 수</span>
                         <span className="stat-description">가장 인기 있는 주차 예약 서비스</span>
                     </div>
                     <div className="stat-item">
-                        <span className="stat-value">5,000+</span>
+                        <span className="stat-value">
+                            <AnimatedNumber endValue={5000} suffix="+" />
+                        </span>
                         <span className="stat-label">주차장 제휴 수</span>
                         <span className="stat-description">전국 주요 주차장과 함께합니다.</span>
                     </div>
                     <div className="stat-item">
-                        <span className="stat-value">500,000+</span>
+                        <span className="stat-value">
+                            <AnimatedNumber endValue={500000} suffix="+" />
+                        </span>
                         <span className="stat-label">사용자 평가 및 평점</span>
                         <span className="stat-description">운전자의 생생한 후기</span>
                     </div>
