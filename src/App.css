@@ -6,11 +6,12 @@
     --background-light: #f9f9f9;
     --background-dark: #3a4750;
     --border-color: #ddd;
+    --font-family: 'Pretendard', sans-serif;
 }
 
 body {
     margin: 0;
-    font-family: Pretendard, sans-serif;
+    font-family: var(--font-family);
     background-color: var(--background-light);
     color: var(--text-primary);
     line-height: 1.6;
