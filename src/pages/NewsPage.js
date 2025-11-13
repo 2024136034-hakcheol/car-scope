@@ -134,7 +134,7 @@ const NewsPage = () => {
                                     className={`like-button ${item.liked ? 'liked' : ''}`}
                                     onClick={() => handleLikeClick(item.id)}
                                 >
-                                    <span className="heart-icon">{item.liked ? '♥' : '♡'}</span>
+                                    <span className="heart-icon"></span>
                                     {item.likes.toLocaleString()}
                                 </button>
                             </div>
