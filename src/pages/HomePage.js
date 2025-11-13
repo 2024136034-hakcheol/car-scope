@@ -210,12 +210,11 @@ const HomePage = () => {
                             ))}
                         </ul>
                     </div>
-                    {/* 카피라이트 섹션은 footer-bottom 클래스에 남김 */}
+                    {/* 하단 카피라이트 섹션 유지 */}
                     <div className="footer-bottom">
                         <p>© 2025 CarScope. All rights reserved.</p>
                     </div>
                 </div>
-                {/* 이미지에서 보이는 하단 중복 섹션 삭제 */}
             </footer>
         </div>
     );
