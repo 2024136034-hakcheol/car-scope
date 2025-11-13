@@ -42,7 +42,6 @@ const recommendedParking = [
     { id: 3, area: '영등포구', name: '여의도 더현대 파크', price: '4,000원/30분', link: '/parking/3' },
 ];
 
-// 푸터에 남길 항목들을 별도로 정의
 const supportLinks = [
     { name: '자주 묻는 질문', link: '/faq' },
     { name: '문의하기', link: '/contact' },
@@ -202,20 +201,15 @@ const HomePage = () => {
             <footer>
                 <div className="footer-container">
                     <div className="footer-content">
-                        {/* CarScope 정보 및 서비스 섹션 모두 삭제됨 */}
-                        
-                        <div className="footer-section">
-                            {/* 섹션 제목(지원)도 삭제하고 목록만 남김 */}
-                            <ul>
-                                {supportLinks.map((linkItem, index) => (
-                                    <li key={index}>
-                                        <Link to={linkItem.link}>{linkItem.name}</Link>
-                                    </li>
-                                ))}
-                            </ul>
-                        </div>
+                        {/* 5가지 링크 목록만 남기고 중앙 정렬을 위해 ul에 클래스 추가 */}
+                        <ul className="support-links-only">
+                            {supportLinks.map((linkItem, index) => (
+                                <li key={index}>
+                                    <Link to={linkItem.link}>{linkItem.name}</Link>
+                                </li>
+                            ))}
+                        </ul>
                     </div>
-                    {/* 하단 카피라이트 섹션은 유지 */}
                     <div className="footer-bottom">
                         <p>© 2025 CarScope. All rights reserved.</p>
                     </div>

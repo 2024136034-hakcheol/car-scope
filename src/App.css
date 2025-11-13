@@ -125,23 +125,45 @@
 }
 
 .footer-content {
-    /* 중앙 정렬을 위해 justify-content를 center로 변경 */
     display: flex;
+    /* 내용을 중앙으로 */
     justify-content: center;
     max-width: 1200px;
     margin: 0 auto 30px;
     flex-wrap: wrap;
     gap: 30px;
-    /* content가 하나만 남았으므로 이 설정이 중앙 정렬을 보장합니다. */
 }
 
-.footer-section {
-    min-width: 200px;
-    /* 항목들이 중앙에 오도록 텍스트 정렬 */
+/* 푸터의 유일한 리스트 항목을 가로 정렬 및 중앙 정렬 */
+.support-links-only {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
-    /* flex 컨테이너 내부에서 중앙에 오도록 flex 속성 조정 */
-    flex-grow: 0;
-    flex-shrink: 0;
+}
+
+.support-links-only li {
+    margin: 0 15px;
+}
+
+.support-links-only li a {
+    color: #ccc;
+    text-decoration: none;
+    transition: color 0.3s;
+    white-space: nowrap;
+}
+
+.support-links-only li a:hover {
+    color: var(--accent-color);
+}
+
+/* 기존 footer-section 관련 스타일은 사용하지 않으므로 삭제하거나 무시합니다. */
+.footer-section {
+    min-width: 0; 
+    text-align: center;
 }
 
 .footer-section h4 {
@@ -177,6 +199,7 @@
 .footer-section ul li a:hover {
     color: var(--accent-color);
 }
+
 
 .footer-bottom {
     border-top: 1px solid #444;
