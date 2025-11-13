@@ -125,16 +125,23 @@
 }
 
 .footer-content {
+    /* 중앙 정렬을 위해 justify-content를 center로 변경 */
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     max-width: 1200px;
     margin: 0 auto 30px;
     flex-wrap: wrap;
     gap: 30px;
+    /* content가 하나만 남았으므로 이 설정이 중앙 정렬을 보장합니다. */
 }
 
 .footer-section {
     min-width: 200px;
+    /* 항목들이 중앙에 오도록 텍스트 정렬 */
+    text-align: center;
+    /* flex 컨테이너 내부에서 중앙에 오도록 flex 속성 조정 */
+    flex-grow: 0;
+    flex-shrink: 0;
 }
 
 .footer-section h4 {
@@ -154,6 +161,7 @@
     list-style: none;
     padding: 0;
     margin: 0;
+    text-align: center;
 }
 
 .footer-section ul li {
