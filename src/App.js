@@ -5,6 +5,7 @@ import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import NotFoundPage from './pages/NotFoundPage';
+import MembershipPage from './pages/MembershipPage';
 
 function App() {
   return (
@@ -14,7 +15,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
-          
+          <Route path="/membership" element={<MembershipPage />} />
           <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </main>
