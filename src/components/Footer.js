@@ -28,6 +28,7 @@ const Footer = () => {
                         <li><Link to="/contact">문의하기</Link></li>
                         <li><Link to="/privacy-policy">개인정보 처리방침</Link></li>
                         <li><Link to="/terms">이용약관</Link></li>
+                        <li><Link to="/emergency-service">긴급출동서비스</Link></li>
                     </ul>
                 </div>
             </div>
