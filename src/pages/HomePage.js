@@ -59,19 +59,19 @@ const HomePage = () => {
             bgColor: '#4263ec',
             title: 'CarScope 첫 오픈 기념!',
             description: '프리미엄 리뷰를 7일간 무료로 경험하세요.',
-            link: 'javascript:void(0)', 
+            link: '#!', 
         },
         {
             bgColor: '#219150',
             title: '2024 신차 트렌드 리포트',
             description: '올해 주목해야 할 전기차, 하이브리드 모델 분석!',
-            link: 'javascript:void(0)',
+            link: '#!',
         },
         {
             bgColor: '#f28d35',
             title: '🅿 주차장 예약 최대 50% 할인!',
             description: '지금 바로 가까운 주차장을 예약하세요.',
-            link: 'javascript:void(0)',
+            link: '#!',
         },
     ];
 
