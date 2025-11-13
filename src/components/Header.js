@@ -9,11 +9,15 @@ const Header = () => {
                 <div className="header-left-section">
                     <Link to="/" className="logo">CarScope</Link>
                 </div>
-                <div className="header-right-section">
+                
+                <div className="header-center-section">
                     <div className="search-bar">
                         <input type="text" placeholder="검색어를 입력하세요..." className="search-input" />
                         <button className="search-button">🔍</button>
                     </div>
+                </div>
+
+                <div className="header-right-section">
                     <nav className="nav-menu">
                         <ul>
                             <li><Link to="/news">뉴스</Link></li>
