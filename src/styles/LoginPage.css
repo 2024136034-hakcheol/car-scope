@@ -1,166 +1,129 @@
-.login-page-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 80vh; 
-    background-color: var(--background-light);
-    padding: 40px 20px;
-}
-
-.login-card {
-    background: white;
+.login-container {
+    max-width: 450px;
+    margin: 50px auto;
     padding: 40px;
-    border-radius: 12px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 400px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
     text-align: center;
 }
 
-.login-card h2 {
-    font-size: 28px;
+.login-container h1 {
+    font-size: 2.2rem;
     color: var(--text-primary);
     margin-bottom: 30px;
-    font-weight: 700;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
 .input-group {
-    margin-bottom: 20px;
+    text-align: left;
 }
 
-.input-group input {
+.input-group label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.input-field {
     width: 100%;
-    padding: 12px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 12px 15px;
+    font-size: 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     box-sizing: border-box;
-    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.input-group input:focus {
-    border-color: var(--primary-color);
-    box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.2);
-    outline: none;
-}
-
-.login-button-primary {
+.login-button {
     width: 100%;
     padding: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
     background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: 700;
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.3s, transform 0.1s;
-    margin-bottom: 20px;
+    transition: background-color 0.2s;
 }
 
-.login-button-primary:hover {
-    background-color: var(--secondary-color);
-    transform: translateY(-1px);
+.login-button:hover {
+    background-color: #3b74b8;
 }
 
-.find-links {
-    margin-bottom: 30px;
-    font-size: 14px;
+.divider {
+    margin: 30px 0;
+    text-align: center;
     color: var(--text-secondary);
+    position: relative;
+    font-weight: 500;
 }
 
-.find-links a {
-    color: var(--text-secondary);
-    text-decoration: none;
-    margin: 0 8px;
-    transition: color 0.3s;
-}
-
-.find-links a:hover {
-    color: var(--primary-color);
-    text-decoration: underline;
-}
-
-.find-links span {
-    color: #ccc;
-}
-
-.social-login-section {
-    margin-top: 30px;
-    border-top: 1px solid #eee;
-    padding-top: 30px;
-}
-
-.divider-text {
-    margin: 0 0 20px;
-    font-size: 14px;
-    color: #888;
-}
-
-.social-buttons {
+.social-login-buttons {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 15px;
 }
 
 .social-button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
-    padding: 10px;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    font-size: 16px;
+    padding: 12px;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
     cursor: pointer;
-    transition: background-color 0.2s, box-shadow 0.2s;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    transition: background-color 0.2s;
 }
 
-.social-button span {
-    font-weight: 600;
+.social-button:hover {
+    background-color: #f8f8f8;
 }
-
-.social-button img, .social-button svg {
-    display: none; 
-}
-
-.social-button span {
-    margin-left: 0; 
-}
-
 
 .social-button.google {
-    background-color: white;
-    color: var(--text-primary);
-    border-color: #ccc;
-}
-.social-button.google:hover {
-    background-color: #f7f7f7;
-}
-
-.social-button.apple {
-    background-color: #000;
-    color: white;
-    border-color: #000;
-}
-.social-button.apple:hover {
-    background-color: #333;
+    color: var(--primary-color);
+    font-weight: 600;
 }
 
 .social-button.kakao {
     background-color: #FEE500;
-    color: #3C1E1E;
-    border-color: #FEE500;
-}
-.social-button.kakao:hover {
-    background-color: #fce100;
+    color: #191919;
+    border: none;
+    font-weight: 600;
 }
 
-.social-button.facebook {
-    background-color: #1877F2;
-    color: white;
-    border-color: #1877F2;
+.social-button.kakao:hover {
+    background-color: #f0d900;
 }
-.social-button.facebook:hover {
-    background-color: #1562d1;
+
+.social-button img {
+    width: 20px;
+    height: 20px;
+}
+
+.register-prompt {
+    margin-top: 25px;
+    color: var(--text-secondary);
+}
+
+.register-link {
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 5px;
+}
+
+.register-link:hover {
+    text-decoration: underline;
 }
