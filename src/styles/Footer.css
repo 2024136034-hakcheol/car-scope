@@ -11,85 +11,43 @@
 .footer {
     background-color: var(--background-dark);
     color: white;
-    padding: 40px 0 20px;
+    padding: 30px 20px 20px;
     font-size: 0.9rem;
     line-height: 1.8;
+    text-align: center;
 }
 
-.footer-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
-    padding: 0 20px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    margin-bottom: 20px;
+.footer-links-only {
     padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
-.footer-section {
-    flex: 1;
-    min-width: 200px; 
-    margin: 0 20px 20px 0;
-}
-
-.footer-section:last-child {
-    margin-right: 0;
-}
-
-.footer-section h3 {
-    color: var(--primary-color); 
-    font-size: 1.2rem;
-    margin-bottom: 15px;
-    padding-bottom: 0;
-}
-
-.footer-section p {
-    margin-bottom: 10px;
-}
-
-.footer-section ul {
+.footer-links-only ul {
     list-style: none;
     padding: 0;
     margin: 0;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
-.footer-section ul li {
-    margin-bottom: 8px;
+.footer-links-only ul li {
+    margin: 0 15px;
 }
 
-.footer-section ul li a {
+.footer-links-only ul li a {
     color: rgba(255, 255, 255, 0.7);
     text-decoration: none;
+    white-space: nowrap;
     transition: color 0.2s ease-in-out;
 }
 
-.footer-section ul li a:hover {
+.footer-links-only ul li a:hover {
     color: var(--primary-color);
 }
 
-.footer .copyright {
-    text-align: center;
+.copyright {
+    font-size: 0.8rem;
     color: rgba(255, 255, 255, 0.5);
     margin-top: 10px;
-}
-
-
-@media (max-width: 768px) {
-    .footer-container {
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-    }
-
-    .footer-section {
-        min-width: unset;
-        width: 100%;
-        margin: 15px 0;
-    }
-
-    .footer-section h3 {
-        padding-bottom: 5px;
-    }
 }
