@@ -65,7 +65,6 @@ const HomePage = () => {
     };
 
     return (
-        // 🚨 homepage-container -> homepageContainer (CamelCase) 수정
         <div className={`${styles.homepageContainer} page-content`}>
             <div className={styles.mainBannerSliderWrapper}>
                 <div className={styles.mainBannerSlider}>
