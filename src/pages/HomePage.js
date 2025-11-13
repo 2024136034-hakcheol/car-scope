@@ -42,14 +42,6 @@ const recommendedParking = [
     { id: 3, area: '영등포구', name: '여의도 더현대 파크', price: '4,000원/30분', link: '/parking/3' },
 ];
 
-const supportLinks = [
-    { name: '자주 묻는 질문', link: '/faq' },
-    { name: '문의하기', link: '/contact' },
-    { name: '개인정보 처리방침', link: '/privacy' },
-    { name: '이용약관', link: '/terms' },
-    { name: '긴급출동서비스', link: '/emergency' },
-];
-
 const HomePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
 
@@ -197,25 +189,6 @@ const HomePage = () => {
                     </div>
                 </div>
             </section>
-
-            <footer>
-                <div className="footer-container">
-                    <div className="footer-content">
-                        {/* 5가지 링크를 중앙 가로 정렬하기 위한 목록만 남김 */}
-                        <ul className="support-links-only">
-                            {supportLinks.map((linkItem, index) => (
-                                <li key={index}>
-                                    <Link to={linkItem.link}>{linkItem.name}</Link>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                    {/* 하단 카피라이트 섹션 유지 */}
-                    <div className="footer-bottom">
-                        <p>© 2025 CarScope. All rights reserved.</p>
-                    </div>
-                </div>
-            </footer>
         </div>
     );
 };
