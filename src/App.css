@@ -126,7 +126,6 @@
 
 .footer-content {
     display: flex;
-    /* 내용을 중앙으로 */
     justify-content: center;
     max-width: 1200px;
     margin: 0 auto 30px;
@@ -134,7 +133,6 @@
     gap: 30px;
 }
 
-/* 푸터의 유일한 리스트 항목을 가로 정렬 및 중앙 정렬 */
 .support-links-only {
     list-style: none;
     padding: 0;
@@ -160,7 +158,6 @@
     color: var(--accent-color);
 }
 
-/* 기존 footer-section 관련 스타일은 사용하지 않으므로 삭제하거나 무시합니다. */
 .footer-section {
     min-width: 0; 
     text-align: center;
@@ -199,7 +196,6 @@
 .footer-section ul li a:hover {
     color: var(--accent-color);
 }
-
 
 .footer-bottom {
     border-top: 1px solid #444;

@@ -201,7 +201,7 @@ const HomePage = () => {
             <footer>
                 <div className="footer-container">
                     <div className="footer-content">
-                        {/* 5가지 링크 목록만 남기고 중앙 정렬을 위해 ul에 클래스 추가 */}
+                        {/* 5가지 링크를 중앙 가로 정렬하기 위한 목록만 남김 */}
                         <ul className="support-links-only">
                             {supportLinks.map((linkItem, index) => (
                                 <li key={index}>
@@ -210,10 +210,12 @@ const HomePage = () => {
                             ))}
                         </ul>
                     </div>
+                    {/* 카피라이트 섹션은 footer-bottom 클래스에 남김 */}
                     <div className="footer-bottom">
                         <p>© 2025 CarScope. All rights reserved.</p>
                     </div>
                 </div>
+                {/* 이미지에서 보이는 하단 중복 섹션 삭제 */}
             </footer>
         </div>
     );
