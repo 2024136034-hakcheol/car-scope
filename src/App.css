@@ -188,7 +188,7 @@ body {
     margin-bottom: 20px;
 }
 
-.banner-content a {
+.banner-content .banner-cta {
     display: inline-block;
     background-color: rgba(255, 255, 255, 0.2);
     color: #fff;
@@ -197,9 +197,13 @@ body {
     text-decoration: none;
     font-weight: 600;
     transition: background-color 0.3s;
+    /* button reset */
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
 }
 
-.banner-content a:hover {
+.banner-content .banner-cta:hover {
     background-color: rgba(255, 255, 255, 0.4);
 }
 
@@ -511,7 +515,6 @@ body {
     color: var(--text-primary);
 }
 
-/* Button to Link Styles */
 .more-link,
 .feedback-more-link,
 .parking-more-link,
