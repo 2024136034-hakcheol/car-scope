@@ -135,7 +135,7 @@ const HomePage = () => {
                         <li>BMW 5시리즈, 진정한 혁신인가?</li>
                         <li>가성비 최고의 전기차 TOP 5</li>
                     </ul>
-                    <a href="javascript:void(0)" className="more-link">더보기</a>
+                    <button type="button" className="more-link">더보기</button>
                 </div>
                 <div className="card">
                     <h3>최신 뉴스</h3>
@@ -144,7 +144,7 @@ const HomePage = () => {
                         <li>내연기관차 생산 중단 시점은?</li>
                         <li>정부, 전기차 보조금 정책 발표</li>
                     </ul>
-                    <a href="javascript:void(0)" className="more-link">더보기</a>
+                    <button type="button" className="more-link">더보기</button>
                 </div>
                 <div className="card">
                     <h3>인기 주차장</h3>
@@ -153,7 +153,7 @@ const HomePage = () => {
                         <li>홍대입구역 24시간 주차장</li>
                         <li>김포공항 장기 주차 꿀팁</li>
                     </ul>
-                    <a href="javascript:void(0)" className="more-link">더보기</a>
+                    <button type="button" className="more-link">더보기</button>
                 </div>
             </div>
 
@@ -176,7 +176,7 @@ const HomePage = () => {
                         <div className="feedback-info">문**철 · 아반떼 N 이용</div>
                     </div>
                 </div>
-                <a href="javascript:void(0)" className="feedback-more-link">모든 후기 보기 &gt;</a>
+                <button type="button" className="feedback-more-link">모든 후기 보기 &gt;</button>
             </div>
 
             <div className="parking-recommendation-section animate-fade-up">
@@ -189,7 +189,7 @@ const HomePage = () => {
                             <span className="spot-price">500원/5분</span>
                         </div>
                         <p className="spot-name">강남 N 타워 주차장</p>
-                        <a href="javascript:void(0)" className="spot-cta">예약/정보 확인 &gt;</a>
+                        <button type="button" className="spot-cta">예약/정보 확인 &gt;</button>
                     </div>
                     <div className="parking-spot-card">
                         <div className="spot-header">
@@ -197,7 +197,7 @@ const HomePage = () => {
                             <span className="spot-price">1,500원/10분</span>
                         </div>
                         <p className="spot-name">홍대입구역 인근</p>
-                        <a href="javascript:void(0)" className="spot-cta">예약/정보 확인 &gt;</a>
+                        <button type="button" className="spot-cta">예약/정보 확인 &gt;</button>
                     </div>
                     <div className="parking-spot-card">
                         <div className="spot-header">
@@ -205,10 +205,10 @@ const HomePage = () => {
                             <span className="spot-price">4,000원/30분</span>
                         </div>
                         <p className="spot-name">여의도 더현대 파크</p>
-                        <a href="javascript:void(0)" className="spot-cta">예약/정보 확인 &gt;</a>
+                        <button type="button" className="spot-cta">예약/정보 확인 &gt;</button>
                     </div>
                 </div>
-                <a href="javascript:void(0)" className="parking-more-link">다른 지역 주차장 찾기 &gt;</a>
+                <button type="button" className="parking-more-link">다른 지역 주차장 찾기 &gt;</button>
             </div>
 
             <div className="company-stats-section animate-fade-up">
