@@ -1,15 +1,30 @@
+:root {
+    --primary-color: #1E90FF;
+    --secondary-color: #007bff;
+    --accent-color: #17a2b8;
+    --background-primary: #f8f8f8;
+    --background-light: #f5f5f5;
+    --background-dark: #343a40;
+    --text-primary: #333;
+    --text-secondary: #555;
+    --text-light: #fff;
+    --border-color: #ddd;
+    --font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
 .header-container {
-    background-color: var(--background-dark);
-    color: var(--text-light);
+    background-color: #ffffff;
+    color: var(--text-primary);
     padding: 15px 30px;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-bottom: 1px solid var(--border-color);
 }
 
 .logo a {
-    color: var(--text-light);
+    color: var(--primary-color);
     font-size: 24px;
     font-weight: 800;
     text-decoration: none;
@@ -23,9 +38,10 @@
 .search-bar {
     display: flex;
     margin-right: 30px;
-    border: 1px solid #555;
+    border: 1px solid var(--border-color);
     border-radius: 20px;
     overflow: hidden;
+    background-color: var(--background-light);
 }
 
 .search-input {
@@ -34,21 +50,26 @@
     outline: none;
     font-size: 14px;
     width: 250px;
-    background-color: var(--background-dark);
-    color: var(--text-light);
+    background-color: transparent;
+    color: var(--text-primary);
 }
 
 .search-button {
-    background-color: var(--background-dark);
+    background-color: var(--background-light);
     border: none;
     padding: 8px 12px;
     cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: var(--border-color);
 }
 
 .search-icon {
     width: 20px;
     height: 20px;
-    fill: var(--text-light);
+    fill: var(--text-secondary);
 }
 
 .nav-menu {
@@ -63,7 +84,7 @@
 }
 
 .nav-menu a {
-    color: var(--text-light);
+    color: var(--text-primary);
     text-decoration: none;
     font-weight: 600;
     padding: 5px 0;
@@ -71,7 +92,7 @@
 }
 
 .nav-menu a:hover {
-    color: var(--accent-color);
+    color: var(--secondary-color);
 }
 
 .nav-menu .active {
@@ -82,13 +103,17 @@
 .login-button {
     background-color: var(--primary-color);
     padding: 8px 15px;
-    border-radius: 4px;
+    border-radius: 6px;
     color: var(--text-light) !important;
+    font-weight: 700;
+    transition: background-color 0.3s, box-shadow 0.3s;
+    margin-left: 20px;
 }
 
 .login-button:hover {
     background-color: var(--secondary-color);
     color: var(--text-light) !important;
+    box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
 }
 
 .footer-container {
