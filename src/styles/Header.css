@@ -37,9 +37,7 @@
 .header-right-section {
     display: flex;
     align-items: center;
-    /* 기본적으로 오른쪽 정렬을 유지합니다. */
-    justify-content: flex-end; 
-    flex-grow: 1; 
+    margin-left: auto; 
 }
 
 .search-bar {
@@ -182,7 +180,8 @@
     .header-right-section {
         margin-top: 10px;
         width: 100%;
-        justify-content: center; /* 모바일에서 가운데 정렬 */
+        justify-content: center;
+        margin-left: 0;
     }
 
     .search-bar {
