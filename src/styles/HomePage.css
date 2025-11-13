@@ -349,6 +349,9 @@ section p {
 .stat-description {
     font-size: 0.9rem;
     color: var(--text-secondary);
+    /* 추가: 라벨 박스 아래로 확실히 내리기 위한 마진 */
+    display: block;
+    margin-top: 10px; 
 }
 
 @keyframes fadeIn {
@@ -402,5 +405,8 @@ section p {
     .stat-label-box {
         font-size: 1rem;
         padding: 6px 12px;
+    }
+    .stat-description {
+        margin-top: 5px; 
     }
 }
