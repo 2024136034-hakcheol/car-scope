@@ -36,9 +36,8 @@
 .header-center-section {
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: center; 
     flex: 1; 
-    margin: 0 auto; 
     min-width: 150px; 
 }
 
