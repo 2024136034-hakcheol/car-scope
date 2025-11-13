@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/HomePage.css';
 
@@ -41,56 +41,6 @@ const recommendedParking = [
     { id: 2, area: '마포구', name: '홍대입구역 인근', price: '1,500원/10분', link: '/parking/2' },
     { id: 3, area: '영등포구', name: '여의도 더현대 파크', price: '4,000원/30분', link: '/parking/3' },
 ];
-
-const AnimatedNumber = ({ end, duration = 2000, suffix = '' }) => {
-    const [count, setCount] = useState(0);
-    const ref = useRef(null);
-    const [isVisible, setIsVisible] = useState(false);
-
-    useEffect(() => {
-        const currentRef = ref.current;
-        const observer = new IntersectionObserver(
-            ([entry]) => {
-                if (entry.isIntersecting) {
-                    setIsVisible(true);
-                    observer.disconnect();
-                }
-            },
-            { threshold: 0.5 }
-        );
-
-        if (currentRef) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
-    }, []);
-
-    useEffect(() => {
-        if (isVisible) {
-            let start = 0;
-            const increment = end / (duration / 16);
-            const timer = setInterval(() => {
-                start += increment;
-                if (start < end) {
-                    setCount(Math.ceil(start));
-                } else {
-                    setCount(end);
-                    clearInterval(timer);
-                }
-            }, 16);
-
-            return () => clearInterval(timer);
-        }
-    }, [end, duration, isVisible]);
-
-    return <span ref={ref}>{count.toLocaleString()}{suffix}</span>;
-};
-
 
 const HomePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -223,17 +173,17 @@ const HomePage = () => {
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
                 <div className="stats-grid">
                     <div className="stat-item">
-                        <span className="stat-value"><AnimatedNumber end={250000} suffix='+' /></span>
+                        <span className="stat-value">250,000+</span>
                         <span className="stat-label">사용자 누적 예약 수</span>
                         <span className="stat-description">가장 인기 있는 주차 예약 서비스</span>
                     </div>
                     <div className="stat-item">
-                        <span className="stat-value"><AnimatedNumber end={5000} suffix='+' /></span>
+                        <span className="stat-value">5,000+</span>
                         <span className="stat-label">주차장 제휴 수</span>
                         <span className="stat-description">전국 주요 주차장과 함께합니다.</span>
                     </div>
                     <div className="stat-item">
-                        <span className="stat-value"><AnimatedNumber end={500000} suffix='+' /></span>
+                        <span className="stat-value">500,000+</span>
                         <span className="stat-label">사용자 평가 및 평점</span>
                         <span className="stat-description">운전자의 생생한 후기</span>
                     </div>
