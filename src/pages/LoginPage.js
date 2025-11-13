@@ -11,7 +11,7 @@ const LoginPage = () => {
         const name = e.target.name;
         
         if (name === 'userId' || name === 'password') {
-            const regex = /^[a-zA-Z0-9!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]*$/;
+            const regex = /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/;
             if (regex.test(value) || value === '') {
                 setter(value);
             }
