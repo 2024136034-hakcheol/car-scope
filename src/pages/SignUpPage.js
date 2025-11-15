@@ -172,12 +172,18 @@ const SignUpPage = () => {
             const methods = await fetchSignInMethodsForEmail(auth, fullEmail);
             if (methods.length > 0) {
                 alert('이미 가입된 이메일입니다.');
+                setIsEmailChecked(false);
             } else {
                 alert('사용 가능한 이메일입니다.');
                 setIsEmailChecked(true);
             }
         } catch (error) {
-            alert('이메일 확인 중 오류가 발생했습니다.');
+            if (error.code === 'auth/invalid-email') {
+                alert('유효하지 않은 이메일 형식입니다. (예: example.com)');
+            } else {
+                alert('이메일 확인 중 오류가 발생했습니다: ' + error.message);
+            }
+            setIsEmailChecked(false);
         }
     };
 
@@ -472,7 +478,7 @@ const SignUpPage = () => {
                                     onClick={handleEmailCheck}
                                     disabled={isEmailChecked}
                                 >
-                                    {isEmailChecked ? "완료" : "확인"}
+                                    {isEmailChecked ? "확인완료" : "중복확인"}
                                 </button>
                             </div>
                             {formData.emailDomainSelect === 'direct' && (
