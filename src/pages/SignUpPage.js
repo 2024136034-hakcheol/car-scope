@@ -1,8 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
-import { auth } from '../firebase';
+import { auth, db } from '../firebase';
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { doc, setDoc } from "firebase/firestore"; 
 
 const isValidDomain = (domain) => {
     const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -197,12 +198,24 @@ const SignUpPage = () => {
             return;
         }
 
+        const fullEmail = `${formData.emailLocal}@${emailDomain}`;
+
         try {
-            const fullEmail = `${formData.emailLocal}@${emailDomain}`;
             const userCredential = await createUserWithEmailAndPassword(auth, fullEmail, formData.password);
+            const user = userCredential.user;
             
-            await updateProfile(userCredential.user, {
+            await updateProfile(user, {
                 displayName: formData.nickname
+            });
+
+            await setDoc(doc(db, "users", user.uid), {
+                id: formData.id,
+                email: fullEmail,
+                name: formData.name,
+                nickname: formData.nickname,
+                birthdate: formData.birthdate,
+                gender: formData.gender,
+                phone: formData.phone
             });
 
             setStep(3);

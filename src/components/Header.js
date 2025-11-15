@@ -1,8 +1,21 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
+import { AuthContext } from '../AuthContext';
+import { auth } from '../firebase';
+import { signOut } from 'firebase/auth';
 
 const Header = () => {
+    const { currentUser } = useContext(AuthContext);
+
+    const handleLogout = async () => {
+        try {
+            await signOut(auth);
+        } catch (error) {
+            alert('로그아웃 실패: ' + error.message);
+        }
+    };
+
     return (
         <header className="header">
             <div className="header-container">
@@ -26,8 +39,17 @@ const Header = () => {
                         </ul>
                     </nav>
                     <div className="auth-buttons">
-                        <Link to="/login" className="auth-button login-button">로그인</Link>
-                        <Link to="/signup" className="auth-button register-button">회원가입</Link>
+                        {currentUser ? (
+                            <>
+                                <span className="user-nickname">{currentUser.displayName}님</span>
+                                <button onClick={handleLogout} className="auth-button logout-button">로그아웃</button>
+                            </>
+                        ) : (
+                            <>
+                                <Link to="/login" className="auth-button login-button">로그인</Link>
+                                <Link to="/signup" className="auth-button register-button">회원가입</Link>
+                            </>
+                        )}
                     </div>
                 </div>
             </div>

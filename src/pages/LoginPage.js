@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css';
-import { auth, googleProvider } from '../firebase';
+import { auth, googleProvider, db } from '../firebase';
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const LoginPage = () => {
-    const [email, setEmail] = useState('');
+    const [idOrEmail, setIdOrEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const navigate = useNavigate();
@@ -17,17 +18,37 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         
-        if (email.trim() === '' || password.trim() === '') {
-            alert('이메일과 비밀번호를 모두 입력해주세요.');
+        if (idOrEmail.trim() === '' || password.trim() === '') {
+            alert('아이디(이메일)와 비밀번호를 모두 입력해주세요.');
             return;
         }
 
+        let emailToLogin = idOrEmail;
+
         try {
-            await signInWithEmailAndPassword(auth, email, password);
-            alert('로그인 성공!');
+            if (!idOrEmail.includes('@')) {
+                const q = query(collection(db, "users"), where("id", "==", idOrEmail));
+                const querySnapshot = await getDocs(q);
+                
+                if (querySnapshot.empty) {
+                    alert("아이디가 틀렸습니다 다시 입력해주세요");
+                    return;
+                }
+                
+                emailToLogin = querySnapshot.docs[0].data().email;
+            }
+
+            await signInWithEmailAndPassword(auth, emailToLogin, password);
             navigate('/');
+
         } catch (error) {
-            alert('로그인 실패: ' + error.message);
+            if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+                alert("비밀번호가 틀렸습니다 다시 입력해주세요");
+            } else if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
+                alert("아이디가 틀렸습니다 다시 입력해주세요");
+            } else {
+                alert('로그인 실패: ' + error.message);
+            }
         }
     };
 
@@ -35,7 +56,6 @@ const LoginPage = () => {
         try {
             if (platform === 'Google') {
                 await signInWithPopup(auth, googleProvider);
-                alert('Google 로그인 성공!');
                 navigate('/');
             } else {
                 alert(platform + ' 로그인은 현재 지원되지 않습니다.');
@@ -56,11 +76,11 @@ const LoginPage = () => {
                 <form onSubmit={handleLogin} className="login-form">
                     <div className="input-group">
                         <input
-                            type="email"
-                            name="email"
-                            placeholder="이메일"
-                            value={email}
-                            onChange={(e) => handleInputChange(e, setEmail)}
+                            type="text"
+                            name="idOrEmail"
+                            placeholder="아이디 또는 이메일"
+                            value={idOrEmail}
+                            onChange={(e) => handleInputChange(e, setIdOrEmail)}
                             required
                         />
                     </div>
