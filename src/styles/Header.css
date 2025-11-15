@@ -1,151 +1,199 @@
 :root {
-    --primary-color: #4A90E2;
-    --secondary-color: #5D6C7C;
+    --primary-color: #1E90FF;
+    --secondary-color: #007bff;
+    --accent-color: #17a2b8;
+    
+    --background-primary: #f8f8f8;
+    --background-light: #f5f5f5;
+    --background-dark: #343a40;
     --text-primary: #333;
-    --text-secondary: #666;
-    --background-light: #F9F9F9;
-    --background-dark: #3a4750;
+    --text-secondary: #555;
+    --text-light: #fff;
+    
     --border-color: #ddd;
+    --font-family-primary: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .header {
-    width: 100%;
-    background-color: var(--primary-color);
-    color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    padding: 15px 0;
     position: sticky;
     top: 0;
     z-index: 1000;
 }
 
 .header-container {
-    max-width: 1400px;
+    max-width: 1200px;
     margin: 0 auto;
-    padding: 0 20px;
-    height: 70px;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-between; 
     align-items: center;
+    padding: 0 20px;
+    gap: 20px; 
 }
 
 .header-left-section {
-    flex: 1;
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; 
+}
+
+.header-center-section {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    flex: 1; 
+    min-width: 150px; 
+}
+
+.header-right-section {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0; 
 }
 
 .logo {
     font-size: 1.8rem;
-    font-weight: 700;
-    color: white;
+    font-weight: 800;
+    color: var(--primary-color);
     text-decoration: none;
-}
-
-.header-center-section {
-    flex: 2;
-    display: flex;
-    justify-content: center;
-    max-width: 600px;
+    letter-spacing: -1px;
 }
 
 .search-bar {
+    display: flex;
+    align-items: center;
+    background-color: #f1f3f5;
+    border-radius: 20px;
+    padding: 5px;
+    transition: background-color 0.3s;
+    max-width: 500px;
     width: 100%;
-    position: relative;
+}
+
+.search-bar:focus-within {
+    background-color: white;
+    box-shadow: 0 0 0 2px var(--primary-color);
 }
 
 .search-input {
-    width: 100%;
-    height: 40px;
-    padding: 0 45px 0 20px;
     border: none;
-    border-radius: 20px;
-    font-size: 0.95rem;
-    background-color: white;
+    background: none;
+    padding: 8px 15px;
+    font-size: 1rem;
+    outline: none;
+    flex-grow: 1; 
 }
 
 .search-button {
-    position: absolute;
-    right: 5px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 32px;
-    height: 32px;
+    background: none;
     border: none;
-    background-color: var(--primary-color);
-    color: white;
-    border-radius: 50%;
+    padding: 8px 10px;
     cursor: pointer;
-    font-size: 1.1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.header-right-section {
-    flex: 1;
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 20px;
+    color: var(--text-secondary);
+    font-size: 1rem;
 }
 
 .nav-menu ul {
     list-style: none;
+    display: flex;
     padding: 0;
     margin: 0;
-    display: flex;
-    gap: 20px;
+}
+
+.nav-menu li {
+    margin-left: 25px;
 }
 
 .nav-menu a {
-    color: white;
     text-decoration: none;
-    font-weight: 600;
-    font-size: 1rem;
+    color: var(--text-primary);
+    font-size: 1.1rem;
+    font-weight: 500;
+    padding-bottom: 3px;
+    position: relative;
+    transition: color 0.2s;
+}
+
+.nav-menu a:hover {
+    color: var(--primary-color);
+}
+
+.nav-menu a::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background-color: var(--primary-color);
+    transition: width 0.3s ease-in-out;
+}
+
+.nav-menu a:hover::after {
+    width: 100%;
 }
 
 .auth-buttons {
     display: flex;
     align-items: center;
-    gap: 10px;
+    margin-left: 25px; 
 }
 
 .auth-button {
-    padding: 8px 16px;
-    border: none;
-    border-radius: 5px;
-    font-weight: 600;
-    cursor: pointer;
     text-decoration: none;
-    font-size: 0.9rem;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 8px 15px;
+    border-radius: 6px;
+    transition: all 0.2s;
+    white-space: nowrap; 
+    text-align: center; 
 }
 
 .login-button {
-    background-color: white;
-    color: var(--primary-color);
+    background-color: var(--primary-color);
+    color: white;
+    border: 1px solid var(--primary-color);
+    margin-right: 10px; 
+}
+
+.login-button:hover {
+    background-color: #3b74b8;
+    border-color: #3b74b8;
+    color: white;
 }
 
 .register-button {
-    background-color: transparent;
-    color: white;
-    border: 1px solid white;
+    background-color: white;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
 }
 
 .user-nickname {
     font-weight: 600;
     font-size: 1rem;
-    color: white;
+    color: var(--text-primary);
     white-space: nowrap;
+    margin-right: 10px;
 }
 
 .logout-button {
-    background-color: transparent;
-    color: white;
-    border: 1px solid white;
-    padding: 8px 16px;
-    border-radius: 5px;
+    background-color: white;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    padding: 8px 15px;
+    border-radius: 6px;
     font-weight: 600;
     cursor: pointer;
-    font-size: 0.9rem;
-    white-space: nowrap;
+    font-size: 1rem;
+    white-space: nowrap; 
+    transition: all 0.2s;
+}
+
+.logout-button:hover {
+    background-color: #f8f8f8;
 }
 
 @media (max-width: 1024px) {
@@ -158,8 +206,8 @@
         width: 100%;
     }
 
-    .nav-menu ul {
-        gap: 15px;
+    .nav-menu li {
+        margin-left: 15px;
     }
 
     .nav-menu a {
@@ -172,8 +220,6 @@
         flex-wrap: wrap;
         justify-content: center;
         gap: 10px;
-        height: auto;
-        padding: 10px 15px;
     }
 
     .header-left-section {
@@ -181,7 +227,6 @@
         justify-content: center;
         order: 1;
         margin-bottom: 0;
-        flex: 1 1 100%;
     }
 
     .logo {
@@ -189,11 +234,10 @@
     }
 
     .header-center-section {
-        order: 3;
-        width: 100%;
+        order: 2;
+        width: 90%;
         max-width: none;
         margin: 0;
-        flex: 1 1 100%;
     }
 
     .search-bar {
@@ -206,11 +250,10 @@
     }
 
     .header-right-section {
-        order: 2;
+        order: 3;
         width: 100%;
         justify-content: center;
         flex-wrap: wrap;
-        flex: 1 1 100%;
     }
     
     .nav-menu {
@@ -233,7 +276,7 @@
         padding: 6px 12px;
         font-size: 0.9rem;
     }
-
+    
     .logout-button {
         padding: 6px 12px;
         font-size: 0.9rem;
