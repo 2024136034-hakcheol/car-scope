@@ -7,35 +7,6 @@ const isValidDomain = (domain) => {
     return domainRegex.test(domain);
 };
 
-const agreementDetails = {
-    terms: {
-        title: '[필수] 이용약관 동의',
-        content: `제1조 (목적)
-본 약관은 CarScope(이하 '회사')가 제공하는 CarScope 서비스 및 관련 제반 서비스(이하 '서비스')의 이용과 관련하여 회사와 회원 간의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
-        
-제2조 (정의)
-본 약관에서 사용하는 용어의 정의는 다음과 같습니다.
-'서비스'라 함은 구현되는 단말기(PC, 모바일 등)와 상관없이 '회원'이 이용할 수 있는 CarScope 관련 제반 서비스를 의미합니다.
-'회원'이라 함은 회사의 '서비스'에 접속하여 본 약관에 따라 '회사'와 이용계약을 체결하고 '회사'가 제공하는 '서비스'를 이용하는 고객을 말합니다.`
-    },
-    privacy: {
-        title: '[필수] 개인정보 수집 및 이용 동의',
-        content: `회사는 회원가입, 상담, 서비스 신청 등을 위해 아래와 같은 개인정보를 수집하고 있습니다.
-        
-1. 수집항목: 이름, 이메일 주소, 비밀번호, 휴대전화 번호, 서비스 이용 기록, 접속 로그
-2. 수집방법: 홈페이지(회원가입)
-3. 이용목적: 회원 관리, 서비스 제공, 마케팅 및 광고 활용`
-    },
-    marketing: {
-        title: '[선택] 마케팅 정보 수신 동의',
-        content: `회사는 회원의 동의 하에 다음과 같은 마케팅 정보를 전송합니다.
-        
-1. 전송내용: 신규 서비스, 이벤트, 할인 혜택
-2. 전송방법: 이메일, SMS
-3. 철회방법: 회원은 언제든지 수신 동의를 철회할 수 있습니다.`
-    }
-};
-
 const SignUpPage = () => {
     const [step, setStep] = useState(1);
     const [agreements, setAgreements] = useState({
@@ -55,13 +26,21 @@ const SignUpPage = () => {
         gender: 'none',
         phone: '',
     });
+    
     const [showPassword, setShowPassword] = useState(false);
     const [isIdChecked, setIsIdChecked] = useState(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [modalContent, setModalContent] = useState({ title: '', content: '' });
+    const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+    
+    const [passwordValidation, setPasswordValidation] = useState({
+        length: false,
+        number: false,
+        special: false,
+    });
+
     const navigate = useNavigate();
 
     const idRef = useRef(null);
+    const passwordRef = useRef(null);
     const emailDomainCustomRef = useRef(null);
     const nameRef = useRef(null);
     const nicknameRef = useRef(null);
@@ -77,6 +56,14 @@ const SignUpPage = () => {
         } else {
             alert('필수 이용약관에 모두 동의해야 합니다.');
         }
+    };
+
+    const validatePassword = (password) => {
+        const length = password.length >= 8 && password.length <= 20;
+        const number = /[0-9]/.test(password);
+        const special = /[!@#$%^&*(),.?":{}|<>]/.test(password);
+        setPasswordValidation({ length, number, special });
+        return length && number && special;
     };
 
     const handleFormChange = (e) => {
@@ -102,6 +89,10 @@ const SignUpPage = () => {
             setIsIdChecked(false);
         }
 
+        if (name === 'password') {
+            validatePassword(value);
+        }
+
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
@@ -122,6 +113,13 @@ const SignUpPage = () => {
         if (!isIdChecked) {
             alert('아이디 중복확인을 해주세요.');
             idRef.current.focus();
+            return;
+        }
+
+        if (!validatePassword(formData.password)) {
+            alert('비밀번호가 요구 조건을 충족하지 않습니다.');
+            passwordRef.current.focus();
+            setFormData(prev => ({ ...prev, password: '' }));
             return;
         }
 
@@ -163,6 +161,38 @@ const SignUpPage = () => {
 
     const closeModal = () => {
         setIsModalOpen(false);
+    };
+    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState({ title: '', content: '' });
+
+    const agreementDetails = {
+        terms: {
+            title: '[필수] 이용약관 동의',
+            content: `제1조 (목적)
+    본 약관은 CarScope(이하 '회사')가 제공하는 CarScope 서비스 및 관련 제반 서비스(이하 '서비스')의 이용과 관련하여 회사와 회원 간의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
+            
+    제2조 (정의)
+    본 약관에서 사용하는 용어의 정의는 다음과 같습니다.
+    '서비스'라 함은 구현되는 단말기(PC, 모바일 등)와 상관없이 '회원'이 이용할 수 있는 CarScope 관련 제반 서비스를 의미합니다.
+    '회원'이라 함은 회사의 '서비스'에 접속하여 본 약관에 따라 '회사'와 이용계약을 체결하고 '회사'가 제공하는 '서비스'를 이용하는 고객을 말합니다.`
+        },
+        privacy: {
+            title: '[필수] 개인정보 수집 및 이용 동의',
+            content: `회사는 회원가입, 상담, 서비스 신청 등을 위해 아래와 같은 개인정보를 수집하고 있습니다.
+            
+    1. 수집항목: 이름, 이메일 주소, 비밀번호, 휴대전화 번호, 서비스 이용 기록, 접속 로그
+    2. 수집방법: 홈페이지(회원가입)
+    3. 이용목적: 회원 관리, 서비스 제공, 마케팅 및 광고 활용`
+        },
+        marketing: {
+            title: '[선택] 마케팅 정보 수신 동의',
+            content: `회사는 회원의 동의 하에 다음과 같은 마케팅 정보를 전송합니다.
+            
+    1. 전송내용: 신규 서비스, 이벤트, 할인 혜택
+    2. 전송방법: 이메일, SMS
+    3. 철회방법: 회원은 언제든지 수신 동의를 철회할 수 있습니다.`
+        }
     };
 
     return (
@@ -240,13 +270,31 @@ const SignUpPage = () => {
                                     name="password" 
                                     placeholder="비밀번호를 입력하세요" 
                                     value={formData.password} 
-                                    onChange={handleFormChange} 
+                                    onChange={handleFormChange}
+                                    onFocus={() => setIsPasswordFocused(true)}
+                                    onBlur={() => setIsPasswordFocused(false)}
+                                    ref={passwordRef}
                                     required 
                                 />
                                 <button type="button" className="password-toggle-btn" onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? "숨기기" : "보이기"}
                                 </button>
                             </div>
+                            {isPasswordFocused && (
+                                <div className="password-validation-guide">
+                                    <ul>
+                                        <li className={passwordValidation.length ? 'valid' : 'invalid'}>
+                                            {passwordValidation.length ? '✅' : '❌'} 8~20자 이내
+                                        </li>
+                                        <li className={passwordValidation.number ? 'valid' : 'invalid'}>
+                                            {passwordValidation.number ? '✅' : '❌'} 숫자 1개 이상 포함
+                                        </li>
+                                        <li className={passwordValidation.special ? 'valid' : 'invalid'}>
+                                            {passwordValidation.special ? '✅' : '❌'} 특수문자 1개 이상 포함
+                                        </li>
+                                    </ul>
+                                </div>
+                            )}
                         </div>
 
                         <div className="input-group">

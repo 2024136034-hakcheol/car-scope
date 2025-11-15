@@ -140,10 +140,15 @@
     width: 100%;
 }
 
+.password-input-group {
+    gap: 8px;
+}
+
 .password-input-wrapper {
     position: relative;
     display: flex;
     align-items: center;
+    width: 100%;
 }
 
 .password-input-wrapper input {
@@ -171,6 +176,39 @@
 
 .password-toggle-btn:hover {
     color: var(--primary-color);
+}
+
+.password-validation-guide {
+    padding: 10px;
+    background-color: #f8f8f8;
+    border-radius: 4px;
+    margin-top: 5px;
+}
+
+.password-validation-guide ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    font-size: 0.9rem;
+}
+
+.password-validation-guide li {
+    margin-bottom: 5px;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.password-validation-guide li:last-child {
+    margin-bottom: 0;
+}
+
+.password-validation-guide li.invalid {
+    color: var(--text-secondary);
+}
+
+.password-validation-guide li.valid {
+    color: #2ecc71;
 }
 
 .phone-group {
