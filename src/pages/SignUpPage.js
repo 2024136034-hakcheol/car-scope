@@ -116,6 +116,24 @@ const SignUpPage = () => {
                             </div>
                             <button type="button" className="sms-button duplicate-check-btn">중복확인</button>
                         </div>
+                        
+                        <div className="input-group password-input-group">
+                            <label htmlFor="password">비밀번호</label>
+                            <div className="password-input-wrapper">
+                                <input 
+                                    type={showPassword ? "text" : "password"} 
+                                    id="password"
+                                    name="password" 
+                                    placeholder="비밀번호를 입력하세요" 
+                                    value={formData.password} 
+                                    onChange={handleFormChange} 
+                                    required 
+                                />
+                                <button type="button" className="password-toggle-btn" onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? "숨기기" : "보이기"}
+                                </button>
+                            </div>
+                        </div>
 
                         <div className="input-group">
                             <label htmlFor="emailLocal">이메일</label>
@@ -156,24 +174,6 @@ const SignUpPage = () => {
                             )}
                         </div>
 
-                        <div className="input-group">
-                            <label htmlFor="password">비밀번호</label>
-                            <div className="password-input-wrapper">
-                                <input 
-                                    type={showPassword ? "text" : "password"} 
-                                    id="password"
-                                    name="password" 
-                                    placeholder="비밀번호를 입력하세요" 
-                                    value={formData.password} 
-                                    onChange={handleFormChange} 
-                                    required 
-                                />
-                                <button type="button" className="password-toggle-btn" onClick={() => setShowPassword(!showPassword)}>
-                                    {showPassword ? "숨기기" : "보이기"}
-                                </button>
-                            </div>
-                        </div>
-
                         <div className="form-row">
                             <div className="input-group">
                                 <label htmlFor="name">이름</label>
@@ -188,7 +188,7 @@ const SignUpPage = () => {
                         <div className="form-row">
                              <div className="input-group">
                                 <label htmlFor="birthdate">생년월일</label>
-                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD('-' 제외하고 입력)" value={formData.birthdate} onChange={handleFormChange} required />
+                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYYMMDD" value={formData.birthdate} onChange={handleFormChange} required />
                             </div>
                             <div className="input-group">
                                 <label htmlFor="gender">성별</label>

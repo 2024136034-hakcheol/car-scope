@@ -124,6 +124,8 @@
 
 .password-input-wrapper {
     position: relative;
+    display: flex;
+    align-items: center;
 }
 
 .password-input-wrapper input {
@@ -144,6 +146,9 @@
     font-weight: 600;
     padding: 12px 15px;
     height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .password-toggle-btn:hover {
@@ -189,11 +194,13 @@
     display: flex;
     align-items: center;
     gap: 8px;
+    width: 100%; /* 추가 */
 }
 
 .email-at {
     font-size: 1rem;
     color: var(--text-secondary);
+    white-space: nowrap; /* 추가 */
 }
 
 .email-local-input {
@@ -201,7 +208,7 @@
 }
 
 .email-domain-select {
-    width: 140px;
+    width: 140px; /* 고정 너비 */
     flex-shrink: 0;
 }
 
