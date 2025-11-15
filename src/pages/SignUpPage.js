@@ -11,7 +11,9 @@ const SignUpPage = () => {
     });
     const [formData, setFormData] = useState({
         id: '',
-        email: '',
+        emailLocal: '',
+        emailDomainSelect: 'naver.com',
+        emailDomainCustom: '',
         password: '',
         name: '',
         nickname: '',
@@ -106,30 +108,70 @@ const SignUpPage = () => {
                 <div className="signup-step step-2">
                     <h2>기본 정보 입력</h2>
                     <form onSubmit={handleSubmitStep2} className="signup-form">
-                        <div className="input-group">
-                            <label htmlFor="id">아이디</label>
-                            <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" value={formData.id} onChange={handleFormChange} required />
-                        </div>
                         
-                        <div className="input-group password-input-group">
-                            <label htmlFor="password">비밀번호</label>
-                            <input 
-                                type={showPassword ? "text" : "password"} 
-                                id="password"
-                                name="password" 
-                                placeholder="비밀번호를 입력하세요" 
-                                value={formData.password} 
-                                onChange={handleFormChange} 
-                                required 
-                            />
-                            <button type="button" className="password-toggle-btn" onClick={() => setShowPassword(!showPassword)}>
-                                {showPassword ? "숨기기" : "보이기"}
-                            </button>
+                        <div className="input-group phone-group">
+                            <div className="input-group">
+                                <label htmlFor="id">아이디</label>
+                                <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" value={formData.id} onChange={handleFormChange} required />
+                            </div>
+                            <button type="button" className="sms-button duplicate-check-btn">중복확인</button>
                         </div>
 
                         <div className="input-group">
-                            <label htmlFor="email">이메일</label>
-                            <input type="email" id="email" name="email" placeholder="이메일 주소를 입력하세요" value={formData.email} onChange={handleFormChange} required />
+                            <label htmlFor="emailLocal">이메일</label>
+                            <div className="email-group">
+                                <input 
+                                    type="text" 
+                                    id="emailLocal" 
+                                    name="emailLocal" 
+                                    placeholder="이메일" 
+                                    className="email-local-input"
+                                    value={formData.emailLocal} 
+                                    onChange={handleFormChange} 
+                                    required 
+                                />
+                                <span className="email-at">@</span>
+                                <select 
+                                    name="emailDomainSelect" 
+                                    className="email-domain-select" 
+                                    value={formData.emailDomainSelect} 
+                                    onChange={handleFormChange}
+                                >
+                                    <option value="direct">직접 입력</option>
+                                    <option value="naver.com">naver.com</option>
+                                    <option value="gmail.com">gmail.com</option>
+                                    <option value="daum.net">daum.net</option>
+                                </select>
+                            </div>
+                            {formData.emailDomainSelect === 'direct' && (
+                                <input 
+                                    type="text" 
+                                    name="emailDomainCustom"
+                                    placeholder="도메인 입력" 
+                                    className="email-domain-custom"
+                                    value={formData.emailDomainCustom}
+                                    onChange={handleFormChange}
+                                    required
+                                />
+                            )}
+                        </div>
+
+                        <div className="input-group">
+                            <label htmlFor="password">비밀번호</label>
+                            <div className="password-input-wrapper">
+                                <input 
+                                    type={showPassword ? "text" : "password"} 
+                                    id="password"
+                                    name="password" 
+                                    placeholder="비밀번호를 입력하세요" 
+                                    value={formData.password} 
+                                    onChange={handleFormChange} 
+                                    required 
+                                />
+                                <button type="button" className="password-toggle-btn" onClick={() => setShowPassword(!showPassword)}>
+                                    {showPassword ? "숨기기" : "보이기"}
+                                </button>
+                            </div>
                         </div>
 
                         <div className="form-row">
@@ -146,7 +188,7 @@ const SignUpPage = () => {
                         <div className="form-row">
                              <div className="input-group">
                                 <label htmlFor="birthdate">생년월일</label>
-                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD(하이폰 제외)" value={formData.birthdate} onChange={handleFormChange} required />
+                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD('-' 제외하고 입력)" value={formData.birthdate} onChange={handleFormChange} required />
                             </div>
                             <div className="input-group">
                                 <label htmlFor="gender">성별</label>

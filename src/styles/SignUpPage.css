@@ -95,6 +95,7 @@
     border-radius: 6px;
     box-sizing: border-box;
     transition: border-color 0.2s, box-shadow 0.2s;
+    height: 46px;
 }
 
 .input-group input:focus,
@@ -121,17 +122,20 @@
     width: 100%;
 }
 
-.password-input-group input {
+.password-input-wrapper {
+    position: relative;
+}
+
+.password-input-wrapper input {
+    width: 100%;
     padding-right: 70px;
 }
 
 .password-toggle-btn {
     position: absolute;
     right: 0px;
-    bottom: 0px;
-    top: auto;
-    transform: none;
-    height: 46px;
+    top: 50%;
+    transform: translateY(-50%);
     background: none;
     border: none;
     cursor: pointer;
@@ -139,6 +143,7 @@
     font-size: 0.9rem;
     font-weight: 600;
     padding: 12px 15px;
+    height: 100%;
 }
 
 .password-toggle-btn:hover {
@@ -170,6 +175,39 @@
     cursor: pointer;
     flex-shrink: 0;
     height: 46px;
+}
+
+.duplicate-check-btn {
+    background-color: var(--primary-color);
+}
+
+.duplicate-check-btn:hover {
+    background-color: #3b74b8;
+}
+
+.email-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.email-at {
+    font-size: 1rem;
+    color: var(--text-secondary);
+}
+
+.email-local-input {
+    flex: 1;
+}
+
+.email-domain-select {
+    width: 140px;
+    flex-shrink: 0;
+}
+
+.email-domain-custom {
+    width: 100%;
+    margin-top: 8px;
 }
 
 .step-3 {
