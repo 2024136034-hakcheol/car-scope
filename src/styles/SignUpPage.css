@@ -205,13 +205,13 @@
 }
 
 .email-local-input {
-    flex-grow: 1;
-    width: auto;
+    flex: 1;
+    min-width: 50px;
 }
 
 .email-domain-select {
-    width: 130px;
-    flex-shrink: 0;
+    flex: 1;
+    min-width: 50px;
 }
 
 .email-domain-custom {
