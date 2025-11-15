@@ -2,6 +2,11 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
 
+const isValidDomain = (domain) => {
+    const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    return domainRegex.test(domain);
+};
+
 const SignUpPage = () => {
     const [step, setStep] = useState(1);
     const [agreements, setAgreements] = useState({
@@ -65,6 +70,13 @@ const SignUpPage = () => {
         if (formData.name.length <= 1) {
             alert('이름은 2글자 이상 입력해야 합니다.');
             return;
+        }
+
+        if (formData.emailDomainSelect === 'direct') {
+            if (!isValidDomain(formData.emailDomainCustom)) {
+                alert('유효하지 않은 도메인 형식입니다. (예: example.com)');
+                return;
+            }
         }
 
         setStep(3);
@@ -165,7 +177,7 @@ const SignUpPage = () => {
                                 <input 
                                     type="text" 
                                     name="emailDomainCustom"
-                                    placeholder="도메인 입력" 
+                                    placeholder="도메인 입력 (예: example.com)" 
                                     className="email-domain-custom"
                                     value={formData.emailDomainCustom}
                                     onChange={handleFormChange}
@@ -188,7 +200,7 @@ const SignUpPage = () => {
                         <div className="form-row">
                              <div className="input-group">
                                 <label htmlFor="birthdate">생년월일</label>
-                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYYMMDD" value={formData.birthdate} onChange={handleFormChange} required />
+                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYYMMDD ('-' 제외하고 입력)" value={formData.birthdate} onChange={handleFormChange} required />
                             </div>
                             <div className="input-group">
                                 <label htmlFor="gender">성별</label>

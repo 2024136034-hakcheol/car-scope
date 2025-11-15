@@ -194,21 +194,23 @@
     display: flex;
     align-items: center;
     gap: 8px;
-    width: 100%; /* 추가 */
+    width: 100%;
 }
 
 .email-at {
     font-size: 1rem;
     color: var(--text-secondary);
-    white-space: nowrap; /* 추가 */
+    white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .email-local-input {
-    flex: 1;
+    flex-grow: 1;
+    width: 100px;
 }
 
 .email-domain-select {
-    width: 140px; /* 고정 너비 */
+    width: 140px;
     flex-shrink: 0;
 }
 
