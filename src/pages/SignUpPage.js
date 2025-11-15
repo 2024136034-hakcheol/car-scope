@@ -96,16 +96,20 @@ const SignUpPage = () => {
                     <h2>기본 정보 입력</h2>
                     <form onSubmit={handleSubmitStep2} className="signup-form">
                         <div className="input-group">
-                            <input type="text" name="id" placeholder="아이디" value={formData.id} onChange={handleFormChange} required />
+                            <label htmlFor="id">아이디</label>
+                            <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" value={formData.id} onChange={handleFormChange} required />
                         </div>
                         <div className="input-group">
-                            <input type="email" name="email" placeholder="이메일" value={formData.email} onChange={handleFormChange} required />
+                            <label htmlFor="email">이메일</label>
+                            <input type="email" id="email" name="email" placeholder="이메일 주소를 입력하세요" value={formData.email} onChange={handleFormChange} required />
                         </div>
                         <div className="input-group password-input-group">
+                            <label htmlFor="password">비밀번호</label>
                             <input 
                                 type={showPassword ? "text" : "password"} 
+                                id="password"
                                 name="password" 
-                                placeholder="비밀번호" 
+                                placeholder="비밀번호를 입력하세요" 
                                 value={formData.password} 
                                 onChange={handleFormChange} 
                                 required 
@@ -114,24 +118,38 @@ const SignUpPage = () => {
                                 {showPassword ? "숨기기" : "보이기"}
                             </button>
                         </div>
-                        <div className="input-group">
-                            <input type="text" name="name" placeholder="이름" value={formData.name} onChange={handleFormChange} required />
+
+                        <div className="form-row">
+                            <div className="input-group">
+                                <label htmlFor="name">이름</label>
+                                <input type="text" id="name" name="name" placeholder="이름 (2글자 이상)" value={formData.name} onChange={handleFormChange} required />
+                            </div>
+                            <div className="input-group">
+                                <label htmlFor="nickname">닉네임</label>
+                                <input type="text" id="nickname" name="nickname" placeholder="닉네임 (특수문자 제외)" value={formData.nickname} onChange={handleFormChange} required />
+                            </div>
                         </div>
-                        <div className="input-group">
-                            <input type="text" name="nickname" placeholder="닉네임 (특수문자 제외)" value={formData.nickname} onChange={handleFormChange} required />
+
+                        <div className="form-row">
+                             <div className="input-group">
+                                <label htmlFor="birthdate">생년월일</label>
+                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" value={formData.birthdate} onChange={handleFormChange} required />
+                            </div>
+                            <div className="input-group">
+                                <label htmlFor="gender">성별</label>
+                                <select id="gender" name="gender" value={formData.gender} onChange={handleFormChange} required>
+                                    <option value="none" disabled>성별 선택</option>
+                                    <option value="male">남성</option>
+                                    <option value="female">여성</option>
+                                </select>
+                            </div>
                         </div>
-                        <div className="input-group">
-                            <input type="text" name="birthdate" placeholder="생년월일 (YYYY-MM-DD)" value={formData.birthdate} onChange={handleFormChange} required />
-                        </div>
-                        <div className="input-group">
-                            <select name="gender" value={formData.gender} onChange={handleFormChange} required>
-                                <option value="none" disabled>성별</option>
-                                <option value="male">남성</option>
-                                <option value="female">여성</option>
-                            </select>
-                        </div>
+
                         <div className="input-group phone-group">
-                            <input type="tel" name="phone" placeholder="전화번호 ('-' 제외)" value={formData.phone} onChange={handleFormChange} required />
+                            <div className="input-group">
+                                <label htmlFor="phone">전화번호</label>
+                                <input type="tel" id="phone" name="phone" placeholder="'-' 제외하고 입력" value={formData.phone} onChange={handleFormChange} required />
+                            </div>
                             <button type="button" className="sms-button">인증</button>
                         </div>
                         <button type="submit" className="next-button">가입하기</button>
