@@ -4,30 +4,35 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
-import NotFoundPage from './pages/NotFoundPage';
-import MembershipPage from './pages/MembershipPage';
-import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
-import TermsOfServicePage from './pages/TermsOfServicePage';
-import NewsPage from './pages/NewsPage';
 import SignUpPage from './pages/SignUpPage';
+import NewsPage from './pages/NewsPage';
+import ParkingPage from './pages/ParkingPage';
+import MembershipPage from './pages/MembershipPage';
+import AdminPage from './pages/AdminPage';
+import AdminRoute from './components/AdminRoute';
 
 function App() {
   return (
     <Router>
       <Header />
-      <main>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/signup" element={<SignUpPage />} />
-          <Route path="/membership" element={<MembershipPage />} />
-          <Route path="/privacy" element={<PrivacyPolicyPage />} />
-          <Route path="/terms" element={<TermsOfServicePage />} />
-          <Route path="/news" element={<NewsPage />} />
-          
-          <Route path="*" element={<NotFoundPage />} />
-        </Routes>
-      </main>
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignUpPage />} />
+        <Route path="/news" element={<NewsPage />} />
+        <Route path="/parking" element={<ParkingPage />} />
+        <Route path="/membership" element={<MembershipPage />} />
+        
+        <Route 
+          path="/admin" 
+          element={
+            <AdminRoute>
+              <AdminPage />
+            </AdminRoute>
+          } 
+        />
+
+      </Routes>
       <Footer />
     </Router>
   );

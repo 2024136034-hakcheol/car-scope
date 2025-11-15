@@ -37,6 +37,9 @@ const Header = () => {
                             <li><Link to="/news">뉴스</Link></li>
                             <li><Link to="/parking">주차장</Link></li>
                             <li><Link to="/membership">멤버십</Link></li>
+                            {dbUser && dbUser.isAdmin && (
+                                <li><Link to="/admin">관리자</Link></li>
+                            )}
                         </ul>
                     </nav>
                     <div className="auth-buttons">

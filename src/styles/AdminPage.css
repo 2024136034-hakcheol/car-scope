@@ -1,0 +1,84 @@
+.admin-page-container {
+    padding-bottom: 40px;
+}
+
+.admin-title {
+    font-size: 2rem;
+    color: var(--text-primary);
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 30px;
+}
+
+.admin-widgets-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+}
+
+.admin-widget {
+    background-color: white;
+    border-radius: 8px;
+    padding: 20px 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.admin-widget.widget-full {
+    grid-column: 1 / -1;
+}
+
+.widget-title {
+    font-size: 1.25rem;
+    color: var(--text-primary);
+    margin-top: 0;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+.status-item {
+    display: flex;
+    justify-content: space-between;
+    font-size: 1rem;
+    margin-bottom: 10px;
+}
+
+.status-label {
+    color: var(--text-secondary);
+}
+
+.status-value {
+    font-weight: 600;
+}
+
+.status-value.ok {
+    color: #2ecc71;
+}
+
+.user-list-container {
+    max-height: 400px;
+    overflow-y: auto;
+}
+
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.user-table th,
+.user-table td {
+    padding: 10px 8px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.user-table th {
+    background-color: var(--background-light);
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.user-table tbody tr:hover {
+    background-color: var(--background-primary);
+}
