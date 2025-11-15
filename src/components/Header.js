@@ -12,11 +12,11 @@ const Header = () => {
                 
                 <div className="header-center-section">
                     <div className="search-bar">
-                        <input type="text" placeholder="검색어를 입력하세요..." className="search-input" />
-                        <button className="search-button">🔍</button>
+                        <input type="text" className="search-input" placeholder="차량명, 지역명 등으로 검색" />
+                        <button className="search-button">🔍</button> 
                     </div>
                 </div>
-
+                
                 <div className="header-right-section">
                     <nav className="nav-menu">
                         <ul>
@@ -27,7 +27,7 @@ const Header = () => {
                     </nav>
                     <div className="auth-buttons">
                         <Link to="/login" className="auth-button login-button">로그인</Link>
-                        <Link to="/register" className="auth-button register-button">회원가입</Link>
+                        <Link to="/signup" className="auth-button register-button">회원가입</Link>
                     </div>
                 </div>
             </div>
