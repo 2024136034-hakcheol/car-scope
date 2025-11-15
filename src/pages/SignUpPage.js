@@ -7,6 +7,35 @@ const isValidDomain = (domain) => {
     return domainRegex.test(domain);
 };
 
+const agreementDetails = {
+    terms: {
+        title: '[필수] 이용약관 동의',
+        content: `제1조 (목적)
+본 약관은 CarScope(이하 '회사')가 제공하는 CarScope 서비스 및 관련 제반 서비스(이하 '서비스')의 이용과 관련하여 회사와 회원 간의 권리, 의무 및 책임사항, 기타 필요한 사항을 규정함을 목적으로 합니다.
+        
+제2조 (정의)
+본 약관에서 사용하는 용어의 정의는 다음과 같습니다.
+'서비스'라 함은 구현되는 단말기(PC, 모바일 등)와 상관없이 '회원'이 이용할 수 있는 CarScope 관련 제반 서비스를 의미합니다.
+'회원'이라 함은 회사의 '서비스'에 접속하여 본 약관에 따라 '회사'와 이용계약을 체결하고 '회사'가 제공하는 '서비스'를 이용하는 고객을 말합니다.`
+    },
+    privacy: {
+        title: '[필수] 개인정보 수집 및 이용 동의',
+        content: `회사는 회원가입, 상담, 서비스 신청 등을 위해 아래와 같은 개인정보를 수집하고 있습니다.
+        
+1. 수집항목: 이름, 이메일 주소, 비밀번호, 휴대전화 번호, 서비스 이용 기록, 접속 로그
+2. 수집방법: 홈페이지(회원가입)
+3. 이용목적: 회원 관리, 서비스 제공, 마케팅 및 광고 활용`
+    },
+    marketing: {
+        title: '[선택] 마케팅 정보 수신 동의',
+        content: `회사는 회원의 동의 하에 다음과 같은 마케팅 정보를 전송합니다.
+        
+1. 전송내용: 신규 서비스, 이벤트, 할인 혜택
+2. 전송방법: 이메일, SMS
+3. 철회방법: 회원은 언제든지 수신 동의를 철회할 수 있습니다.`
+    }
+};
+
 const SignUpPage = () => {
     const [step, setStep] = useState(1);
     const [agreements, setAgreements] = useState({
@@ -28,6 +57,8 @@ const SignUpPage = () => {
     });
     const [showPassword, setShowPassword] = useState(false);
     const [isIdChecked, setIsIdChecked] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalContent, setModalContent] = useState({ title: '', content: '' });
     const navigate = useNavigate();
 
     const idRef = useRef(null);
@@ -125,31 +156,46 @@ const SignUpPage = () => {
         navigate('/login');
     };
 
+    const openModal = (type) => {
+        setModalContent(agreementDetails[type]);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setIsModalOpen(false);
+    };
+
     return (
         <div className="signup-container page-content">
             {step === 1 && (
                 <div className="signup-step step-1">
                     <h2>약관 동의</h2>
                     <div className="agreement-box">
-                        <label>
-                            <input type="checkbox" name="terms" checked={agreements.terms} onChange={handleAgreementChange} />
-                            [필수] 이용약관 동의
-                        </label>
-                        <p>이용약관 내용...</p>
+                        <div className="agreement-header">
+                            <label>
+                                <input type="checkbox" name="terms" checked={agreements.terms} onChange={handleAgreementChange} />
+                                [필수] 이용약관 동의
+                            </label>
+                            <button type="button" className="details-button" onClick={() => openModal('terms')}>자세히</button>
+                        </div>
                     </div>
                     <div className="agreement-box">
-                        <label>
-                            <input type="checkbox" name="privacy" checked={agreements.privacy} onChange={handleAgreementChange} />
-                            [필수] 개인정보 수집 및 이용 동의
-                        </label>
-                        <p>개인정보 수집 및 이용 동의 내용...</p>
+                        <div className="agreement-header">
+                            <label>
+                                <input type="checkbox" name="privacy" checked={agreements.privacy} onChange={handleAgreementChange} />
+                                [필수] 개인정보 수집 및 이용 동의
+                            </label>
+                            <button type="button" className="details-button" onClick={() => openModal('privacy')}>자세히</button>
+                        </div>
                     </div>
                     <div className="agreement-box">
-                        <label>
-                            <input type="checkbox" name="marketing" checked={agreements.marketing} onChange={handleAgreementChange} />
-                            [선택] 마케팅 정보 수신 동의
-                        </label>
-                        <p>마케팅 정보 수신 동의 내용...</p>
+                        <div className="agreement-header">
+                            <label>
+                                <input type="checkbox" name="marketing" checked={agreements.marketing} onChange={handleAgreementChange} />
+                                [선택] 마케팅 정보 수신 동의
+                            </label>
+                            <button type="button" className="details-button" onClick={() => openModal('marketing')}>자세히</button>
+                        </div>
                     </div>
                     <button className="next-button" onClick={handleNextStep1}>다음</button>
                 </div>
@@ -304,6 +350,18 @@ const SignUpPage = () => {
                     <h2 className="complete-nickname">{formData.nickname} 님</h2>
                     <p className="complete-message">CarScope 회원가입을 진심으로 감사드립니다.</p>
                     <button className="next-button" onClick={handleGoToLogin}>로그인 페이지로</button>
+                </div>
+            )}
+
+            {isModalOpen && (
+                <div className="modal-overlay" onClick={closeModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <h2>{modalContent.title}</h2>
+                        <div className="modal-text-content">
+                            {modalContent.content}
+                        </div>
+                        <button className="modal-close-button" onClick={closeModal}>닫기</button>
+                    </div>
                 </div>
             )}
         </div>
