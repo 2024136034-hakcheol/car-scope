@@ -9,6 +9,9 @@ import NewsPage from './pages/NewsPage';
 import MembershipPage from './pages/MembershipPage';
 import AdminPage from './pages/AdminPage';
 import AdminRoute from './components/AdminRoute';
+import TermsOfServicePage from './pages/TermsOfServicePage';
+import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import NotFoundPage from './pages/NotFoundPage';
 
 function App() {
   return (
@@ -20,6 +23,8 @@ function App() {
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/news" element={<NewsPage />} />
         <Route path="/membership" element={<MembershipPage />} />
+        <Route path="/terms" element={<TermsOfServicePage />} />
+        <Route path="/privacy" element={<PrivacyPolicyPage />} />
         
         <Route 
           path="/admin" 
@@ -30,6 +35,7 @@ function App() {
           } 
         />
 
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
     </Router>
