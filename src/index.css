@@ -31,8 +31,13 @@ code {
 
 .page-content {
     min-height: calc(100vh - 120px);
-    padding-top: 20px;
+    padding-top: 90px;
     padding-bottom: 20px;
+    max-width: 1400px;
+    margin: 0 auto;
+    padding-left: 20px;
+    padding-right: 20px;
+    box-sizing: border-box;
 }
 
 .primary-button {
