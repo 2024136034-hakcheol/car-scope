@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css';
 import { auth, googleProvider, db } from '../firebase';
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
 
 const LoginPage = () => {
     const [idOrEmail, setIdOrEmail] = useState('');
@@ -44,12 +44,10 @@ const LoginPage = () => {
             navigate('/');
 
         } catch (error) {
-            if (error.code === 'auth/invalid-credential') {
-                if (isIdLogin) {
-                    alert("비밀번호가 틀렸습니다 다시 입력해주세요");
-                } else {
-                    alert("이메일 또는 비밀번호가 틀렸습니다. 다시 입력해주세요.");
-                }
+            if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+                alert("비밀번호가 틀렸습니다 다시 입력해주세요");
+            } else if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
+                alert("아이디가 틀렸습니다 다시 입력해주세요");
             } else {
                 alert('로그인 실패: ' + error.message);
             }
@@ -59,7 +57,24 @@ const LoginPage = () => {
     const handleSocialLogin = async (platform) => {
         try {
             if (platform === 'Google') {
-                await signInWithPopup(auth, googleProvider);
+                const userCredential = await signInWithPopup(auth, googleProvider);
+                const user = userCredential.user;
+
+                const userDocRef = doc(db, "users", user.uid);
+                const userDoc = await getDoc(userDocRef);
+
+                if (!userDoc.exists()) {
+                    await setDoc(userDocRef, {
+                        id: user.email, 
+                        email: user.email,
+                        name: user.displayName,
+                        nickname: user.displayName,
+                        birthdate: '',
+                        gender: 'none',
+                        phone: ''
+                    });
+                }
+                
                 navigate('/');
             } else {
                 alert(platform + ' 로그인은 현재 지원되지 않습니다.');

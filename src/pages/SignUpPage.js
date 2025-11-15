@@ -2,8 +2,8 @@ import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
 import { auth, db } from '../firebase';
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { doc, setDoc } from "firebase/firestore"; 
+import { createUserWithEmailAndPassword, updateProfile, signOut, fetchSignInMethodsForEmail } from "firebase/auth";
+import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore"; 
 
 const isValidDomain = (domain) => {
     const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -32,6 +32,7 @@ const SignUpPage = () => {
     
     const [showPassword, setShowPassword] = useState(false);
     const [isIdChecked, setIsIdChecked] = useState(false);
+    const [isEmailChecked, setIsEmailChecked] = useState(false);
     const [isIdFocused, setIsIdFocused] = useState(false);
     const [isPasswordFocused, setIsPasswordFocused] = useState(false);
     
@@ -49,6 +50,7 @@ const SignUpPage = () => {
 
     const idRef = useRef(null);
     const passwordRef = useRef(null);
+    const emailLocalRef = useRef(null);
     const emailDomainCustomRef = useRef(null);
     const nameRef = useRef(null);
     const nicknameRef = useRef(null);
@@ -124,10 +126,14 @@ const SignUpPage = () => {
             }
         }
 
+        if (['emailLocal', 'emailDomainSelect', 'emailDomainCustom'].includes(name)) {
+            setIsEmailChecked(false);
+        }
+
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleIdCheck = () => {
+    const handleIdCheck = async () => {
         if (formData.id.trim() === '') {
             alert('아이디를 먼저 입력해주세요.');
             idRef.current.focus();
@@ -139,8 +145,40 @@ const SignUpPage = () => {
             return;
         }
         
-        alert('사용 가능한 아이디입니다.');
-        setIsIdChecked(true);
+        const q = query(collection(db, "users"), where("id", "==", formData.id));
+        const querySnapshot = await getDocs(q);
+
+        if (querySnapshot.empty) {
+            alert('사용 가능한 아이디입니다.');
+            setIsIdChecked(true);
+        } else {
+            alert('이미 사용 중인 아이디입니다.');
+            idRef.current.focus();
+        }
+    };
+
+    const handleEmailCheck = async () => {
+        const { emailLocal, emailDomainSelect, emailDomainCustom } = formData;
+        const emailDomain = emailDomainSelect === 'direct' ? emailDomainCustom : emailDomainSelect;
+        
+        if (emailLocal.trim() === '' || emailDomain.trim() === '') {
+            alert('이메일을 올바르게 입력해주세요.');
+            return;
+        }
+
+        const fullEmail = `${emailLocal}@${emailDomain}`;
+
+        try {
+            const methods = await fetchSignInMethodsForEmail(auth, fullEmail);
+            if (methods.length > 0) {
+                alert('이미 가입된 이메일입니다.');
+            } else {
+                alert('사용 가능한 이메일입니다.');
+                setIsEmailChecked(true);
+            }
+        } catch (error) {
+            alert('이메일 확인 중 오류가 발생했습니다.');
+        }
     };
 
     const handleSubmitStep2 = async (e) => {
@@ -162,6 +200,11 @@ const SignUpPage = () => {
             alert('비밀번호가 요구 조건을 충족하지 않습니다.');
             passwordRef.current.focus();
             setFormData(prev => ({ ...prev, password: '' }));
+            return;
+        }
+
+        if (!isEmailChecked) {
+            alert('이메일 중복확인을 해주세요.');
             return;
         }
 
@@ -218,11 +261,14 @@ const SignUpPage = () => {
                 phone: formData.phone
             });
 
+            await signOut(auth);
+            
             setStep(3);
 
         } catch (error) {
             if (error.code === 'auth/email-already-in-use') {
-                alert('이미 사용 중인 이메일입니다.');
+                alert('이미 사용 중인 이메일입니다. 이메일 중복확인을 다시 해주세요.');
+                setIsEmailChecked(false);
             } else {
                 alert('회원가입 중 오류가 발생했습니다: ' + error.message);
             }
@@ -394,7 +440,7 @@ const SignUpPage = () => {
 
                         <div className="input-group">
                             <label htmlFor="emailLocal">이메일</label>
-                            <div className="email-group">
+                            <div className="email-group with-button">
                                 <input 
                                     type="text" 
                                     id="emailLocal" 
@@ -402,7 +448,9 @@ const SignUpPage = () => {
                                     placeholder="이메일" 
                                     className="email-local-input"
                                     value={formData.emailLocal} 
-                                    onChange={handleFormChange} 
+                                    onChange={handleFormChange}
+                                    ref={emailLocalRef}
+                                    disabled={isEmailChecked}
                                     required 
                                 />
                                 <span className="email-at">@</span>
@@ -411,12 +459,21 @@ const SignUpPage = () => {
                                     className="email-domain-select" 
                                     value={formData.emailDomainSelect} 
                                     onChange={handleFormChange}
+                                    disabled={isEmailChecked}
                                 >
                                     <option value="direct">직접 입력</option>
                                     <option value="naver.com">naver.com</option>
                                     <option value="gmail.com">gmail.com</option>
                                     <option value="daum.net">daum.net</option>
                                 </select>
+                                <button 
+                                    type="button" 
+                                    className="sms-button duplicate-check-btn email-check-btn"
+                                    onClick={handleEmailCheck}
+                                    disabled={isEmailChecked}
+                                >
+                                    {isEmailChecked ? "완료" : "확인"}
+                                </button>
                             </div>
                             {formData.emailDomainSelect === 'direct' && (
                                 <input 
@@ -427,6 +484,7 @@ const SignUpPage = () => {
                                     value={formData.emailDomainCustom}
                                     onChange={handleFormChange}
                                     ref={emailDomainCustomRef}
+                                    disabled={isEmailChecked}
                                     required
                                 />
                             )}

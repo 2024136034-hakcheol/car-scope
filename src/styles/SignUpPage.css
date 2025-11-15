@@ -128,10 +128,15 @@
 
 .input-group select {
     appearance: none;
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNicgaGVpZ2h0PScxNicgZmlsbD0nY3VycmVudENvbG9yJyBjbGFzcz0nYmkgYmktY2hldnJvbi1kb3duJyB2aWV3Qm94PScwIDAgMTYgMTYnPjxwYXRoIGZpbGwtcnVsZT0nZXZlbm9kZCcgZD0nTS42NDYgNC42NDZhLjUuNSAwIDAgMSAuNzA4IDBMOCAxMC4yOTNsNS42NDYtNS42NDdhLjUuNSAwIDAgMSAuNzA4LjcwOGwtNiA2YS41LjUgMCAwIDEtLjcwOCAwBDEuMzU0IDUuMzU0YS41LjUgMCAwIDEgMC0uNzA4eicvPjwvc3ZnPg==");
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNicgaGVpZ2h0PScxNicgZmlsbD0nY3VycmVudENvbG9yJyBjbGFzcz0nYmkgYmktY2hldnJvbi1kb3duJyB2aWV3Qm94PScwIDAgMTYgMTYnPjxwYXRoIGZpbGwtcnVsZT0nZXZlbm9kZCcgZD0nTS42NDYgNC42NDZhLjUuNSAwIDAgMSAuNzA4IDBMOCAxMC4yOTNsNS42NDYtNS42NDdhLjUuNSAwIDAgMSAuNzA4LjcwOGwtNiA6YS41LjUgMCAwIDEtLjcwOCAwBDEuMzU0IDUuMzU0YS41LjUgMCAwIDEgMC0uNzA4eicvPjwvc3ZnPg==");
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 16px;
+}
+
+.input-group select[disabled] {
+    background-color: #f8f8f8;
+    color: var(--text-secondary);
 }
 
 .form-row {
@@ -276,6 +281,24 @@
 .email-domain-select {
     flex: 1;
     min-width: 50px;
+}
+
+.email-group.with-button {
+    gap: 5px;
+}
+
+.email-group.with-button .email-local-input {
+    flex-grow: 1;
+}
+
+.email-group.with-button .email-domain-select {
+    flex-grow: 1;
+}
+
+.email-group.with-button .email-check-btn {
+    flex-shrink: 0;
+    padding-left: 15px;
+    padding-right: 15px;
 }
 
 .email-domain-custom {
