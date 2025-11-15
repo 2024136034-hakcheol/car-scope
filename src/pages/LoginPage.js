@@ -24,9 +24,11 @@ const LoginPage = () => {
         }
 
         let emailToLogin = idOrEmail;
+        let isIdLogin = false;
 
         try {
             if (!idOrEmail.includes('@')) {
+                isIdLogin = true;
                 const q = query(collection(db, "users"), where("id", "==", idOrEmail));
                 const querySnapshot = await getDocs(q);
                 
@@ -42,10 +44,12 @@ const LoginPage = () => {
             navigate('/');
 
         } catch (error) {
-            if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
-                alert("비밀번호가 틀렸습니다 다시 입력해주세요");
-            } else if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
-                alert("아이디가 틀렸습니다 다시 입력해주세요");
+            if (error.code === 'auth/invalid-credential') {
+                if (isIdLogin) {
+                    alert("비밀번호가 틀렸습니다 다시 입력해주세요");
+                } else {
+                    alert("이메일 또는 비밀번호가 틀렸습니다. 다시 입력해주세요.");
+                }
             } else {
                 alert('로그인 실패: ' + error.message);
             }
@@ -70,7 +74,7 @@ const LoginPage = () => {
     };
 
     return (
-        <div className="login-page-container">
+        <div className="login-page-container page-content">
             <div className="login-card">
                 <h2>로그인</h2>
                 <form onSubmit={handleLogin} className="login-form">
