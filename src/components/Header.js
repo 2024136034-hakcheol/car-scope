@@ -11,6 +11,7 @@ const Header = () => {
     const handleLogout = async () => {
         try {
             await signOut(auth);
+            alert('로그아웃 되었습니다.');
         } catch (error) {
             alert('로그아웃 실패: ' + error.message);
         }
