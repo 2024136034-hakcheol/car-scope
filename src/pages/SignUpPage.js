@@ -37,6 +37,23 @@ const SignUpPage = () => {
 
     const handleFormChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === 'id' || name === 'password') {
+            const regex = /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/;
+            if (value !== '' && !regex.test(value)) {
+                alert('영문, 숫자, 특수문자만 입력할 수 있습니다.');
+                return;
+            }
+        }
+
+        if (name === 'nickname') {
+            const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+            if (value !== '' && specialCharRegex.test(value)) {
+                alert('닉네임에는 특수문자를 사용할 수 없습니다.');
+                return;
+            }
+        }
+
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
@@ -45,12 +62,6 @@ const SignUpPage = () => {
         
         if (formData.name.length <= 1) {
             alert('이름은 2글자 이상 입력해야 합니다.');
-            return;
-        }
-
-        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
-        if (specialCharRegex.test(formData.nickname)) {
-            alert('닉네임에는 특수문자를 사용할 수 없습니다.');
             return;
         }
 
@@ -99,10 +110,7 @@ const SignUpPage = () => {
                             <label htmlFor="id">아이디</label>
                             <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" value={formData.id} onChange={handleFormChange} required />
                         </div>
-                        <div className="input-group">
-                            <label htmlFor="email">이메일</label>
-                            <input type="email" id="email" name="email" placeholder="이메일 주소를 입력하세요" value={formData.email} onChange={handleFormChange} required />
-                        </div>
+                        
                         <div className="input-group password-input-group">
                             <label htmlFor="password">비밀번호</label>
                             <input 
@@ -119,6 +127,11 @@ const SignUpPage = () => {
                             </button>
                         </div>
 
+                        <div className="input-group">
+                            <label htmlFor="email">이메일</label>
+                            <input type="email" id="email" name="email" placeholder="이메일 주소를 입력하세요" value={formData.email} onChange={handleFormChange} required />
+                        </div>
+
                         <div className="form-row">
                             <div className="input-group">
                                 <label htmlFor="name">이름</label>
@@ -133,7 +146,7 @@ const SignUpPage = () => {
                         <div className="form-row">
                              <div className="input-group">
                                 <label htmlFor="birthdate">생년월일</label>
-                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD" value={formData.birthdate} onChange={handleFormChange} required />
+                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYY-MM-DD(하이폰 제외)" value={formData.birthdate} onChange={handleFormChange} required />
                             </div>
                             <div className="input-group">
                                 <label htmlFor="gender">성별</label>
