@@ -113,9 +113,9 @@ const SignUpPage = () => {
                 alert('이메일에는 영어 대문자를 쓸 수 없습니다.');
                 return;
             }
-            const invalidRegex = /[^a-z._-]/;
+            const invalidRegex = /[^a-z0-9._-]/;
             if (invalidRegex.test(value)) {
-                alert('이메일에는 영문 소문자와 특수문자(._-)만 사용할 수 있습니다.');
+                alert('이메일에는 영문 소문자, 숫자, 특수문자(._-)만 사용할 수 있습니다.');
                 return;
             }
         }
