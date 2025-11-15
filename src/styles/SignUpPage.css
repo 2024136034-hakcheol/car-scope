@@ -89,11 +89,14 @@
     width: 100%;
     position: relative;
     text-align: left;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
 .input-group label {
     display: block;
-    margin-bottom: 6px;
+    margin-bottom: 0;
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-secondary);
@@ -133,14 +136,12 @@
 
 .form-row {
     display: flex;
+    flex-direction: row;
     gap: 15px;
 }
 
 .form-row .input-group {
     width: 100%;
-}
-
-.password-input-group {
     gap: 8px;
 }
 
@@ -182,7 +183,6 @@
     padding: 10px;
     background-color: #f8f8f8;
     border-radius: 4px;
-    margin-top: 5px;
 }
 
 .password-validation-guide ul {
@@ -213,12 +213,14 @@
 
 .phone-group {
     display: flex;
+    flex-direction: row;
     align-items: flex-end;
     gap: 10px;
 }
 
 .phone-group .input-group {
     flex-grow: 1;
+    gap: 8px;
 }
 
 .phone-group input {
@@ -253,6 +255,7 @@
 
 .email-group {
     display: flex;
+    flex-direction: row;
     align-items: center;
     gap: 8px;
     width: 100%;

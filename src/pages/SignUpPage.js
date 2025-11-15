@@ -452,12 +452,9 @@ const SignUpPage = () => {
                             </div>
                         </div>
 
-                        <div className="input-group phone-group">
-                            <div className="input-group">
-                                <label htmlFor="phone">전화번호</label>
-                                <input type="tel" id="phone" name="phone" placeholder="'-' 제외하고 입력" value={formData.phone} onChange={handleFormChange} required />
-                            </div>
-                            <button type="button" className="sms-button">인증</button>
+                        <div className="input-group">
+                            <label htmlFor="phone">전화번호</label>
+                            <input type="tel" id="phone" name="phone" placeholder="'-' 제외하고 입력" value={formData.phone} onChange={handleFormChange} required />
                         </div>
                         <button type="submit" className="next-button">가입하기</button>
                     </form>
