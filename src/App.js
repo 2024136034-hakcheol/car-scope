@@ -9,6 +9,7 @@ import MembershipPage from './pages/MembershipPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import NewsPage from './pages/NewsPage';
+import SignUpPage from './pages/SignUpPage';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/login" element={<LoginPage />} />
+          <Route path="/signup" element={<SignUpPage />} />
           <Route path="/membership" element={<MembershipPage />} />
           <Route path="/privacy" element={<PrivacyPolicyPage />} />
           <Route path="/terms" element={<TermsOfServicePage />} />
