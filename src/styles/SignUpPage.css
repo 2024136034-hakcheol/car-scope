@@ -106,7 +106,7 @@
 
 .input-group select {
     appearance: none;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='currentColor' class='bi bi-chevron-down' viewBox='0 0 16 16'%3E%3Cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScxNicgaGVpZ2h0PScxNicgZmlsbD0nY3VycmVudENvbG9yJyBjbGFzcz0nYmkgYmktY2hldnJvbi1kb3duJyB2aWV3Qm94PScwIDAgMTYgMTYnPjxwYXRoIGZpbGwtcnVsZT0nZXZlbm9kZCcgZD0nTS42NDYgNC42NDZhLjUuNSAwIDAgMSAuNzA4IDBMOCAxMC4yOTNsNS42NDYtNS42NDdhLjUuNSAwIDAgMSAuNzA4LjcwOGwtNiA2YS41LjUgMCAwIDEtLjcwOCAwBDEuMzU0IDUuMzU0YS41LjUgMCAwIDEgMC0uNzA4eicvPjwvc3ZnPg==");
     background-repeat: no-repeat;
     background-position: right 15px center;
     background-size: 16px;
