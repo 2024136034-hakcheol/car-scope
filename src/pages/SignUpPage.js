@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
 import { auth, db } from '../firebase';
-import { createUserWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, signOut, fetchSignInMethodsForEmail } from "firebase/auth";
 import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore"; 
 
 const isValidDomain = (domain) => {
@@ -39,6 +39,7 @@ const SignUpPage = () => {
     const [idValidation, setIdValidation] = useState({
         letters: false,
         numbers: false,
+        noUppercase: true,
     });
     const [passwordValidation, setPasswordValidation] = useState({
         length: false,
@@ -72,8 +73,9 @@ const SignUpPage = () => {
     const validateId = (id) => {
         const letters = (id.match(/[a-zA-Z]/g) || []).length >= 4;
         const numbers = (id.match(/[0-9]/g) || []).length >= 4;
-        setIdValidation({ letters, numbers });
-        return letters && numbers;
+        const noUppercase = !/[A-Z]/.test(id);
+        setIdValidation({ letters, numbers, noUppercase });
+        return letters && numbers && noUppercase;
     };
 
     const validatePassword = (password) => {
@@ -104,6 +106,13 @@ const SignUpPage = () => {
                 return;
             }
             validatePassword(value);
+        }
+
+        if (name === 'emailLocal' || name === 'emailDomainCustom') {
+            if (/[A-Z]/.test(value)) {
+                alert('이메일에는 영어 대문자를 쓸 수 없습니다.');
+                return;
+            }
         }
 
         if (name === 'nickname') {
@@ -167,20 +176,23 @@ const SignUpPage = () => {
         }
 
         const fullEmail = `${emailLocal}@${emailDomain}`.toLowerCase();
-        
-        try {
-            const q = query(collection(db, "users"), where("email", "==", fullEmail));
-            const querySnapshot = await getDocs(q);
 
-            if (!querySnapshot.empty) {
-                alert('이미 사용 중인 이메일입니다.');
+        try {
+            const methods = await fetchSignInMethodsForEmail(auth, fullEmail);
+            
+            if (methods.length > 0) {
+                alert('이미 가입된 이메일입니다.');
                 setIsEmailChecked(false);
             } else {
                 alert('사용 가능한 이메일입니다.');
                 setIsEmailChecked(true);
             }
         } catch (error) {
-            alert('이메일 확인 중 오류가 발생했습니다: ' + error.message);
+            if (error.code === 'auth/invalid-email') {
+                alert('유효하지 않은 이메일 형식입니다. (예: example.com)');
+            } else {
+                alert('이메일 확인 중 오류가 발생했습니다: ' + error.message);
+            }
             setIsEmailChecked(false);
         }
     };
@@ -400,6 +412,9 @@ const SignUpPage = () => {
                                         </li>
                                         <li className={idValidation.numbers ? 'valid' : 'invalid'}>
                                             {idValidation.numbers ? '✅' : '❌'} 숫자 4자리 이상 포함
+                                        </li>
+                                        <li className={idValidation.noUppercase ? 'valid' : 'invalid'}>
+                                            {idValidation.noUppercase ? '✅' : '❌'} 영문 대문자 사용 불가
                                         </li>
                                     </ul>
                                 </div>
