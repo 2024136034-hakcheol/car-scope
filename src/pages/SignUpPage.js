@@ -113,6 +113,11 @@ const SignUpPage = () => {
                 alert('이메일에는 영어 대문자를 쓸 수 없습니다.');
                 return;
             }
+            const invalidRegex = /[^a-z._-]/;
+            if (invalidRegex.test(value)) {
+                alert('이메일에는 영문 소문자와 특수문자(._-)만 사용할 수 있습니다.');
+                return;
+            }
         }
 
         if (name === 'nickname') {
@@ -175,7 +180,7 @@ const SignUpPage = () => {
             return;
         }
 
-        const fullEmail = `${emailLocal}@${emailDomain}`.toLowerCase();
+        const fullEmail = `${emailLocal.trim()}@${emailDomain.trim()}`.toLowerCase();
 
         try {
             const methods = await fetchSignInMethodsForEmail(auth, fullEmail);
@@ -257,7 +262,7 @@ const SignUpPage = () => {
             return;
         }
 
-        const fullEmail = `${formData.emailLocal}@${emailDomain}`.toLowerCase();
+        const fullEmail = `${formData.emailLocal.trim()}@${emailDomain.trim()}`.toLowerCase();
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, fullEmail, formData.password);
