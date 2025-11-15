@@ -6,7 +6,6 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import SignUpPage from './pages/SignUpPage';
 import NewsPage from './pages/NewsPage';
-import ParkingPage from './pages/ParkingPage';
 import MembershipPage from './pages/MembershipPage';
 import AdminPage from './pages/AdminPage';
 import AdminRoute from './components/AdminRoute';
@@ -20,7 +19,6 @@ function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/signup" element={<SignUpPage />} />
         <Route path="/news" element={<NewsPage />} />
-        <Route path="/parking" element={<ParkingPage />} />
         <Route path="/membership" element={<MembershipPage />} />
         
         <Route 
