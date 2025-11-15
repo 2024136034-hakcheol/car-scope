@@ -2,7 +2,7 @@ import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
 import { auth, db } from '../firebase';
-import { createUserWithEmailAndPassword, updateProfile, signOut, fetchSignInMethodsForEmail } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
 import { doc, setDoc, collection, query, where, getDocs } from "firebase/firestore"; 
 
 const isValidDomain = (domain) => {
@@ -166,24 +166,21 @@ const SignUpPage = () => {
             return;
         }
 
-        const fullEmail = `${emailLocal}@${emailDomain}`;
-
+        const fullEmail = `${emailLocal}@${emailDomain}`.toLowerCase();
+        
         try {
-            const methods = await fetchSignInMethodsForEmail(auth, fullEmail);
-            
-            if (methods.length > 0) {
-                alert('이미 가입된 이메일입니다.');
+            const q = query(collection(db, "users"), where("email", "==", fullEmail));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                alert('이미 사용 중인 이메일입니다.');
                 setIsEmailChecked(false);
             } else {
                 alert('사용 가능한 이메일입니다.');
                 setIsEmailChecked(true);
             }
         } catch (error) {
-            if (error.code === 'auth/invalid-email') {
-                alert('유효하지 않은 이메일 형식입니다. (예: example.com)');
-            } else {
-                alert('이메일 확인 중 오류가 발생했습니다: ' + error.message);
-            }
+            alert('이메일 확인 중 오류가 발생했습니다: ' + error.message);
             setIsEmailChecked(false);
         }
     };
@@ -248,7 +245,7 @@ const SignUpPage = () => {
             return;
         }
 
-        const fullEmail = `${formData.emailLocal}@${emailDomain}`;
+        const fullEmail = `${formData.emailLocal}@${emailDomain}`.toLowerCase();
 
         try {
             const userCredential = await createUserWithEmailAndPassword(auth, fullEmail, formData.password);
