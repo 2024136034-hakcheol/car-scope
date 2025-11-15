@@ -29,8 +29,13 @@ const SignUpPage = () => {
     
     const [showPassword, setShowPassword] = useState(false);
     const [isIdChecked, setIsIdChecked] = useState(false);
+    const [isIdFocused, setIsIdFocused] = useState(false);
     const [isPasswordFocused, setIsPasswordFocused] = useState(false);
     
+    const [idValidation, setIdValidation] = useState({
+        letters: false,
+        numbers: false,
+    });
     const [passwordValidation, setPasswordValidation] = useState({
         length: false,
         number: false,
@@ -59,6 +64,13 @@ const SignUpPage = () => {
         }
     };
 
+    const validateId = (id) => {
+        const letters = (id.match(/[a-zA-Z]/g) || []).length >= 4;
+        const numbers = (id.match(/[0-9]/g) || []).length >= 4;
+        setIdValidation({ letters, numbers });
+        return letters && numbers;
+    };
+
     const validatePassword = (password) => {
         const length = password.length >= 8 && password.length <= 20;
         const number = /[0-9]/.test(password);
@@ -70,12 +82,23 @@ const SignUpPage = () => {
     const handleFormChange = (e) => {
         const { name, value } = e.target;
 
-        if (name === 'id' || name === 'password') {
+        if (name === 'id') {
+            const regex = /^[a-zA-Z0-9]*$/;
+            if (value !== '' && !regex.test(value)) {
+                alert('아이디는 영문과 숫자만 입력할 수 있습니다.');
+                return;
+            }
+            validateId(value);
+            setIsIdChecked(false);
+        }
+        
+        if (name === 'password') {
             const regex = /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/;
             if (value !== '' && !regex.test(value)) {
                 alert('영문, 숫자, 특수문자만 입력할 수 있습니다.');
                 return;
             }
+            validatePassword(value);
         }
 
         if (name === 'nickname') {
@@ -93,16 +116,9 @@ const SignUpPage = () => {
                 return;
             }
             if (value.length > 8) {
+                alert('생년월일은 8자리를 초과하여 입력할 수 없습니다.');
                 return;
             }
-        }
-
-        if (name === 'id') {
-            setIsIdChecked(false);
-        }
-
-        if (name === 'password') {
-            validatePassword(value);
         }
 
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -114,6 +130,11 @@ const SignUpPage = () => {
             idRef.current.focus();
             return;
         }
+        if (!validateId(formData.id)) {
+            alert('아이디가 요구 조건을 충족하지 않습니다.');
+            idRef.current.focus();
+            return;
+        }
         
         alert('사용 가능한 아이디입니다.');
         setIsIdChecked(true);
@@ -122,6 +143,12 @@ const SignUpPage = () => {
     const handleSubmitStep2 = (e) => {
         e.preventDefault();
         
+        if (!validateId(formData.id)) {
+            alert('아이디가 요구 조건을 충족하지 않습니다.');
+            idRef.current.focus();
+            return;
+        }
+
         if (!isIdChecked) {
             alert('아이디 중복확인을 해주세요.');
             idRef.current.focus();
@@ -255,29 +282,45 @@ const SignUpPage = () => {
                     <h2>기본 정보 입력</h2>
                     <form onSubmit={handleSubmitStep2} className="signup-form">
                         
-                        <div className="input-group phone-group">
-                            <div className="input-group">
-                                <label htmlFor="id">아이디</label>
-                                <input 
-                                    type="text" 
-                                    id="id" 
-                                    name="id" 
-                                    placeholder="아이디를 입력하세요" 
-                                    value={formData.id} 
-                                    onChange={handleFormChange} 
-                                    ref={idRef}
+                        <div className="input-group">
+                            <div className="phone-group">
+                                <div className="input-group">
+                                    <label htmlFor="id">아이디</label>
+                                    <input 
+                                        type="text" 
+                                        id="id" 
+                                        name="id" 
+                                        placeholder="아이디를 입력하세요" 
+                                        value={formData.id} 
+                                        onChange={handleFormChange} 
+                                        onFocus={() => setIsIdFocused(true)}
+                                        onBlur={() => setIsIdFocused(false)}
+                                        ref={idRef}
+                                        disabled={isIdChecked}
+                                        required 
+                                    />
+                                </div>
+                                <button 
+                                    type="button" 
+                                    className="sms-button duplicate-check-btn"
+                                    onClick={handleIdCheck}
                                     disabled={isIdChecked}
-                                    required 
-                                />
+                                >
+                                    {isIdChecked ? "확인완료" : "중복확인"}
+                                </button>
                             </div>
-                            <button 
-                                type="button" 
-                                className="sms-button duplicate-check-btn"
-                                onClick={handleIdCheck}
-                                disabled={isIdChecked}
-                            >
-                                {isIdChecked ? "확인완료" : "중복확인"}
-                            </button>
+                            {isIdFocused && !isIdChecked && (
+                                <div className="password-validation-guide">
+                                    <ul>
+                                        <li className={idValidation.letters ? 'valid' : 'invalid'}>
+                                            {idValidation.letters ? '✅' : '❌'} 영문 4자리 이상 포함
+                                        </li>
+                                        <li className={idValidation.numbers ? 'valid' : 'invalid'}>
+                                            {idValidation.numbers ? '✅' : '❌'} 숫자 4자리 이상 포함
+                                        </li>
+                                    </ul>
+                                </div>
+                            )}
                         </div>
                         
                         <div className="input-group password-input-group">
