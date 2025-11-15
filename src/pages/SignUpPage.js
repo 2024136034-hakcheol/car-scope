@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
 
@@ -27,7 +27,13 @@ const SignUpPage = () => {
         phone: '',
     });
     const [showPassword, setShowPassword] = useState(false);
+    const [isIdChecked, setIsIdChecked] = useState(false);
     const navigate = useNavigate();
+
+    const idRef = useRef(null);
+    const emailDomainCustomRef = useRef(null);
+    const nameRef = useRef(null);
+    const nicknameRef = useRef(null);
 
     const handleAgreementChange = (e) => {
         const { name, checked } = e.target;
@@ -61,22 +67,55 @@ const SignUpPage = () => {
             }
         }
 
+        if (name === 'id') {
+            setIsIdChecked(false);
+        }
+
         setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
+    const handleIdCheck = () => {
+        if (formData.id.trim() === '') {
+            alert('아이디를 먼저 입력해주세요.');
+            idRef.current.focus();
+            return;
+        }
+        
+        alert('사용 가능한 아이디입니다.');
+        setIsIdChecked(true);
     };
 
     const handleSubmitStep2 = (e) => {
         e.preventDefault();
         
-        if (formData.name.length <= 1) {
-            alert('이름은 2글자 이상 입력해야 합니다.');
+        if (!isIdChecked) {
+            alert('아이디 중복확인을 해주세요.');
+            idRef.current.focus();
             return;
         }
 
         if (formData.emailDomainSelect === 'direct') {
             if (!isValidDomain(formData.emailDomainCustom)) {
                 alert('유효하지 않은 도메인 형식입니다. (예: example.com)');
+                emailDomainCustomRef.current.focus();
+                setFormData(prev => ({ ...prev, emailDomainCustom: '' }));
                 return;
             }
+        }
+
+        if (formData.name.length <= 1) {
+            alert('이름은 2글자 이상 입력해야 합니다.');
+            nameRef.current.focus();
+            setFormData(prev => ({ ...prev, name: '' }));
+            return;
+        }
+
+        const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
+        if (specialCharRegex.test(formData.nickname)) {
+            alert('닉네임에는 특수문자를 사용할 수 없습니다.');
+            nicknameRef.current.focus();
+            setFormData(prev => ({ ...prev, nickname: '' }));
+            return;
         }
 
         setStep(3);
@@ -124,9 +163,26 @@ const SignUpPage = () => {
                         <div className="input-group phone-group">
                             <div className="input-group">
                                 <label htmlFor="id">아이디</label>
-                                <input type="text" id="id" name="id" placeholder="아이디를 입력하세요" value={formData.id} onChange={handleFormChange} required />
+                                <input 
+                                    type="text" 
+                                    id="id" 
+                                    name="id" 
+                                    placeholder="아이디를 입력하세요" 
+                                    value={formData.id} 
+                                    onChange={handleFormChange} 
+                                    ref={idRef}
+                                    disabled={isIdChecked}
+                                    required 
+                                />
                             </div>
-                            <button type="button" className="sms-button duplicate-check-btn">중복확인</button>
+                            <button 
+                                type="button" 
+                                className="sms-button duplicate-check-btn"
+                                onClick={handleIdCheck}
+                                disabled={isIdChecked}
+                            >
+                                {isIdChecked ? "확인완료" : "중복확인"}
+                            </button>
                         </div>
                         
                         <div className="input-group password-input-group">
@@ -181,6 +237,7 @@ const SignUpPage = () => {
                                     className="email-domain-custom"
                                     value={formData.emailDomainCustom}
                                     onChange={handleFormChange}
+                                    ref={emailDomainCustomRef}
                                     required
                                 />
                             )}
@@ -189,11 +246,29 @@ const SignUpPage = () => {
                         <div className="form-row">
                             <div className="input-group">
                                 <label htmlFor="name">이름</label>
-                                <input type="text" id="name" name="name" placeholder="이름 (2글자 이상)" value={formData.name} onChange={handleFormChange} required />
+                                <input 
+                                    type="text" 
+                                    id="name" 
+                                    name="name" 
+                                    placeholder="이름 (2글자 이상)" 
+                                    value={formData.name} 
+                                    onChange={handleFormChange} 
+                                    ref={nameRef}
+                                    required 
+                                />
                             </div>
                             <div className="input-group">
                                 <label htmlFor="nickname">닉네임</label>
-                                <input type="text" id="nickname" name="nickname" placeholder="닉네임 (특수문자 제외)" value={formData.nickname} onChange={handleFormChange} required />
+                                <input 
+                                    type="text" 
+                                    id="nickname" 
+                                    name="nickname" 
+                                    placeholder="닉네임 (특수문자 제외)" 
+                                    value={formData.nickname} 
+                                    onChange={handleFormChange} 
+                                    ref={nicknameRef}
+                                    required 
+                                />
                             </div>
                         </div>
 
