@@ -44,6 +44,7 @@ const SignUpPage = () => {
     const emailDomainCustomRef = useRef(null);
     const nameRef = useRef(null);
     const nicknameRef = useRef(null);
+    const birthdateRef = useRef(null);
 
     const handleAgreementChange = (e) => {
         const { name, checked } = e.target;
@@ -81,6 +82,17 @@ const SignUpPage = () => {
             const specialCharRegex = /[!@#$%^&*(),.?":{}|<>]/;
             if (value !== '' && specialCharRegex.test(value)) {
                 alert('닉네임에는 특수문자를 사용할 수 없습니다.');
+                return;
+            }
+        }
+
+        if (name === 'birthdate') {
+            const regex = /^[0-9]*$/;
+            if (!regex.test(value)) {
+                alert('생년월일은 숫자만 입력할 수 있습니다.');
+                return;
+            }
+            if (value.length > 8) {
                 return;
             }
         }
@@ -144,6 +156,13 @@ const SignUpPage = () => {
             alert('닉네임에는 특수문자를 사용할 수 없습니다.');
             nicknameRef.current.focus();
             setFormData(prev => ({ ...prev, nickname: '' }));
+            return;
+        }
+
+        if (formData.birthdate.length !== 8) {
+            alert('생년월일을 8자리(YYYYMMDD)로 입력해주세요.');
+            birthdateRef.current.focus();
+            setFormData(prev => ({ ...prev, birthdate: '' }));
             return;
         }
 
@@ -369,7 +388,16 @@ const SignUpPage = () => {
                         <div className="form-row">
                              <div className="input-group">
                                 <label htmlFor="birthdate">생년월일</label>
-                                <input type="text" id="birthdate" name="birthdate" placeholder="YYYYMMDD ('-' 제외하고 입력)" value={formData.birthdate} onChange={handleFormChange} required />
+                                <input 
+                                    type="text" 
+                                    id="birthdate" 
+                                    name="birthdate" 
+                                    placeholder="YYYYMMDD ('-' 제외하고 입력)" 
+                                    value={formData.birthdate} 
+                                    onChange={handleFormChange} 
+                                    ref={birthdateRef}
+                                    required 
+                                />
                             </div>
                             <div className="input-group">
                                 <label htmlFor="gender">성별</label>
