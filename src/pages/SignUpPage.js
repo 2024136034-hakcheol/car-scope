@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
+import { auth } from '../firebase';
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const isValidDomain = (domain) => {
     const domainRegex = /^[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
@@ -140,7 +142,7 @@ const SignUpPage = () => {
         setIsIdChecked(true);
     };
 
-    const handleSubmitStep2 = (e) => {
+    const handleSubmitStep2 = async (e) => {
         e.preventDefault();
         
         if (!validateId(formData.id)) {
@@ -162,6 +164,8 @@ const SignUpPage = () => {
             return;
         }
 
+        const emailDomain = formData.emailDomainSelect === 'direct' ? formData.emailDomainCustom : formData.emailDomainSelect;
+        
         if (formData.emailDomainSelect === 'direct') {
             if (!isValidDomain(formData.emailDomainCustom)) {
                 alert('유효하지 않은 도메인 형식입니다. (예: example.com)');
@@ -193,7 +197,23 @@ const SignUpPage = () => {
             return;
         }
 
-        setStep(3);
+        try {
+            const fullEmail = `${formData.emailLocal}@${emailDomain}`;
+            const userCredential = await createUserWithEmailAndPassword(auth, fullEmail, formData.password);
+            
+            await updateProfile(userCredential.user, {
+                displayName: formData.nickname
+            });
+
+            setStep(3);
+
+        } catch (error) {
+            if (error.code === 'auth/email-already-in-use') {
+                alert('이미 사용 중인 이메일입니다.');
+            } else {
+                alert('회원가입 중 오류가 발생했습니다: ' + error.message);
+            }
+        }
     };
 
     const handleGoToLogin = () => {

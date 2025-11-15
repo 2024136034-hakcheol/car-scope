@@ -1,42 +1,48 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css';
+import { auth, googleProvider } from '../firebase';
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 
 const LoginPage = () => {
-    const [userId, setUserId] = useState('');
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const navigate = useNavigate();
 
     const handleInputChange = (e, setter) => {
-        const value = e.target.value;
-        const name = e.target.name;
-        
-        if (name === 'userId' || name === 'password') {
-            const regex = /^[a-zA-Z0-9!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]*$/;
-            
-            if (!regex.test(value)) {
-                alert('아이디와 비밀번호에는 영문, 숫자, 특수문자만 입력할 수 있습니다.');
-                return;
-            }
-            setter(value);
-        } else {
-            setter(value);
-        }
+        setter(e.target.value);
     };
 
-    const handleLogin = (e) => {
+    const handleLogin = async (e) => {
         e.preventDefault();
         
-        if (userId.trim() === '' || password.trim() === '') {
-            alert('아이디와 비밀번호를 모두 입력해주세요.');
+        if (email.trim() === '' || password.trim() === '') {
+            alert('이메일과 비밀번호를 모두 입력해주세요.');
             return;
         }
 
-        alert(`로그인 시도: ID ${userId}`);
+        try {
+            await signInWithEmailAndPassword(auth, email, password);
+            alert('로그인 성공!');
+            navigate('/');
+        } catch (error) {
+            alert('로그인 실패: ' + error.message);
+        }
     };
 
-    const handleSocialLogin = (platform) => {
-        alert(`${platform} 소셜 로그인 시도`);
+    const handleSocialLogin = async (platform) => {
+        try {
+            if (platform === 'Google') {
+                await signInWithPopup(auth, googleProvider);
+                alert('Google 로그인 성공!');
+                navigate('/');
+            } else {
+                alert(platform + ' 로그인은 현재 지원되지 않습니다.');
+            }
+        } catch (error) {
+            alert(platform + ' 로그인 실패: ' + error.message);
+        }
     };
 
     const togglePasswordVisibility = () => {
@@ -50,15 +56,15 @@ const LoginPage = () => {
                 <form onSubmit={handleLogin} className="login-form">
                     <div className="input-group">
                         <input
-                            type="text"
-                            name="userId"
-                            placeholder="아이디"
-                            value={userId}
-                            onChange={(e) => handleInputChange(e, setUserId)}
+                            type="email"
+                            name="email"
+                            placeholder="이메일"
+                            value={email}
+                            onChange={(e) => handleInputChange(e, setEmail)}
                             required
                         />
                     </div>
-                    <div className="input-group password-input-group">
+                    <div className="input-group">
                         <input
                             type={showPassword ? "text" : "password"}
                             name="password"
