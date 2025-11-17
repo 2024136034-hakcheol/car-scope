@@ -13,24 +13,9 @@ const UserEditModal = ({ user, onSave, onClose }) => {
         setFormData(prev => ({ ...prev, [name]: value }));
     };
 
-    const handleRoleChange = (e) => {
-        const role = e.target.value;
-        setFormData(prev => ({
-            ...prev,
-            isAdmin: role === 'admin',
-            isJournalist: role === 'journalist'
-        }));
-    };
-
     const handleSubmit = (e) => {
         e.preventDefault();
         onSave(formData);
-    };
-
-    const getUserRole = (user) => {
-        if (user.isAdmin) return 'admin';
-        if (user.isJournalist) return 'journalist';
-        return 'general';
     };
 
     return (
@@ -79,16 +64,17 @@ const UserEditModal = ({ user, onSave, onClose }) => {
                         />
                     </div>
                     <div className="input-group">
-                        <label htmlFor="role">권한</label>
+                        <label htmlFor="gender">성별</label>
                         <select
-                            id="role"
-                            value={getUserRole(formData)}
-                            onChange={handleRoleChange}
+                            id="gender"
+                            name="gender"
+                            value={formData.gender}
+                            onChange={handleChange}
                             className="role-select"
                         >
-                            <option value="general">일반</option>
-                            <option value="journalist">기자</option>
-                            <option value="admin">관리자</option>
+                            <option value="none">선택 안함</option>
+                            <option value="male">남성</option>
+                            <option value="female">여성</option>
                         </select>
                     </div>
                     <div className="modal-buttons">
