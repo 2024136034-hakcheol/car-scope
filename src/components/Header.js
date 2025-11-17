@@ -6,7 +6,7 @@ import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 
 const Header = () => {
-    const { currentUser, dbUser, setLoading } = useContext(AuthContext);
+    const { currentUser, dbUser, loading, setLoading } = useContext(AuthContext);
 
     const handleLogout = async () => {
         setLoading(true);
@@ -49,7 +49,13 @@ const Header = () => {
                                 <span className="user-nickname">
                                     {dbUser ? dbUser.nickname : (currentUser.displayName || "사용자")}님
                                 </span>
-                                <button onClick={handleLogout} className="logout-button">로그아웃</button>
+                                <button 
+                                    onClick={handleLogout} 
+                                    className="logout-button" 
+                                    disabled={loading}
+                                >
+                                    {loading ? "로그아웃중..." : "로그아웃"}
+                                </button>
                             </>
                         ) : (
                             <>
