@@ -55,6 +55,10 @@
     color: #2ecc71;
 }
 
+.status-value.error {
+    color: #e74c3c;
+}
+
 .user-list-container {
     max-height: 400px;
     overflow-y: auto;
