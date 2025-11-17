@@ -9,6 +9,7 @@ import NewsPage from './pages/NewsPage';
 import MembershipPage from './pages/MembershipPage';
 import AdminPage from './pages/AdminPage';
 import AdminRoute from './components/AdminRoute';
+import GuestRoute from './components/GuestRoute';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import NotFoundPage from './pages/NotFoundPage';
@@ -19,8 +20,24 @@ function App() {
       <Header />
       <Routes>
         <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/signup" element={<SignUpPage />} />
+        
+        <Route 
+          path="/login" 
+          element={
+            <GuestRoute>
+              <LoginPage />
+            </GuestRoute>
+          } 
+        />
+        <Route 
+          path="/signup" 
+          element={
+            <GuestRoute>
+              <SignUpPage />
+            </GuestRoute>
+          } 
+        />
+
         <Route path="/news" element={<NewsPage />} />
         <Route path="/membership" element={<MembershipPage />} />
         <Route path="/terms" element={<TermsOfServicePage />} />
