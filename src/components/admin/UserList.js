@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { db } from '../../firebase';
-import { collection, getDocs, doc, updateDoc, query, orderBy, limit, startAfter, endBefore, limitToLast } from 'firebase/firestore';
+import { auth, db } from '../../firebase';
+import { sendPasswordResetEmail } from 'firebase/auth';
+import { collection, getDocs, doc, updateDoc, query, where, orderBy, limit, startAfter, endBefore, limitToLast } from 'firebase/firestore';
 import '../../styles/AdminPage.css';
 import UserEditModal from './UserEditModal';
 
@@ -91,6 +92,16 @@ const UserList = () => {
         setIsUpdating(updatedUser.uid);
         const { uid, ...userData } = updatedUser;
         const userDocRef = doc(db, "users", uid);
+
+        if (updatedUser.id !== editingUser.id) {
+            const q = query(collection(db, "users"), where("id", "==", updatedUser.id));
+            const querySnapshot = await getDocs(q);
+            if (!querySnapshot.empty) {
+                alert("이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.");
+                setIsUpdating(null);
+                return;
+            }
+        }
         
         try {
             await updateDoc(userDocRef, userData);
@@ -102,6 +113,18 @@ const UserList = () => {
             alert("정보 저장에 실패했습니다.");
         } finally {
             setIsUpdating(null);
+        }
+    };
+
+    const handlePasswordReset = async (email) => {
+        if (!window.confirm(`${email} 사용자에게 비밀번호 재설정 이메일을 발송하시겠습니까?`)) {
+            return;
+        }
+        try {
+            await sendPasswordResetEmail(auth, email);
+            alert("비밀번호 재설정 이메일을 발송했습니다.");
+        } catch (error) {
+            alert("이메일 발송에 실패했습니다: " + error.message);
         }
     };
 
@@ -172,7 +195,7 @@ const UserList = () => {
                                             <option value="admin">관리자</option>
                                         </select>
                                     </td>
-                                    <td>
+                                    <td className="action-buttons">
                                         <button 
                                             className="edit-button"
                                             onClick={() => setEditingUser(user)}
@@ -198,6 +221,7 @@ const UserList = () => {
                     user={editingUser}
                     onSave={handleSaveUser}
                     onClose={() => setEditingUser(null)}
+                    onPasswordReset={handlePasswordReset}
                 />
             )}
         </>

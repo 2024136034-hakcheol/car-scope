@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/AdminPage.css';
 
-const UserEditModal = ({ user, onSave, onClose }) => {
+const UserEditModal = ({ user, onSave, onClose, onPasswordReset }) => {
     const [formData, setFormData] = useState(user);
 
     useEffect(() => {
@@ -23,6 +23,16 @@ const UserEditModal = ({ user, onSave, onClose }) => {
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                 <h2>사용자 정보 수정 ({user.email})</h2>
                 <form onSubmit={handleSubmit} className="modal-form">
+                    <div className="input-group">
+                        <label htmlFor="id">아이디</label>
+                        <input
+                            type="text"
+                            id="id"
+                            name="id"
+                            value={formData.id}
+                            onChange={handleChange}
+                        />
+                    </div>
                     <div className="input-group">
                         <label htmlFor="nickname">닉네임</label>
                         <input
@@ -78,8 +88,17 @@ const UserEditModal = ({ user, onSave, onClose }) => {
                         </select>
                     </div>
                     <div className="modal-buttons">
-                        <button type="button" className="cancel-button" onClick={onClose}>취소</button>
-                        <button type="submit" className="save-button">저장</button>
+                        <button 
+                            type="button" 
+                            className="reset-button-modal" 
+                            onClick={() => onPasswordReset(user.email)}
+                        >
+                            비밀번호 재설정
+                        </button>
+                        <div>
+                            <button type="button" className="cancel-button" onClick={onClose}>취소</button>
+                            <button type="submit" className="save-button">저장</button>
+                        </div>
                     </div>
                 </form>
             </div>
