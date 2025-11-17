@@ -6,14 +6,16 @@ import { auth } from '../firebase';
 import { signOut } from 'firebase/auth';
 
 const Header = () => {
-    const { currentUser, dbUser } = useContext(AuthContext);
+    const { currentUser, dbUser, setLoading } = useContext(AuthContext);
 
     const handleLogout = async () => {
+        setLoading(true);
         try {
             await signOut(auth);
             alert('로그아웃 되었습니다.');
         } catch (error) {
             alert('로그아웃 실패: ' + error.message);
+            setLoading(false);
         }
     };
 
