@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase';
 import { collection, getDocs, doc, updateDoc, query, orderBy, limit, startAfter, endBefore, limitToLast } from 'firebase/firestore';
 import '../../styles/AdminPage.css';
+import UserEditModal from './UserEditModal';
 
 const USERS_PER_PAGE = 10;
 
@@ -12,6 +13,7 @@ const UserList = () => {
     const [firstDoc, setFirstDoc] = useState(null);
     const [currentPage, setCurrentPage] = useState(1);
     const [isUpdating, setIsUpdating] = useState(null);
+    const [editingUser, setEditingUser] = useState(null);
 
     const fetchUsers = async (page = 1, direction = 'next') => {
         setLoading(true);
@@ -37,11 +39,11 @@ const UserList = () => {
                 setFirstDoc(querySnapshot.docs[0]);
                 setLastDoc(querySnapshot.docs[querySnapshot.docs.length - 1]);
                 setUsers(usersList);
-            } else if (direction === 'next') {
+            } else if (direction === 'next' && page > 1) {
                 alert("마지막 페이지입니다.");
                 setLastDoc(null);
                 setCurrentPage(prev => prev - 1);
-            } else if (direction === 'prev') {
+            } else if (direction === 'prev' && page > 0) {
                 alert("첫 페이지입니다.");
                 setFirstDoc(null);
                 setCurrentPage(prev => prev + 1);
@@ -85,6 +87,24 @@ const UserList = () => {
         }
     };
 
+    const handleSaveUser = async (updatedUser) => {
+        setIsUpdating(updatedUser.uid);
+        const { uid, ...userData } = updatedUser;
+        const userDocRef = doc(db, "users", uid);
+        
+        try {
+            await updateDoc(userDocRef, userData);
+            setUsers(users.map(user => 
+                user.uid === uid ? updatedUser : user
+            ));
+            setEditingUser(null);
+        } catch (error) {
+            alert("정보 저장에 실패했습니다.");
+        } finally {
+            setIsUpdating(null);
+        }
+    };
+
     const getUserRole = (user) => {
         if (user.isAdmin) return 'admin';
         if (user.isJournalist) return 'journalist';
@@ -92,10 +112,6 @@ const UserList = () => {
     };
 
     const goToNextPage = () => {
-        if (!lastDoc && currentPage > 1) {
-            alert("마지막 페이지입니다.");
-            return;
-        }
         const newPage = currentPage + 1;
         setCurrentPage(newPage);
         fetchUsers(newPage, 'next');
@@ -116,49 +132,75 @@ const UserList = () => {
     }
 
     return (
-        <div className="admin-widget widget-full">
-            <h2 className="widget-title">사용자 목록 (페이지 {currentPage})</h2>
-            <div className="user-list-container">
-                <table className="user-table">
-                    <thead>
-                        <tr>
-                            <th>아이디</th>
-                            <th>닉네임</th>
-                            <th>이메일</th>
-                            <th>이름</th>
-                            <th>권한</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {users.map(user => (
-                            <tr key={user.uid}>
-                                <td>{user.id}</td>
-                                <td>{user.nickname}</td>
-                                <td>{user.email}</td>
-                                <td>{user.name}</td>
-                                <td>
-                                    <select 
-                                        className="role-select"
-                                        value={getUserRole(user)} 
-                                        onChange={(e) => handleRoleChange(user.uid, e.target.value)}
-                                        disabled={isUpdating === user.uid}
-                                    >
-                                        <option value="general">일반</option>
-                                        <option value="journalist">기자</option>
-                                        <option value="admin">관리자</option>
-                                    </select>
-                                </td>
+        <>
+            <div className="admin-widget widget-full">
+                <h2 className="widget-title">사용자 목록 (페이지 {currentPage})</h2>
+                <div className="user-list-container">
+                    <table className="user-table">
+                        <thead>
+                            <tr>
+                                <th>아이디</th>
+                                <th>닉네임</th>
+                                <th>이메일</th>
+                                <th>이름</th>
+                                <th>생년월일</th>
+                                <th>성별</th>
+                                <th>전화번호</th>
+                                <th>권한</th>
+                                <th>수정</th>
                             </tr>
-                        ))}
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            {users.map(user => (
+                                <tr key={user.uid}>
+                                    <td>{user.id}</td>
+                                    <td>{user.nickname}</td>
+                                    <td>{user.email}</td>
+                                    <td>{user.name}</td>
+                                    <td>{user.birthdate}</td>
+                                    <td>{user.gender}</td>
+                                    <td>{user.phone}</td>
+                                    <td>
+                                        <select 
+                                            className="role-select"
+                                            value={getUserRole(user)} 
+                                            onChange={(e) => handleRoleChange(user.uid, e.target.value)}
+                                            disabled={isUpdating === user.uid}
+                                        >
+                                            <option value="general">일반</option>
+                                            <option value="journalist">기자</option>
+                                            <option value="admin">관리자</option>
+                                        </select>
+                                    </td>
+                                    <td>
+                                        <button 
+                                            className="edit-button"
+                                            onClick={() => setEditingUser(user)}
+                                            disabled={isUpdating === user.uid}
+                                        >
+                                            수정
+                                        </button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+                <div className="pagination-controls">
+                    <button onClick={goToPrevPage} disabled={currentPage === 1 || loading}>이전</button>
+                    <span>페이지 {currentPage}</span>
+                    <button onClick={goToNextPage} disabled={users.length < USERS_PER_PAGE || loading}>다음</button>
+                </div>
             </div>
-            <div className="pagination-controls">
-                <button onClick={goToPrevPage} disabled={currentPage === 1}>이전</button>
-                <span>페이지 {currentPage}</span>
-                <button onClick={goToNextPage} disabled={users.length < USERS_PER_PAGE}>다음</button>
-            </div>
-        </div>
+
+            {editingUser && (
+                <UserEditModal 
+                    user={editingUser}
+                    onSave={handleSaveUser}
+                    onClose={() => setEditingUser(null)}
+                />
+            )}
+        </>
     );
 };
 

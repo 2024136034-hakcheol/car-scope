@@ -7,7 +7,7 @@ const AdminPage = () => {
     return (
         <div className="admin-page-container page-content">
             <h1 className="admin-title">관리자 대시보드</h1>
-            <div className="admin-widgets-grid">
+            <div className="admin-widgets-grid-single">
                 <SiteStatus />
                 <UserList />
             </div>
