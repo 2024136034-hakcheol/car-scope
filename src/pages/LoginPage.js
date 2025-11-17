@@ -9,6 +9,7 @@ const LoginPage = () => {
     const [idOrEmail, setIdOrEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const navigate = useNavigate();
 
     const handleInputChange = (e, setter) => {
@@ -18,6 +19,11 @@ const LoginPage = () => {
     const handleLogin = async (e) => {
         e.preventDefault();
         
+        if (loading) {
+            alert("로그인 중입니다. 잠시만 기다려주세요.");
+            return;
+        }
+
         if (idOrEmail.trim() === '' || password.trim() === '') {
             alert('아이디(이메일)와 비밀번호를 모두 입력해주세요.');
             return;
@@ -25,6 +31,7 @@ const LoginPage = () => {
 
         let emailToLogin = idOrEmail;
         let isIdLogin = false;
+        setLoading(true);
 
         try {
             if (!idOrEmail.includes('@')) {
@@ -34,6 +41,7 @@ const LoginPage = () => {
                 
                 if (querySnapshot.empty) {
                     alert("아이디가 틀렸습니다 다시 입력해주세요");
+                    setLoading(false);
                     return;
                 }
                 
@@ -51,10 +59,17 @@ const LoginPage = () => {
             } else {
                 alert('로그인 실패: ' + error.message);
             }
+            setLoading(false);
         }
     };
 
     const handleSocialLogin = async (platform) => {
+        if (loading) {
+            alert("로그인 중입니다. 잠시만 기다려주세요.");
+            return;
+        }
+        setLoading(true);
+
         try {
             if (platform === 'Google') {
                 const userCredential = await signInWithPopup(auth, googleProvider);
@@ -64,9 +79,10 @@ const LoginPage = () => {
                 const userDoc = await getDoc(userDocRef);
 
                 if (!userDoc.exists()) {
+                    const userEmail = user.email.toLowerCase();
                     await setDoc(userDocRef, {
-                        id: user.email, 
-                        email: user.email,
+                        id: userEmail,
+                        email: userEmail,
                         name: user.displayName,
                         nickname: user.displayName,
                         birthdate: '',
@@ -81,6 +97,8 @@ const LoginPage = () => {
             }
         } catch (error) {
             alert(platform + ' 로그인 실패: ' + error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -120,7 +138,9 @@ const LoginPage = () => {
                             {showPassword ? "숨기기" : "보이기"}
                         </button>
                     </div>
-                    <button type="submit" className="login-button-primary">로그인</button>
+                    <button type="submit" className="login-button-primary" disabled={loading}>
+                        {loading ? "로그인 중..." : "로그인"}
+                    </button>
                 </form>
 
                 <div className="find-links">
@@ -134,16 +154,16 @@ const LoginPage = () => {
                 <div className="social-login-section">
                     <p className="divider-text">또는 소셜 계정으로 로그인</p>
                     <div className="social-buttons">
-                        <button className="social-button google" onClick={() => handleSocialLogin('Google')}>
+                        <button className="social-button google" onClick={() => handleSocialLogin('Google')} disabled={loading}>
                             <span>Google 로그인</span>
                         </button>
-                        <button className="social-button apple" onClick={() => handleSocialLogin('Apple')}>
+                        <button className="social-button apple" onClick={() => handleSocialLogin('Apple')} disabled={loading}>
                             <span>Apple 로그인</span>
                         </button>
-                        <button className="social-button kakao" onClick={() => handleSocialLogin('Kakao')}>
+                        <button className="social-button kakao" onClick={() => handleSocialLogin('Kakao')} disabled={loading}>
                             <span>카카오 로그인</span>
                         </button>
-                        <button className="social-button facebook" onClick={() => handleSocialLogin('Facebook')}>
+                        <button className="social-button facebook" onClick={() => handleSocialLogin('Facebook')} disabled={loading}>
                             <span>Facebook 로그인</span>
                         </button>
                     </div>
