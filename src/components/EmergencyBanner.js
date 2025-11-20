@@ -1,16 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../styles/EmergencyBanner.css';
 
 const EmergencyBanner = () => {
     const location = useLocation();
+    const [scrollTop, setScrollTop] = useState(0);
+
+    useEffect(() => {
+        const handleScroll = () => {
+            setScrollTop(window.scrollY);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+        return () => window.removeEventListener('scroll', handleScroll);
+    }, []);
 
     if (location.pathname.startsWith('/admin')) {
         return null;
     }
 
     return (
-        <div className="emergency-banner">
+        <div 
+            className="emergency-banner" 
+            style={{ top: `${scrollTop + 250}px` }}
+        >
             <div className="banner-header">
                 <span className="emergency-icon">🚨</span>
                 <h3>긴급출동</h3>
