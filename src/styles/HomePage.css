@@ -7,10 +7,9 @@
     --text-light: #999;
     --white: #ffffff;
     --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.05);
-    --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
-    --shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.12);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
     --radius-md: 12px;
-    --radius-lg: 24px;
+    --radius-lg: 20px;
     --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
@@ -28,12 +27,12 @@
 .main-banner-slider-wrapper {
     position: relative;
     width: 100%;
-    max-width: 1200px;
-    height: 450px;
-    margin: 40px 20px;
+    max-width: 1100px;
+    height: 360px;
+    margin: 30px 20px;
     border-radius: var(--radius-lg);
     overflow: hidden;
-    box-shadow: var(--shadow-lg);
+    box-shadow: var(--shadow-md);
 }
 
 .main-banner-slider {
@@ -46,7 +45,7 @@
     display: flex;
     width: 100%;
     height: 100%;
-    transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+    transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
 .slide-item {
@@ -62,46 +61,45 @@
 }
 
 .banner-content {
-    max-width: 800px;
+    max-width: 700px;
     z-index: 2;
-    padding: 40px;
+    padding: 20px;
     color: var(--white);
 }
 
 .banner-content h2 {
-    font-size: 3.2rem;
-    margin-bottom: 20px;
+    font-size: 2.2rem;
+    margin-bottom: 15px;
     font-weight: 800;
     line-height: 1.2;
-    letter-spacing: -0.5px;
-    text-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
 }
 
 .banner-content p {
-    font-size: 1.4rem;
-    margin-bottom: 40px;
+    font-size: 1.1rem;
+    margin-bottom: 30px;
     opacity: 0.95;
     font-weight: 500;
-    line-height: 1.6;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    line-height: 1.5;
+    text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .banner-cta {
     display: inline-block;
-    padding: 16px 48px;
+    padding: 12px 32px;
     background-color: var(--white);
     color: var(--text-primary);
     text-decoration: none;
     font-weight: 700;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     border-radius: 50px;
     transition: var(--transition);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .banner-cta:hover {
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
     background-color: #f0f8ff;
     color: var(--primary-color);
 }
@@ -110,12 +108,12 @@
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    background: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: var(--white);
-    font-size: 1.5rem;
-    width: 56px;
-    height: 56px;
+    font-size: 1.2rem;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     cursor: pointer;
     z-index: 10;
@@ -123,40 +121,39 @@
     align-items: center;
     justify-content: center;
     transition: var(--transition);
-    backdrop-filter: blur(5px);
+    backdrop-filter: blur(4px);
 }
 
 .slider-nav-arrows .arrow:hover {
-    background: rgba(255, 255, 255, 0.35);
+    background: rgba(255, 255, 255, 0.4);
     transform: translateY(-50%) scale(1.1);
 }
 
 .slider-nav-arrows .prev {
-    left: 30px;
+    left: 20px;
 }
 
 .slider-nav-arrows .next {
-    right: 30px;
+    right: 20px;
 }
 
 .slider-dots {
     position: absolute;
-    bottom: 30px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
     display: flex;
-    gap: 12px;
+    gap: 8px;
     z-index: 10;
 }
 
 .dot {
-    width: 12px;
-    height: 12px;
+    width: 10px;
+    height: 10px;
     background: rgba(255, 255, 255, 0.4);
     border-radius: 50%;
     cursor: pointer;
     transition: var(--transition);
-    border: 2px solid transparent;
 }
 
 .dot:hover {
@@ -166,61 +163,61 @@
 .dot.active {
     background: var(--white);
     transform: scale(1.2);
-    width: 32px;
+    width: 24px;
     border-radius: 10px;
 }
 
 .hot-trends-section {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px;
     text-align: center;
-    margin-bottom: 80px;
+    margin-bottom: 60px;
     padding: 0 20px;
     box-sizing: border-box;
 }
 
 .hot-trends-section h2 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     color: var(--text-primary);
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     font-weight: 800;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
+    gap: 8px;
 }
 
 .hot-trends-section p {
     color: var(--text-secondary);
-    margin-bottom: 40px;
-    font-size: 1.1rem;
+    margin-bottom: 30px;
+    font-size: 1rem;
 }
 
 .trend-list-container {
     display: flex;
     justify-content: center;
-    gap: 20px;
+    gap: 15px;
     flex-wrap: wrap;
 }
 
 .trend-item-card {
     background: var(--white);
-    padding: 15px 30px;
+    padding: 10px 20px;
     border-radius: 50px;
     border: 1px solid #eee;
     box-shadow: var(--shadow-sm);
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     font-weight: 600;
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     color: var(--text-primary);
     transition: var(--transition);
     cursor: pointer;
 }
 
 .trend-item-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-3px);
     border-color: var(--primary-color);
     color: var(--primary-color);
     box-shadow: var(--shadow-md);
@@ -229,69 +226,51 @@
 .trend-rank {
     background: var(--primary-color);
     color: var(--white);
-    width: 28px;
-    height: 28px;
+    width: 22px;
+    height: 22px;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 0.9rem;
-    font-weight: 800;
+    font-size: 0.8rem;
+    font-weight: 700;
 }
 
 .main-content-grid {
     display: flex;
-    gap: 40px;
+    gap: 30px;
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px;
     padding: 0 20px;
-    margin-bottom: 120px;
+    margin-bottom: 80px;
     box-sizing: border-box;
 }
 
 .card {
     flex: 1;
     background: var(--white);
-    padding: 40px;
-    border-radius: var(--radius-lg);
+    padding: 30px;
+    border-radius: var(--radius-md);
     box-shadow: var(--shadow-md);
     border: 1px solid #f0f0f0;
     transition: var(--transition);
     display: flex;
     flex-direction: column;
-    position: relative;
-    overflow: hidden;
-}
-
-.card::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 4px;
-    background: var(--primary-color);
-    opacity: 0;
-    transition: var(--transition);
 }
 
 .card:hover {
-    transform: translateY(-8px);
-    box-shadow: var(--shadow-lg);
-}
-
-.card:hover::before {
-    opacity: 1;
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
 .card h3 {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
     color: var(--primary-color);
     margin-top: 0;
-    margin-bottom: 30px;
-    border-bottom: 2px solid #f0f0f0;
-    padding-bottom: 20px;
-    font-weight: 800;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #f0f0f0;
+    padding-bottom: 15px;
+    font-weight: 700;
 }
 
 .card ul {
@@ -302,10 +281,10 @@
 }
 
 .card li {
-    padding: 18px 0;
-    border-bottom: 1px solid #f8f8f8;
+    padding: 14px 0;
+    border-bottom: 1px solid #f9f9f9;
     color: var(--text-secondary);
-    font-size: 1.1rem;
+    font-size: 0.95rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -320,6 +299,7 @@
     text-decoration: none;
     font-weight: 600;
     transition: color 0.2s;
+    font-size: 0.95rem;
 }
 
 .more-link:hover {
@@ -329,47 +309,46 @@
 
 .parking-recommendation-section {
     width: 100%;
-    max-width: 1200px;
+    max-width: 1100px;
     padding: 0 20px;
-    margin-bottom: 120px;
+    margin-bottom: 80px;
     text-align: center;
     box-sizing: border-box;
 }
 
 .parking-recommendation-section h2 {
-    font-size: 2.2rem;
+    font-size: 1.8rem;
     color: var(--text-primary);
-    margin-bottom: 15px;
+    margin-bottom: 10px;
     font-weight: 800;
 }
 
 .parking-recommendation-section p {
     color: var(--text-secondary);
-    margin-bottom: 50px;
-    font-size: 1.1rem;
+    margin-bottom: 40px;
+    font-size: 1rem;
 }
 
 .parking-spot-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    gap: 30px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
 }
 
 .parking-spot-card {
     background: var(--white);
     border: 1px solid #e0e0e0;
-    border-radius: var(--radius-lg);
-    padding: 35px;
+    border-radius: var(--radius-md);
+    padding: 25px;
     text-align: left;
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
     display: flex;
     flex-direction: column;
-    position: relative;
 }
 
 .parking-spot-card:hover {
-    transform: translateY(-6px);
+    transform: translateY(-5px);
     box-shadow: var(--shadow-md);
     border-color: var(--primary-color);
 }
@@ -377,28 +356,28 @@
 .spot-header {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     align-items: center;
 }
 
 .spot-area {
     background-color: var(--secondary-color);
     color: var(--text-secondary);
-    padding: 6px 14px;
-    border-radius: 20px;
-    font-size: 0.9rem;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.8rem;
     font-weight: 700;
 }
 
 .spot-price {
     color: var(--primary-color);
     font-weight: 800;
-    font-size: 1.1rem;
+    font-size: 0.95rem;
 }
 
 .spot-name {
-    font-size: 1.5rem;
-    margin: 0 0 25px 0;
+    font-size: 1.2rem;
+    margin: 0 0 20px 0;
     color: var(--text-primary);
     font-weight: 700;
 }
@@ -408,7 +387,7 @@
     text-decoration: none;
     color: var(--text-light);
     font-weight: 600;
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: all 0.2s;
     text-align: right;
 }
@@ -420,15 +399,15 @@
 
 .parking-more-link {
     display: inline-block;
-    padding: 15px 40px;
+    padding: 12px 30px;
     border: 1px solid #ccc;
     border-radius: 50px;
     text-decoration: none;
     color: var(--text-secondary);
     font-weight: 700;
     transition: var(--transition);
-    margin-top: 50px;
-    font-size: 1rem;
+    margin-top: 40px;
+    font-size: 0.95rem;
 }
 
 .parking-more-link:hover {
@@ -441,29 +420,29 @@
 .company-stats-section {
     width: 100%;
     background-color: var(--secondary-color);
-    padding: 100px 0;
+    padding: 80px 0;
     text-align: center;
     border-top: 1px solid #e0e0e0;
 }
 
 .company-stats-section h2 {
-    font-size: 2.5rem;
+    font-size: 2rem;
     color: var(--text-primary);
-    margin-bottom: 20px;
+    margin-bottom: 15px;
     font-weight: 800;
 }
 
 .company-stats-section p {
     color: var(--text-secondary);
-    margin-bottom: 80px;
-    font-size: 1.2rem;
+    margin-bottom: 60px;
+    font-size: 1.1rem;
 }
 
 .stats-grid {
     display: flex;
     justify-content: center;
-    gap: 100px;
-    max-width: 1200px;
+    gap: 80px;
+    max-width: 1100px;
     margin: 0 auto;
     flex-wrap: wrap;
 }
@@ -473,57 +452,54 @@
     flex-direction: column;
     align-items: center;
     justify-content: flex-start;
-    padding: 20px;
+    padding: 10px;
     flex: 1;
-    min-width: 250px;
+    min-width: 200px;
 }
 
 .stat-value {
-    font-size: 4rem;
+    font-size: 3rem;
     font-weight: 900;
-    color: var(--text-primary);
-    margin-bottom: 15px;
+    color: var(--primary-color);
+    margin-bottom: 10px;
     line-height: 1;
-    background: linear-gradient(135deg, var(--primary-color) 0%, #00c6ff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
     display: block;
 }
 
 .stat-label-box {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
     font-weight: 800;
     color: var(--text-primary);
-    margin-bottom: 10px;
+    margin-bottom: 8px;
     display: block;
 }
 
 .stat-description {
-    font-size: 1.05rem;
+    font-size: 0.95rem;
     color: var(--text-secondary);
-    line-height: 1.5;
+    line-height: 1.4;
     display: block;
 }
 
 @media (max-width: 1024px) {
     .main-banner-slider-wrapper {
-        height: 400px;
+        height: 340px;
         width: calc(100% - 40px);
     }
     .banner-content h2 {
-        font-size: 2.6rem;
+        font-size: 1.8rem;
     }
     .main-content-grid {
-        gap: 30px;
+        gap: 20px;
     }
     .stats-grid {
-        gap: 60px;
+        gap: 40px;
     }
 }
 
 @media (max-width: 768px) {
     .main-banner-slider-wrapper {
-        height: 350px;
+        height: 300px;
         border-radius: 0;
         margin: 0 0 40px 0;
         width: 100%;
@@ -532,58 +508,54 @@
         padding: 20px;
     }
     .banner-content h2 {
-        font-size: 2rem;
+        font-size: 1.6rem;
     }
     .banner-content p {
-        font-size: 1.1rem;
-        margin-bottom: 25px;
-    }
-    .banner-cta {
-        padding: 12px 30px;
         font-size: 1rem;
-    }
-    .slider-nav-arrows .arrow {
-        width: 45px;
-        height: 45px;
-        font-size: 1.2rem;
-        left: 15px;
-        right: 15px;
-    }
-    .main-content-grid {
-        flex-direction: column;
-        gap: 30px;
-    }
-    .card {
-        padding: 30px;
-    }
-    .stats-grid {
-        flex-direction: column;
-        gap: 50px;
-    }
-    .stat-value {
-        font-size: 3rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .banner-content h2 {
-        font-size: 1.8rem;
+        margin-bottom: 20px;
     }
     .banner-cta {
         padding: 10px 25px;
         font-size: 0.9rem;
     }
     .slider-nav-arrows .arrow {
-        width: 36px;
-        height: 36px;
+        width: 35px;
+        height: 35px;
+        font-size: 1.1rem;
+        left: 10px;
+        right: 10px;
+    }
+    .main-content-grid {
+        flex-direction: column;
+        gap: 25px;
+    }
+    .card {
+        padding: 25px;
+    }
+    .stats-grid {
+        flex-direction: column;
+        gap: 40px;
+    }
+    .stat-value {
+        font-size: 2.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .banner-content h2 {
+        font-size: 1.4rem;
+    }
+    .banner-cta {
+        padding: 8px 20px;
+        font-size: 0.85rem;
     }
     .hot-trends-section h2,
     .parking-recommendation-section h2,
     .company-stats-section h2 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
     .trend-item-card {
-        padding: 10px 20px;
-        font-size: 0.9rem;
+        padding: 8px 16px;
+        font-size: 0.85rem;
     }
 }
