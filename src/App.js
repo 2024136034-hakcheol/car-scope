@@ -13,11 +13,13 @@ import GuestRoute from './components/GuestRoute';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import NotFoundPage from './pages/NotFoundPage';
+import EmergencyBanner from './components/EmergencyBanner';
 
 function App() {
   return (
     <Router>
       <Header />
+      <EmergencyBanner /> 
       <Routes>
         <Route path="/" element={<HomePage />} />
         
