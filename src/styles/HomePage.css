@@ -29,14 +29,11 @@ body {
 .main-banner-slider-wrapper {
     position: relative;
     width: 100%;
-    max-width: var(--container-width);
     height: 350px;
     margin-top: 0;
     margin-bottom: 60px;
-    border-bottom-left-radius: var(--radius-card);
-    border-bottom-right-radius: var(--radius-card);
     overflow: hidden;
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     background-color: var(--white);
 }
 
@@ -67,12 +64,14 @@ body {
     background-size: cover;
     background-position: center;
     position: relative;
+    
+    background: linear-gradient(135deg, #1E90FF 0%, #3498db 100%);
+    color: var(--white);
 }
 
 .banner-content {
     position: relative;
     z-index: 2;
-    color: var(--white);
     max-width: 800px;
 }
 
@@ -406,21 +405,22 @@ body {
 
 .company-stats-section {
     width: 100%;
-    background-color: #2c3e50;
     padding: 80px 0;
     text-align: center;
-    color: var(--white);
+    background-color: var(--white);
+    border-top: 5px solid #f0f0f0;
+    color: var(--text-dark);
 }
 
 .company-stats-section h2 {
     font-size: 2rem;
-    color: var(--white);
+    color: var(--text-dark);
     margin-bottom: 15px;
     font-weight: 700;
 }
 
 .company-stats-section p {
-    color: #bdc3c7;
+    color: var(--text-medium);
     margin-bottom: 50px;
     font-size: 1rem;
 }
@@ -455,29 +455,26 @@ body {
 .stat-label-box {
     font-size: 1.1rem;
     font-weight: 700;
-    color: var(--white);
+    color: var(--text-dark);
     margin-bottom: 6px;
     display: block;
 }
 
 .stat-description {
     font-size: 0.9rem;
-    color: #95a5a6;
+    color: var(--text-light);
     display: block;
 }
 
 @media (max-width: 1160px) {
-    .main-banner-slider-wrapper,
+    .main-banner-slider-wrapper {
+        border-radius: 0;
+    }
     .hot-trends-section,
     .main-content-grid,
     .parking-recommendation-section {
         width: 100%;
         max-width: none;
-        border-radius: 0;
-    }
-    .main-banner-slider-wrapper {
-        margin-top: 0;
-        border-radius: 0;
     }
 }
 
