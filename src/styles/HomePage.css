@@ -4,10 +4,8 @@
     --text-dark: #333333;
     --text-medium: #666666;
     --text-light: #999999;
-    --bg-body: #ebedf0;
     --white: #ffffff;
     --shadow-card: 0 2px 12px rgba(0, 0, 0, 0.08);
-    --shadow-hover: 0 10px 25px rgba(0, 0, 0, 0.12);
     --radius-card: 16px;
     --container-width: 1140px;
 }
@@ -15,7 +13,7 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: var(--bg-body);
+    background-color: var(--white);
 }
 
 .homepage-container {
@@ -32,10 +30,11 @@ body {
     position: relative;
     width: 100%;
     max-width: var(--container-width);
-    height: 300px;
-    margin-top: 30px;
-    margin-bottom: 40px;
-    border-radius: var(--radius-card);
+    height: 350px;
+    margin-top: 0;
+    margin-bottom: 60px;
+    border-bottom-left-radius: var(--radius-card);
+    border-bottom-right-radius: var(--radius-card);
     overflow: hidden;
     box-shadow: var(--shadow-card);
     background-color: var(--white);
@@ -166,19 +165,16 @@ body {
 .hot-trends-section {
     width: 100%;
     max-width: var(--container-width);
-    margin-bottom: 40px;
-    padding: 30px;
+    margin-bottom: 60px;
+    padding: 0 20px;
     box-sizing: border-box;
-    background-color: var(--white);
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
     text-align: center;
 }
 
 .hot-trends-section h2 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
     color: var(--text-dark);
-    margin-bottom: 8px;
+    margin-bottom: 10px;
     font-weight: 700;
 }
 
@@ -196,10 +192,11 @@ body {
 }
 
 .trend-item-card {
-    background: var(--bg-body);
+    background: var(--white);
     padding: 10px 20px;
     border-radius: 50px;
-    border: 1px solid transparent;
+    border: 1px solid #eee;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
     display: flex;
     align-items: center;
     gap: 8px;
@@ -211,7 +208,6 @@ body {
 }
 
 .trend-item-card:hover {
-    background: var(--white);
     border-color: var(--primary-color);
     color: var(--primary-color);
     transform: translateY(-2px);
@@ -237,7 +233,8 @@ body {
     gap: 30px;
     width: 100%;
     max-width: var(--container-width);
-    margin-bottom: 40px;
+    margin-bottom: 60px;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
@@ -249,12 +246,12 @@ body {
     display: flex;
     flex-direction: column;
     transition: transform 0.3s;
-    border: 1px solid rgba(0,0,0,0.02);
+    border: 1px solid #eee;
 }
 
 .card:hover {
     transform: translateY(-5px);
-    box-shadow: var(--shadow-hover);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
 }
 
 .card h3 {
@@ -302,11 +299,8 @@ body {
 .parking-recommendation-section {
     width: 100%;
     max-width: var(--container-width);
-    background-color: var(--white);
-    padding: 40px;
-    border-radius: var(--radius-card);
-    box-shadow: var(--shadow-card);
-    margin-bottom: 60px;
+    padding: 0 20px;
+    margin-bottom: 80px;
     box-sizing: border-box;
     text-align: center;
 }
@@ -331,20 +325,20 @@ body {
 }
 
 .parking-spot-card {
-    background: var(--bg-body);
+    background: var(--white);
     border-radius: 12px;
-    padding: 20px;
+    padding: 25px;
     text-align: left;
     transition: all 0.3s;
-    border: 1px solid transparent;
+    border: 1px solid #eee;
+    box-shadow: var(--shadow-card);
     display: flex;
     flex-direction: column;
 }
 
 .parking-spot-card:hover {
-    background: var(--white);
     transform: translateY(-3px);
-    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.12);
     border-color: #e0e0e0;
 }
 
@@ -356,7 +350,7 @@ body {
 }
 
 .spot-area {
-    background: #dfe6ed;
+    background: #f0f2f5;
     color: var(--text-medium);
     padding: 4px 10px;
     border-radius: 8px;
@@ -407,7 +401,7 @@ body {
 .parking-more-link:hover {
     border-color: var(--primary-color);
     color: var(--primary-color);
-    background-color: var(--white);
+    background-color: #f8f9fa;
 }
 
 .company-stats-section {
@@ -415,7 +409,6 @@ body {
     background-color: #2c3e50;
     padding: 80px 0;
     text-align: center;
-    margin-top: 20px;
     color: var(--white);
 }
 
@@ -478,14 +471,19 @@ body {
     .hot-trends-section,
     .main-content-grid,
     .parking-recommendation-section {
-        width: 95%;
+        width: 100%;
         max-width: none;
+        border-radius: 0;
+    }
+    .main-banner-slider-wrapper {
+        margin-top: 0;
+        border-radius: 0;
     }
 }
 
 @media (max-width: 768px) {
     .main-banner-slider-wrapper {
-        height: 260px;
+        height: 280px;
     }
     .banner-content h2 {
         font-size: 1.8rem;
