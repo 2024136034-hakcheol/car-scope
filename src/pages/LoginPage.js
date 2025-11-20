@@ -1,8 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import '../styles/LoginPage.css';
 import { auth, googleProvider, db } from '../firebase';
-import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
+import { 
+    signInWithEmailAndPassword, 
+    signInWithPopup, 
+    setPersistence, 
+    browserSessionPersistence, 
+    browserLocalPersistence 
+} from "firebase/auth";
 import { collection, query, where, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
 
 const LoginPage = () => {
@@ -10,17 +16,30 @@ const LoginPage = () => {
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [rememberId, setRememberId] = useState(false);
+    const [keepLoggedIn, setKeepLoggedIn] = useState(false);
     const navigate = useNavigate();
+
+    useEffect(() => {
+        const savedId = localStorage.getItem('savedId');
+        if (savedId) {
+            setIdOrEmail(savedId);
+            setRememberId(true);
+        }
+    }, []);
 
     const handleInputChange = (e, setter) => {
         setter(e.target.value);
+    };
+
+    const handleCheckboxChange = (e, setter) => {
+        setter(e.target.checked);
     };
 
     const handleLogin = async (e) => {
         e.preventDefault();
         
         if (loading) {
-            alert("로그인 중입니다. 잠시만 기다려주세요.");
             return;
         }
 
@@ -34,6 +53,9 @@ const LoginPage = () => {
         setLoading(true);
 
         try {
+            const persistenceMode = keepLoggedIn ? browserLocalPersistence : browserSessionPersistence;
+            await setPersistence(auth, persistenceMode);
+
             if (!idOrEmail.includes('@')) {
                 isIdLogin = true;
                 const q = query(collection(db, "users"), where("id", "==", idOrEmail));
@@ -49,6 +71,13 @@ const LoginPage = () => {
             }
 
             await signInWithEmailAndPassword(auth, emailToLogin, password);
+
+            if (rememberId) {
+                localStorage.setItem('savedId', idOrEmail);
+            } else {
+                localStorage.removeItem('savedId');
+            }
+
             navigate('/');
 
         } catch (error) {
@@ -65,12 +94,14 @@ const LoginPage = () => {
 
     const handleSocialLogin = async (platform) => {
         if (loading) {
-            alert("로그인 중입니다. 잠시만 기다려주세요.");
             return;
         }
         setLoading(true);
 
         try {
+            const persistenceMode = keepLoggedIn ? browserLocalPersistence : browserSessionPersistence;
+            await setPersistence(auth, persistenceMode);
+
             if (platform === 'Google') {
                 const userCredential = await signInWithPopup(auth, googleProvider);
                 const user = userCredential.user;
@@ -138,9 +169,29 @@ const LoginPage = () => {
                             {showPassword ? "숨기기" : "보이기"}
                         </button>
                     </div>
+                    
                     <button type="submit" className="login-button-primary" disabled={loading}>
                         {loading ? "로그인 중..." : "로그인"}
                     </button>
+
+                    <div className="login-options">
+                        <label className="checkbox-label">
+                            <input 
+                                type="checkbox" 
+                                checked={rememberId} 
+                                onChange={(e) => handleCheckboxChange(e, setRememberId)} 
+                            />
+                            아이디 저장
+                        </label>
+                        <label className="checkbox-label">
+                            <input 
+                                type="checkbox" 
+                                checked={keepLoggedIn} 
+                                onChange={(e) => handleCheckboxChange(e, setKeepLoggedIn)} 
+                            />
+                            로그인 상태 유지
+                        </label>
+                    </div>
                 </form>
 
                 <div className="find-links">
