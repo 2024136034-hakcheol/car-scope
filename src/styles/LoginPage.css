@@ -85,8 +85,9 @@
 
 .login-options {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
+    gap: 20px;
     margin-top: 15px;
     margin-bottom: 10px;
     font-size: 0.9rem;
