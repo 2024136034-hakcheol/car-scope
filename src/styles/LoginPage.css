@@ -2,8 +2,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: calc(100vh - 140px); 
+    min-height: calc(100vh - 140px);
     background-color: #f8f9fa;
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .login-card {
@@ -81,12 +83,11 @@
     cursor: not-allowed;
 }
 
-/* 새로 추가된 스타일 */
 .login-options {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 15px;
     margin-bottom: 10px;
     font-size: 0.9rem;
     color: #666;
@@ -97,12 +98,14 @@
     align-items: center;
     cursor: pointer;
     gap: 5px;
+    white-space: nowrap;
 }
 
 .checkbox-label input[type="checkbox"] {
     cursor: pointer;
     width: 16px;
     height: 16px;
+    margin: 0;
 }
 
 .find-links {
@@ -133,16 +136,18 @@
     color: #999;
     margin-bottom: 20px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 }
 
 .divider-text::before,
 .divider-text::after {
     content: "";
-    display: inline-block;
-    width: 30%;
+    flex: 1;
     height: 1px;
     background-color: #ddd;
-    vertical-align: middle;
     margin: 0 10px;
 }
 
