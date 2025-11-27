@@ -33,10 +33,10 @@ body {
     position: relative;
     width: 100%;
     max-width: 100%;
-    height: 350px;
+    height: 280px;
     margin-top: 0;
     margin-bottom: 60px;
-    border-radius: 0;
+    border-radius: 0 0 30px 30px;
     overflow: hidden;
     box-shadow: var(--shadow-soft);
     background-color: var(--white);
@@ -82,7 +82,7 @@ body {
 }
 
 .banner-content h2 {
-    font-size: 2.6rem;
+    font-size: 2.4rem;
     margin-bottom: 15px;
     font-weight: 800;
     text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
@@ -323,7 +323,7 @@ body {
     font-size: 1.6rem;
     color: var(--text-dark);
     margin-bottom: 10px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .parking-recommendation-section p {
@@ -436,7 +436,7 @@ body {
     font-size: 1.8rem;
     color: var(--text-dark);
     margin-bottom: 15px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .company-stats-section p {
@@ -462,7 +462,7 @@ body {
 }
 
 .stat-value {
-    font-size: 3rem;
+    font-size: 2.8rem;
     font-weight: 900;
     color: var(--primary-color);
     margin-bottom: 10px;
@@ -471,7 +471,7 @@ body {
 }
 
 .stat-label-box {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
     font-weight: 700;
     color: var(--text-dark);
     margin-bottom: 6px;
@@ -485,6 +485,7 @@ body {
 }
 
 @media (max-width: 1160px) {
+    .main-banner-slider-wrapper,
     .hot-trends-section,
     .main-content-grid,
     .parking-recommendation-section,
@@ -496,10 +497,11 @@ body {
 
 @media (max-width: 768px) {
     .main-banner-slider-wrapper {
-        height: 300px;
+        height: 240px;
+        margin-top: 0;
     }
     .banner-content h2 {
-        font-size: 1.8rem;
+        font-size: 1.5rem;
     }
     .main-content-grid {
         grid-template-columns: 1fr;
@@ -510,11 +512,11 @@ body {
     }
     .stats-grid {
         flex-direction: column;
-        gap: 40px;
+        gap: 30px;
     }
     .hot-trends-section h2, 
     .parking-recommendation-section h2,
     .company-stats-section h2 {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 }
