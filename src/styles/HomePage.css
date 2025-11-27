@@ -25,20 +25,17 @@ body {
     align-items: center;
     font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, sans-serif;
     overflow-x: hidden;
-    padding-top: 0 !important;
-    margin-top: 0 !important;
+    padding-top: 30px;
     padding-bottom: 80px;
 }
 
 .main-banner-slider-wrapper {
     position: relative;
     width: 100%;
-    max-width: 100%;
+    max-width: var(--container-width);
     height: 280px;
-    margin-top: 0;
     margin-bottom: 50px;
-    border-bottom-left-radius: var(--radius-lg);
-    border-bottom-right-radius: var(--radius-lg);
+    border-radius: var(--radius-lg);
     overflow: hidden;
     box-shadow: var(--shadow-soft);
     background-color: var(--white);
@@ -81,24 +78,24 @@ body {
 }
 
 .banner-content h2 {
-    font-size: 2rem;
-    margin-bottom: 10px;
+    font-size: 2.4rem;
+    margin-bottom: 15px;
     font-weight: 800;
-    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
     line-height: 1.2;
 }
 
 .banner-content p {
-    font-size: 1rem;
+    font-size: 1.1rem;
     margin-bottom: 25px;
     opacity: 0.95;
     font-weight: 500;
-    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.3);
 }
 
 .banner-cta {
     display: inline-block;
-    padding: 10px 30px;
+    padding: 10px 32px;
     background-color: var(--white);
     color: var(--text-dark);
     font-weight: 700;
@@ -119,13 +116,13 @@ body {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
-    width: 40px;
-    height: 40px;
+    width: 44px;
+    height: 44px;
     border-radius: 50%;
     background: rgba(0, 0, 0, 0.2);
     border: 1px solid rgba(255, 255, 255, 0.3);
     color: var(--white);
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     cursor: pointer;
     display: flex;
     align-items: center;
@@ -135,7 +132,7 @@ body {
 }
 
 .slider-nav-arrows .arrow:hover {
-    background: rgba(0, 0, 0, 0.5);
+    background: rgba(0, 0, 0, 0.4);
 }
 
 .slider-nav-arrows .prev { left: 20px; }
@@ -321,7 +318,7 @@ body {
     font-size: 1.5rem;
     color: var(--text-dark);
     margin-bottom: 10px;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .parking-recommendation-section p {
@@ -421,7 +418,7 @@ body {
     width: 100%;
     max-width: var(--container-width);
     margin-bottom: 50px;
-    padding: 50px;
+    padding: 50px 40px;
     box-sizing: border-box;
     background-color: #f4f6f8;
     border-radius: var(--radius-lg);
@@ -506,7 +503,6 @@ body {
 @media (max-width: 768px) {
     .main-banner-slider-wrapper {
         height: 240px;
-        margin-top: 0;
     }
     .banner-content h2 {
         font-size: 1.5rem;
