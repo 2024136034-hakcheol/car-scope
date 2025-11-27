@@ -417,10 +417,10 @@ body {
 .company-stats-section {
     width: 100%;
     max-width: var(--container-width);
-    margin-bottom: 50px;
+    margin-bottom: 60px;
     padding: 50px 40px;
     box-sizing: border-box;
-    background-color: #e9ecef;
+    background-color: var(--white);
     border-radius: var(--radius-lg);
     text-align: center;
 }
@@ -441,7 +441,7 @@ body {
 .stats-grid {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 40px;
     flex-wrap: wrap;
 }
 
@@ -451,14 +451,11 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     padding: 40px 20px;
     background-color: var(--white);
     border-radius: 20px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    top: 0;
 }
 
 .stat-item:hover {
@@ -470,7 +467,7 @@ body {
     font-size: 3rem;
     font-weight: 900;
     color: var(--primary-color);
-    margin-bottom: 5px;
+    margin-bottom: 0px;
     line-height: 1;
     display: block;
 }
@@ -480,16 +477,15 @@ body {
     font-weight: 700;
     color: var(--text-dark);
     margin-bottom: 2px;
-    line-height: 1.2;
+    margin-top: 5px;
     display: block;
 }
 
 .stat-description {
-    font-size: 0.95rem;
+    font-size: 0.9rem;
     color: var(--text-medium);
     display: block;
-    margin-top: 0;
-    line-height: 1.4;
+    margin-top: 0px;
 }
 
 @media (max-width: 1160px) {
