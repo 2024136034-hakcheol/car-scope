@@ -238,7 +238,7 @@ body {
     width: 100%;
     max-width: var(--container-width);
     margin-bottom: 50px;
-    padding: 0;
+    padding: 0 20px;
     box-sizing: border-box;
 }
 
@@ -420,7 +420,7 @@ body {
     margin-bottom: 60px;
     padding: 50px 40px;
     box-sizing: border-box;
-    background-color: #f4f6f8;
+    background-color: var(--white);
     border-radius: var(--radius-lg);
     text-align: center;
 }
@@ -474,7 +474,7 @@ body {
     font-size: 3rem;
     font-weight: 900;
     color: var(--primary-color);
-    margin-bottom: 15px;
+    margin-bottom: 5px;
     line-height: 1;
     display: block;
 }
@@ -483,16 +483,18 @@ body {
     font-size: 1.2rem;
     font-weight: 700;
     color: var(--text-dark);
-    margin-bottom: 2px;
-    display: block;
+    margin: 0;
+    padding: 0;
     line-height: 1.2;
+    display: block;
 }
 
 .stat-description {
     font-size: 0.95rem;
     color: var(--text-medium);
     display: block;
-    margin-top: 0;
+    margin: 0;
+    padding: 0;
     line-height: 1.4;
 }
 
