@@ -455,7 +455,7 @@ body {
     padding: 40px 20px;
     background-color: var(--white);
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     top: 0;
@@ -463,7 +463,11 @@ body {
 
 .stat-item:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+}
+
+.stat-item br {
+    display: none;
 }
 
 .stat-value {
@@ -479,15 +483,17 @@ body {
     font-size: 1.2rem;
     font-weight: 700;
     color: var(--text-dark);
-    margin-bottom: 0px;
+    margin-bottom: 2px;
     display: block;
+    line-height: 1.2;
 }
 
 .stat-description {
     font-size: 0.95rem;
     color: var(--text-medium);
     display: block;
-    margin-top: 0px;
+    margin-top: 0;
+    line-height: 1.4;
 }
 
 @media (max-width: 1160px) {
