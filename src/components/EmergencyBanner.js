@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import '../styles/EmergencyBanner.css';
 
 const EmergencyBanner = () => {
     const location = useLocation();
+    const navigate = useNavigate();
     const [scrollTop, setScrollTop] = useState(0);
 
     useEffect(() => {
@@ -14,6 +15,10 @@ const EmergencyBanner = () => {
         window.addEventListener('scroll', handleScroll);
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const handleEmergencyClick = () => {
+        navigate('/emergency');
+    };
 
     if (location.pathname.startsWith('/admin')) {
         return null;
@@ -29,11 +34,9 @@ const EmergencyBanner = () => {
                 <h3>긴급출동</h3>
             </div>
             <div className="banner-content">
-                <p>24시간<br />신속대기</p>
-                <div className="phone-number">
-                    1588<br />0000
-                </div>
-                <button className="request-btn">접수하기</button>
+                <button className="request-btn" onClick={handleEmergencyClick}>
+                    서비스<br/>접수하기
+                </button>
             </div>
             <div className="banner-footer">
                 <p>배터리 방전</p>
