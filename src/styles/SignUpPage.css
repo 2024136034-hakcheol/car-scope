@@ -1,35 +1,39 @@
 :root {
     --primary-color: #1E90FF;
-    --primary-hover: #0056b3;
-    --text-primary: #333333;
-    --text-secondary: #666666;
-    --border-color: #dddddd;
-    --bg-color: #f4f6f9;
+    --primary-hover: #0069d9;
+    --text-main: #333;
+    --text-sub: #666;
+    --border-color: #ddd;
+    --bg-page: #f0f2f5;
     --white: #ffffff;
-    --shadow-card: 0 8px 30px rgba(0, 0, 0, 0.08);
-    --radius-md: 10px;
 }
 
 body {
-    background-color: var(--bg-color);
+    background-color: var(--bg-page);
 }
 
 .signup-container {
+    width: 100%;
     max-width: 500px;
     margin: 60px auto;
-    padding: 50px 40px;
+    padding: 40px;
     background-color: var(--white);
     border-radius: 16px;
-    box-shadow: var(--shadow-card);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     box-sizing: border-box;
+}
+
+.signup-step {
+    width: 100%;
 }
 
 .signup-step h2 {
     font-size: 2rem;
-    color: var(--text-primary);
+    font-weight: 800;
+    color: var(--text-main);
     text-align: center;
     margin-bottom: 40px;
-    font-weight: 800;
+    margin-top: 0;
 }
 
 .signup-form {
@@ -39,48 +43,42 @@ body {
 }
 
 .input-group {
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
 }
 
 .input-group label {
     font-size: 0.95rem;
     font-weight: 600;
-    color: var(--text-primary);
-    margin-left: 2px;
+    color: var(--text-main);
 }
 
 .input-group input,
 .input-group select {
     width: 100%;
-    padding: 12px 15px;
-    font-size: 1rem;
+    height: 48px;
+    padding: 0 15px;
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
+    border-radius: 8px;
+    font-size: 1rem;
     box-sizing: border-box;
     transition: all 0.2s;
-    height: 50px;
     background-color: #fff;
-    color: var(--text-primary);
 }
 
 .input-group input:focus,
 .input-group select:focus {
-    outline: none;
     border-color: var(--primary-color);
+    outline: none;
     box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
-}
-
-.input-group input::placeholder {
-    color: #bbb;
 }
 
 .form-row {
     display: flex;
     gap: 10px;
-    align-items: flex-end;
+    width: 100%;
 }
 
 .form-row .input-group {
@@ -89,36 +87,41 @@ body {
 
 .phone-group {
     display: flex;
-    gap: 10px;
     align-items: flex-end;
+    gap: 10px;
+    width: 100%;
 }
 
 .phone-group .input-group {
     flex: 1;
 }
 
-.sms-button, 
+.phone-group input {
+    margin-bottom: 0;
+}
+
+.sms-button,
 .duplicate-check-btn,
 .email-check-btn {
-    height: 50px;
+    height: 48px;
     padding: 0 20px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    background-color: #f1f3f5;
+    background-color: #f8f9fa;
     border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
+    border-radius: 8px;
+    color: var(--text-main);
+    font-weight: 600;
+    font-size: 0.9rem;
     cursor: pointer;
     white-space: nowrap;
     transition: all 0.2s;
-    margin-bottom: 0; 
+    margin-bottom: 0;
 }
 
 .sms-button:hover,
 .duplicate-check-btn:hover,
 .email-check-btn:hover {
     background-color: #e9ecef;
-    border-color: #ced4da;
+    border-color: #ccc;
 }
 
 .password-input-wrapper {
@@ -127,6 +130,7 @@ body {
 }
 
 .password-input-wrapper input {
+    width: 100%;
     padding-right: 50px;
 }
 
@@ -137,58 +141,29 @@ body {
     transform: translateY(-50%);
     background: none;
     border: none;
-    color: var(--text-secondary);
+    color: var(--text-sub);
     font-size: 0.9rem;
     cursor: pointer;
     font-weight: 600;
     padding: 0;
 }
 
-.next-button {
-    width: 100%;
-    padding: 15px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: background-color 0.2s;
-    margin-top: 20px;
-    height: 54px;
+.email-group {
+    display: flex;
+    align-items: flex-end;
+    gap: 10px;
 }
 
-.next-button:hover {
-    background-color: var(--primary-hover);
-}
-
-.cancel-button { 
-    width: 100%;
-    padding: 15px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    background-color: var(--white);
-    color: var(--text-secondary);
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all 0.2s;
-    margin-top: 10px;
-    height: 54px;
-}
-
-.cancel-button:hover {
-    background-color: #f8f9fa;
-    border-color: #ccc;
+.email-group .input-group {
+    flex: 1;
 }
 
 .agreement-box {
-    margin-bottom: 20px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-md);
-    padding: 20px;
     background-color: #f9f9f9;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 15px;
 }
 
 .agreement-header {
@@ -197,43 +172,81 @@ body {
     align-items: center;
 }
 
-.agreement-box label {
-    font-size: 1rem;
+.agreement-header label {
     font-weight: 600;
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 8px;
     cursor: pointer;
-    color: var(--text-primary);
+    font-size: 1rem;
 }
 
-.agreement-box input[type="checkbox"] {
+.agreement-header input[type="checkbox"] {
     width: 20px;
     height: 20px;
+    cursor: pointer;
     accent-color: var(--primary-color);
 }
 
 .details-button {
     background: none;
     border: none;
-    color: var(--text-secondary);
-    font-size: 0.85rem;
     text-decoration: underline;
+    color: var(--text-sub);
     cursor: pointer;
+    font-size: 0.85rem;
+}
+
+.next-button,
+.signup-submit-btn {
+    width: 100%;
+    height: 54px;
+    background-color: var(--primary-color);
+    color: var(--white);
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.2s;
+}
+
+.next-button:hover,
+.signup-submit-btn:hover {
+    background-color: var(--primary-hover);
+}
+
+.cancel-button {
+    width: 100%;
+    height: 54px;
+    background-color: var(--white);
+    color: var(--text-sub);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 10px;
 }
 
 .password-validation-guide {
-    margin-top: 5px;
-    padding: 10px;
     background-color: #f8f9fa;
+    padding: 15px;
     border-radius: 8px;
-    font-size: 0.85rem;
-    color: var(--text-secondary);
+    margin-top: 5px;
+}
+
+.password-validation-guide ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
 }
 
 .password-validation-guide li {
-    list-style: none;
+    font-size: 0.85rem;
     margin-bottom: 4px;
+    color: var(--text-sub);
 }
 
 .password-validation-guide li.valid {
@@ -247,7 +260,13 @@ body {
 
 @media (max-width: 600px) {
     .signup-container {
-        margin: 20px;
+        margin: 20px auto;
+        width: 90%;
         padding: 30px 20px;
+    }
+    
+    .form-row {
+        flex-direction: column;
+        gap: 20px;
     }
 }
