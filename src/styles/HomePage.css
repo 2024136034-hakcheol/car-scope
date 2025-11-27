@@ -318,7 +318,7 @@ body {
     font-size: 1.5rem;
     color: var(--text-dark);
     margin-bottom: 10px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .parking-recommendation-section p {
@@ -417,10 +417,10 @@ body {
 .company-stats-section {
     width: 100%;
     max-width: var(--container-width);
-    margin-bottom: 50px;
-    padding: 50px 40px;
+    margin-bottom: 60px;
+    padding: 60px 40px;
     box-sizing: border-box;
-    background-color: #f4f6f8;
+    background-color: #e9ecef;
     border-radius: var(--radius-lg);
     text-align: center;
 }
@@ -429,7 +429,7 @@ body {
     font-size: 1.8rem;
     color: var(--text-dark);
     margin-bottom: 15px;
-    font-weight: 800;
+    font-weight: 700;
 }
 
 .company-stats-section p {
@@ -441,7 +441,7 @@ body {
 .stats-grid {
     display: flex;
     justify-content: center;
-    gap: 30px;
+    gap: 40px;
     flex-wrap: wrap;
 }
 
@@ -451,26 +451,23 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     padding: 40px 20px;
     background-color: var(--white);
-    border-radius: 24px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    border-radius: 20px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    top: 0;
 }
 
 .stat-item:hover {
     transform: translateY(-10px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
 }
 
 .stat-value {
     font-size: 3rem;
     font-weight: 900;
     color: var(--primary-color);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     line-height: 1;
     display: block;
 }
