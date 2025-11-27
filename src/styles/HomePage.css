@@ -423,6 +423,7 @@ body {
     background-color: var(--white);
     border-radius: var(--radius-lg);
     text-align: center;
+    box-shadow: var(--shadow-card);
 }
 
 .company-stats-section h2 {
@@ -455,7 +456,7 @@ body {
     padding: 40px 20px;
     background-color: var(--white);
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     position: relative;
     top: 0;
