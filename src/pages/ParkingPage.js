@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import '../styles/ParkingPage.css';
 
-// 1. 임시 데이터 (나중에 Firebase로 대체할 부분)
 const DUMMY_PARKING_LOTS = [
   {
     id: 1,
@@ -11,7 +10,7 @@ const DUMMY_PARKING_LOTS = [
     totalSpots: 100,
     availableSpots: 12,
     type: '실내',
-    image: 'https://via.placeholder.com/300x200?text=Parking+1' // 아까 만든 이미지 URL 넣으면 됨
+    image: 'https://mblogthumb-phinf.pstatic.net/MjAyMDA1MDRfMjUx/MDAxNTg4NTY1Mzc4NTQz.jYmb91zkO7OF8MukAGgkpOnCoeZNABlG-GnkIcPtodIg.5wFooTmkdx9MuQno9moBK6gwlUvZaV0hyH-ZtAsE-98g.JPEG.pybboss/1588565377054.jpg?type=w800'
   },
   {
     id: 2,
@@ -29,7 +28,7 @@ const DUMMY_PARKING_LOTS = [
     address: '서울 강남구 테헤란로 123',
     price: 2500,
     totalSpots: 50,
-    availableSpots: 0, // 만차 테스트용
+    availableSpots: 0,
     type: '기계식',
     image: 'https://via.placeholder.com/300x200?text=Parking+3'
   },
@@ -38,25 +37,23 @@ const DUMMY_PARKING_LOTS = [
 const ParkingPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
 
-  // 검색 기능 필터링
   const filteredList = DUMMY_PARKING_LOTS.filter((lot) =>
     lot.name.includes(searchTerm) || lot.address.includes(searchTerm)
   );
 
   const handleReserve = (name) => {
     alert(`'${name}' 예약 페이지로 이동합니다. (기능 구현 예정)`);
-    // 나중에 여기에 예약 상세 페이지로 이동하는 navigate 코드 추가
   };
 
   return (
     <div className="parking-container">
-      {/* 2. 상단 배너 섹션 (아까 만든 이미지 활용 공간) */}
+      {}
       <div className="parking-banner">
         <h2>주차장 예약 최대 70% 할인</h2>
         <p>CarScope 회원만의 특별한 혜택을 누리세요.</p>
       </div>
 
-      {/* 3. 검색창 */}
+      {}
       <div className="search-section">
         <input 
           type="text" 
@@ -67,7 +64,7 @@ const ParkingPage = () => {
         <button>검색</button>
       </div>
 
-      {/* 4. 주차장 리스트 카드 */}
+      {}
       <div className="parking-list">
         {filteredList.map((lot) => (
           <div key={lot.id} className="parking-card">
