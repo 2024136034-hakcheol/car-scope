@@ -238,7 +238,7 @@ body {
     width: 100%;
     max-width: var(--container-width);
     margin-bottom: 50px;
-    padding: 0 20px;
+    padding: 0;
     box-sizing: border-box;
 }
 
@@ -318,7 +318,7 @@ body {
     font-size: 1.5rem;
     color: var(--text-dark);
     margin-bottom: 10px;
-    font-weight: 700;
+    font-weight: 800;
 }
 
 .parking-recommendation-section p {
