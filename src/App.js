@@ -12,6 +12,7 @@ import AdminRoute from './components/AdminRoute';
 import GuestRoute from './components/GuestRoute';
 import TermsOfServicePage from './pages/TermsOfServicePage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
+import ParkingPage from './pages/ParkingPage';
 import NotFoundPage from './pages/NotFoundPage';
 import EmergencyBanner from './components/EmergencyBanner';
 
@@ -44,6 +45,7 @@ function App() {
         <Route path="/membership" element={<MembershipPage />} />
         <Route path="/terms" element={<TermsOfServicePage />} />
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
+        <Route path="/parking" element={<ParkingPage />} />
         
         <Route 
           path="/admin" 
