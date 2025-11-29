@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
 
@@ -42,6 +42,10 @@ const SignUpPage = () => {
         nickname: '',
     });
 
+    const [isIdChecked, setIsIdChecked] = useState(false);
+    const [isEmailChecked, setIsEmailChecked] = useState(false);
+    const [isNicknameChecked, setIsNicknameChecked] = useState(false);
+
     const [passwordValidations, setPasswordValidations] = useState({
         length: false,
         letter: false,
@@ -50,6 +54,10 @@ const SignUpPage = () => {
     });
 
     const [idValidation, setIdValidation] = useState(false);
+
+    const loginIdRef = useRef(null);
+    const emailLocalRef = useRef(null);
+    const nicknameRef = useRef(null);
 
     const validatePassword = (password) => {
         const length = password.length >= 8 && password.length <= 20;
@@ -69,16 +77,14 @@ const SignUpPage = () => {
 
         if (name === 'loginId') {
             const regex = /^[a-zA-Z0-9]*$/;
-            if (!regex.test(value)) {
-                return;
-            }
+            if (!regex.test(value)) return;
+            setIsIdChecked(false); 
+            validateId(value);
         }
 
         if (name === 'birthdate') {
             const regex = /^[0-9]*$/;
-            if (!regex.test(value)) {
-                return;
-            }
+            if (!regex.test(value)) return;
             if (value.length > 8) {
                 alert('생년월일은 8자리까지만 입력 가능합니다.');
                 return;
@@ -90,10 +96,12 @@ const SignUpPage = () => {
             if (!regex.test(value)) return;
         }
 
-        setFormData({ ...formData, [name]: value });
-
         if (name === 'password') validatePassword(value);
-        if (name === 'loginId') validateId(value);
+        
+        if (name === 'emailLocal' || name === 'emailDomain') setIsEmailChecked(false);
+        if (name === 'nickname') setIsNicknameChecked(false);
+
+        setFormData({ ...formData, [name]: value });
     };
 
     const handleAgreementChange = (e) => {
@@ -109,6 +117,48 @@ const SignUpPage = () => {
         }
     };
 
+    const checkDuplicateId = () => {
+        if (!formData.loginId) {
+            alert('아이디를 입력해주세요.');
+            loginIdRef.current.focus();
+            return;
+        }
+        if (formData.loginId.length < 4) {
+            alert('아이디는 4자 이상이어야 합니다.');
+            loginIdRef.current.focus();
+            return;
+        }
+        
+        const mockExistingIds = ['admin', 'test', 'carscope'];
+        if (mockExistingIds.includes(formData.loginId)) {
+            alert('이미 사용 중인 아이디입니다.');
+            setIsIdChecked(false);
+        } else {
+            alert('사용 가능한 아이디입니다.');
+            setIsIdChecked(true);
+        }
+    };
+
+    const checkEmail = () => {
+        if (!formData.emailLocal) {
+            alert('이메일 아이디를 입력해주세요.');
+            emailLocalRef.current.focus();
+            return;
+        }
+        alert('사용 가능한 이메일입니다.');
+        setIsEmailChecked(true);
+    };
+
+    const checkDuplicateNickname = () => {
+        if (!formData.nickname) {
+            alert('닉네임을 입력해주세요.');
+            nicknameRef.current.focus();
+            return;
+        }
+        alert('사용 가능한 닉네임입니다.');
+        setIsNicknameChecked(true);
+    };
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
@@ -119,17 +169,23 @@ const SignUpPage = () => {
             window.scrollTo(0,0);
         } else if (step === 2) {
             if (!formData.loginId) return alert('아이디를 입력해주세요.');
+            if (!isIdChecked) return alert('아이디 중복확인을 해주세요.');
+            
             if (!formData.password) return alert('비밀번호를 입력해주세요.');
-            if (!formData.confirmPassword) return alert('비밀번호 확인을 입력해주세요.');
             if (formData.password !== formData.confirmPassword) return alert('비밀번호가 일치하지 않습니다.');
+            
             if (!formData.name) return alert('이름을 입력해주세요.');
             
             if (!formData.birthdate) return alert('생년월일을 입력해주세요.');
-            if (formData.birthdate.length !== 8) {
-                return alert('생년월일은 8자리로 입력해주세요. (예: 19900101)');
-            }
+            if (formData.birthdate.length !== 8) return alert('생년월일은 8자리로 입력해주세요. (예: 19900101)');
 
             if (!formData.phone) return alert('휴대폰 번호를 입력해주세요.');
+            
+            if (!formData.emailLocal) return alert('이메일을 입력해주세요.');
+            if (!isEmailChecked) return alert('이메일 중복확인을 해주세요.');
+
+            if (!formData.nickname) return alert('닉네임을 입력해주세요.');
+            if (!isNicknameChecked) return alert('닉네임 중복확인을 해주세요.');
             
             setStep(3);
             window.scrollTo(0,0);
@@ -192,7 +248,9 @@ const SignUpPage = () => {
                                         onChange={handleInputChange} 
                                         onFocus={() => setFocusedField('loginId')}
                                         onBlur={() => setFocusedField(null)}
+                                        ref={loginIdRef}
                                         maxLength={20}
+                                        disabled={isIdChecked}
                                     />
                                     {focusedField === 'loginId' && (
                                         <div className="validation-tooltip">
@@ -204,7 +262,14 @@ const SignUpPage = () => {
                                         </div>
                                     )}
                                 </div>
-                                <button className="action-btn">중복확인</button>
+                                <button 
+                                    type="button" 
+                                    className="action-btn" 
+                                    onClick={checkDuplicateId}
+                                    disabled={isIdChecked}
+                                >
+                                    중복확인
+                                </button>
                             </div>
                         </div>
 
@@ -283,17 +348,37 @@ const SignUpPage = () => {
                             <label>이메일</label>
                             <div className="input-row email-row">
                                 <div className="input-wrapper">
-                                    <input type="text" name="emailLocal" placeholder="이메일 아이디" value={formData.emailLocal} onChange={handleInputChange} />
+                                    <input 
+                                        type="text" 
+                                        name="emailLocal" 
+                                        placeholder="이메일 아이디" 
+                                        value={formData.emailLocal} 
+                                        onChange={handleInputChange}
+                                        ref={emailLocalRef}
+                                        disabled={isEmailChecked}
+                                    />
                                 </div>
                                 <span className="email-at">@</span>
                                 <div className="input-wrapper">
-                                    <select name="emailDomain" value={formData.emailDomain} onChange={handleInputChange}>
+                                    <select 
+                                        name="emailDomain" 
+                                        value={formData.emailDomain} 
+                                        onChange={handleInputChange}
+                                        disabled={isEmailChecked}
+                                    >
                                         <option value="naver.com">naver.com</option>
                                         <option value="gmail.com">gmail.com</option>
                                         <option value="daum.net">daum.net</option>
                                     </select>
                                 </div>
-                                <button className="action-btn">중복확인</button>
+                                <button 
+                                    type="button" 
+                                    className="action-btn" 
+                                    onClick={checkEmail}
+                                    disabled={isEmailChecked}
+                                >
+                                    중복확인
+                                </button>
                             </div>
                         </div>
 
@@ -301,9 +386,24 @@ const SignUpPage = () => {
                             <label>닉네임</label>
                             <div className="input-row">
                                 <div className="input-wrapper">
-                                    <input type="text" name="nickname" placeholder="닉네임 입력" value={formData.nickname} onChange={handleInputChange} />
+                                    <input 
+                                        type="text" 
+                                        name="nickname" 
+                                        placeholder="닉네임 입력" 
+                                        value={formData.nickname} 
+                                        onChange={handleInputChange}
+                                        ref={nicknameRef}
+                                        disabled={isNicknameChecked}
+                                    />
                                 </div>
-                                <button className="action-btn">중복확인</button>
+                                <button 
+                                    type="button" 
+                                    className="action-btn" 
+                                    onClick={checkDuplicateNickname}
+                                    disabled={isNicknameChecked}
+                                >
+                                    중복확인
+                                </button>
                             </div>
                         </div>
 
