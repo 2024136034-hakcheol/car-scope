@@ -21,7 +21,8 @@
     overflow-x: hidden;
     padding-top: 30px;
     padding-bottom: 80px;
-    background-color: var(--bg-body); 
+    background-color: var(--bg-body);
+    box-sizing: border-box;
 }
 
 .homepage-container .main-banner-slider-wrapper {
@@ -34,6 +35,7 @@
     overflow: hidden;
     box-shadow: var(--shadow-soft);
     background-color: var(--white);
+    flex-shrink: 0;
 }
 
 .homepage-container .main-banner-slider {
@@ -228,10 +230,10 @@
 
 .homepage-container .main-content-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 30px;
     width: 100%;
     max-width: var(--container-width);
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
     margin-bottom: 50px;
     padding: 0 20px;
     box-sizing: border-box;
@@ -246,6 +248,8 @@
     flex-direction: column;
     transition: transform 0.3s;
     border: 1px solid transparent;
+    width: 100%;
+    box-sizing: border-box;
 }
 
 .homepage-container .card:hover {
@@ -326,6 +330,7 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
+    width: 100%;
 }
 
 .homepage-container .parking-spot-card {
@@ -418,6 +423,7 @@
     background-color: var(--white);
     border-radius: var(--radius-lg);
     text-align: center;
+    box-shadow: var(--shadow-card);
 }
 
 .homepage-container .company-stats-section h2 {
@@ -438,6 +444,7 @@
     justify-content: center;
     gap: 30px;
     flex-wrap: wrap;
+    width: 100%;
 }
 
 .homepage-container .stat-item {
