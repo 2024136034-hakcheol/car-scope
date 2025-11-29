@@ -15,39 +15,35 @@ body {
 }
 
 .signup-container {
-    max-width: 600px;
-    margin: 50px auto;
-    padding: 40px;
+    max-width: 520px;
+    margin: 60px auto;
+    padding: 50px 40px;
     background-color: var(--white);
-    border-radius: 12px;
+    border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
 }
 
-.signup-step {
-    display: flex;
-    flex-direction: column;
-}
-
 .signup-step h2 {
     font-size: 1.8rem;
+    font-weight: 800;
     color: var(--text-main);
     text-align: center;
-    margin-bottom: 30px;
-    font-weight: 800;
+    margin-top: 0;
+    margin-bottom: 40px;
 }
 
 .agreement-box {
-    margin-bottom: 15px;
+    background-color: #fff;
     border: 1px solid var(--border-color);
     border-radius: 8px;
-    padding: 15px;
-    background-color: #fff;
-    transition: border-color 0.2s;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
 }
 
 .agreement-box:hover {
-    border-color: #b0c4de;
+    border-color: var(--primary-color);
 }
 
 .agreement-header {
@@ -59,14 +55,15 @@ body {
 .agreement-box label {
     font-size: 1rem;
     font-weight: 600;
+    color: var(--text-main);
     display: flex;
     align-items: center;
+    gap: 10px;
     cursor: pointer;
-    color: var(--text-main);
+    width: 100%;
 }
 
 .agreement-box input[type="checkbox"] {
-    margin-right: 12px;
     width: 20px;
     height: 20px;
     accent-color: var(--primary-color);
@@ -78,210 +75,186 @@ body {
     border: none;
     color: var(--text-sub);
     font-size: 0.9rem;
-    font-weight: 600;
-    cursor: pointer;
     text-decoration: underline;
-    padding: 5px 10px;
-    transition: color 0.2s;
-}
-
-.details-button:hover {
-    color: var(--primary-color);
-}
-
-.next-button {
-    width: 100%;
-    padding: 14px;
-    font-size: 1.1rem;
-    font-weight: 700;
-    background-color: var(--primary-color);
-    color: white;
-    border: none;
-    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s, transform 0.1s;
-    margin-top: 20px;
-    box-shadow: 0 4px 6px rgba(30, 144, 255, 0.2);
-}
-
-.next-button:hover {
-    background-color: var(--primary-hover);
-    transform: translateY(-2px);
+    flex-shrink: 0;
 }
 
 .signup-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
 .input-group {
-    width: 100%;
     display: flex;
     flex-direction: column;
     gap: 8px;
+    width: 100%;
 }
 
 .input-group label {
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-main);
+    margin-left: 2px;
 }
 
 .input-group input,
 .input-group select {
     width: 100%;
-    height: 48px;
+    height: 50px;
     padding: 0 15px;
-    font-size: 1rem;
     border: 1px solid var(--border-color);
     border-radius: 8px;
+    font-size: 1rem;
     box-sizing: border-box;
     transition: all 0.2s;
     background-color: #fff;
+    color: var(--text-main);
 }
 
 .input-group input:focus,
 .input-group select:focus {
-    outline: none;
     border-color: var(--primary-color);
+    outline: none;
     box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
 }
 
-.input-group input[disabled] {
-    background-color: #f8f9fa;
-    color: var(--text-sub);
-}
-
-.form-row {
+.input-row {
     display: flex;
-    flex-direction: row;
     gap: 10px;
     align-items: flex-end;
+    width: 100%;
 }
 
-.form-row .input-group {
+.input-row .input-wrapper {
     flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
 }
 
-.password-input-wrapper {
+.action-btn {
+    height: 50px;
+    padding: 0 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: all 0.2s;
+    box-shadow: 0 2px 5px rgba(30, 144, 255, 0.2);
+}
+
+.action-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-1px);
+}
+
+.action-btn:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: none;
+}
+
+.password-wrapper {
     position: relative;
     width: 100%;
 }
 
-.password-input-wrapper input {
+.password-wrapper input {
     padding-right: 60px;
 }
 
-.password-toggle-btn {
+.toggle-pw {
     position: absolute;
-    right: 10px;
+    right: 15px;
     top: 50%;
     transform: translateY(-50%);
     background: none;
     border: none;
-    cursor: pointer;
-    color: var(--text-sub);
+    color: var(--primary-color);
     font-size: 0.9rem;
     font-weight: 600;
-    padding: 5px;
+    cursor: pointer;
+    padding: 0;
 }
 
-.password-toggle-btn:hover {
-    color: var(--primary-color);
-}
-
-.password-validation-guide {
-    padding: 12px;
-    background-color: #f8f9fa;
+.password-guide {
+    background-color: #f0f7ff;
+    border: 1px solid #cce5ff;
+    padding: 15px;
     border-radius: 8px;
     margin-top: 5px;
+    animation: slideDown 0.3s ease-out;
 }
 
-.password-validation-guide ul {
-    list-style: none;
-    padding: 0;
+@keyframes slideDown {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.password-guide ul {
     margin: 0;
-    font-size: 0.85rem;
+    padding: 0;
+    list-style: none;
 }
 
-.password-validation-guide li {
-    margin-bottom: 4px;
+.password-guide li {
+    font-size: 0.85rem;
+    margin-bottom: 5px;
+    color: var(--text-sub);
     display: flex;
     align-items: center;
     gap: 6px;
-    color: var(--text-sub);
 }
 
-.password-validation-guide li.valid {
+.password-guide li.valid {
     color: #2ecc71;
     font-weight: 700;
 }
 
-.phone-group {
+.password-guide li.invalid {
+    color: #e74c3c;
+}
+
+.email-row {
     display: flex;
-    flex-direction: row;
-    align-items: flex-end;
-    gap: 10px;
-}
-
-.phone-group .input-group {
-    flex: 1;
-}
-
-.sms-button,
-.duplicate-check-btn,
-.email-check-btn {
-    height: 48px;
-    padding: 0 20px;
-    font-size: 0.95rem;
-    font-weight: 600;
-    background-color: #f1f3f5;
-    color: var(--text-main);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    cursor: pointer;
-    white-space: nowrap;
-    transition: all 0.2s;
-    margin-bottom: 0;
-}
-
-.sms-button:hover,
-.duplicate-check-btn:hover,
-.email-check-btn:hover {
-    background-color: #e9ecef;
-    border-color: #b0b0b0;
-}
-
-.email-group {
-    display: flex;
-    flex-direction: row;
     align-items: center;
     gap: 8px;
-    width: 100%;
 }
 
 .email-at {
-    font-size: 1.1rem;
-    color: var(--text-sub);
+    font-size: 1.2rem;
     font-weight: 600;
+    color: var(--text-sub);
+    margin-top: 25px; 
 }
 
-.email-local-input {
-    flex: 1;
-}
-
-.email-domain-select {
-    flex: 1;
-}
-
-.email-group.with-button {
-    align-items: flex-end;
-}
-
-.email-domain-custom {
+.full-btn {
     width: 100%;
-    margin-top: 10px;
+    height: 54px;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 700;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 30px;
+    transition: all 0.2s;
+    box-shadow: 0 4px 12px rgba(30, 144, 255, 0.3);
+}
+
+.full-btn:hover {
+    background-color: var(--primary-hover);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 144, 255, 0.4);
 }
 
 .step-3 {
@@ -289,17 +262,17 @@ body {
     padding: 20px 0;
 }
 
-.complete-nickname {
-    font-size: 2.2rem;
-    font-weight: 800;
-    color: var(--primary-color);
-    margin: 15px 0;
-}
-
-.complete-message {
-    font-size: 1.1rem;
+.complete-msg {
+    font-size: 1.2rem;
     color: var(--text-sub);
     margin-bottom: 40px;
+}
+
+.welcome-name {
+    font-size: 2.2rem;
+    color: var(--primary-color);
+    font-weight: 800;
+    margin-bottom: 10px;
 }
 
 .modal-overlay {
@@ -308,85 +281,59 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: rgba(0,0,0,0.5);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 2000;
-    backdrop-filter: blur(3px);
+    z-index: 9999;
 }
 
 .modal-content {
-    background-color: white;
+    background: white;
     padding: 30px;
     border-radius: 16px;
     width: 90%;
-    max-width: 600px;
-    max-height: 80vh;
-    display: flex;
-    flex-direction: column;
+    max-width: 500px;
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
 }
 
-.modal-content h2 {
-    text-align: center;
-    margin-top: 0;
-    margin-bottom: 20px;
-    font-size: 1.5rem;
-    color: var(--text-main);
-}
-
-.modal-text-content {
+.modal-body {
+    height: 300px;
     overflow-y: auto;
-    border: 1px solid var(--border-color);
+    background: #f9f9f9;
+    padding: 15px;
     border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    white-space: pre-wrap;
-    font-size: 0.95rem;
-    color: var(--text-sub);
+    margin: 20px 0;
+    font-size: 0.9rem;
     line-height: 1.6;
-    background-color: #f9f9f9;
+    color: var(--text-sub);
+    white-space: pre-wrap;
 }
 
-.modal-close-button {
+.close-btn {
+    width: 100%;
     padding: 12px;
-    background-color: var(--primary-color);
+    background-color: var(--text-main);
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
-    transition: background-color 0.2s;
-}
-
-.modal-close-button:hover {
-    background-color: var(--primary-hover);
 }
 
 @media (max-width: 600px) {
     .signup-container {
-        margin: 20px auto;
+        margin: 20px;
         padding: 30px 20px;
-        width: 95%;
     }
-    
-    .form-row, 
-    .phone-group, 
-    .email-group {
+    .input-row {
         flex-direction: column;
         align-items: stretch;
     }
-    
+    .action-btn {
+        width: 100%;
+    }
     .email-at {
         display: none;
-    }
-    
-    .sms-button, 
-    .duplicate-check-btn, 
-    .email-check-btn {
-        width: 100%;
-        margin-top: 5px;
     }
 }
