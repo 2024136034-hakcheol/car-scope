@@ -6,6 +6,8 @@
     --border-color: #ddd;
     --bg-page: #f4f6f8;
     --white: #ffffff;
+    --error-color: #e74c3c;
+    --success-color: #2ecc71;
 }
 
 body {
@@ -22,7 +24,7 @@ body {
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
-    text-align: left; 
+    text-align: left;
 }
 
 .signup-step {
@@ -33,7 +35,7 @@ body {
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--text-main);
-    text-align: center; 
+    text-align: center;
     margin-top: 0;
     margin-bottom: 40px;
 }
@@ -41,7 +43,7 @@ body {
 .signup-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 24px;
 }
 
 .input-group {
@@ -49,6 +51,7 @@ body {
     flex-direction: column;
     gap: 8px;
     width: 100%;
+    position: relative; 
 }
 
 .input-group label {
@@ -83,14 +86,15 @@ body {
 .input-row {
     display: flex;
     gap: 10px;
-    align-items: flex-end; 
+    align-items: flex-end;
     width: 100%;
 }
 
 .input-row .input-wrapper {
-    flex: 1; 
+    flex: 1;
     display: flex;
     flex-direction: column;
+    position: relative; 
 }
 
 .input-row .input-wrapper input {
@@ -98,7 +102,7 @@ body {
 }
 
 .action-btn {
-    height: 50px; 
+    height: 50px;
     padding: 0 20px;
     background-color: var(--primary-color);
     color: white;
@@ -107,7 +111,7 @@ body {
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    white-space: nowrap; 
+    white-space: nowrap;
     transition: all 0.2s;
     box-shadow: 0 2px 5px rgba(30, 144, 255, 0.2);
     margin-bottom: 0;
@@ -148,41 +152,70 @@ body {
     padding: 0;
 }
 
-.password-guide {
-    background-color: #f0f7ff;
-    border: 1px solid #cce5ff;
-    padding: 15px;
+.validation-tooltip {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    background-color: #fff;
+    border: 1px solid var(--primary-color);
+    padding: 12px;
     border-radius: 8px;
-    margin-top: 5px;
+    margin-top: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    z-index: 10;
+    animation: fadeIn 0.2s ease-out;
 }
 
-.password-guide ul {
+.validation-tooltip::before {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: 20px;
+    width: 10px;
+    height: 10px;
+    background-color: #fff;
+    border-top: 1px solid var(--primary-color);
+    border-left: 1px solid var(--primary-color);
+    transform: rotate(45deg);
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-5px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.validation-tooltip ul {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.password-guide li {
+.validation-tooltip li {
     font-size: 0.85rem;
-    margin-bottom: 5px;
+    margin-bottom: 4px;
     color: var(--text-sub);
     display: flex;
     align-items: center;
     gap: 6px;
 }
 
-.password-guide li.valid {
-    color: #2ecc71;
+.validation-tooltip li:last-child {
+    margin-bottom: 0;
+}
+
+.validation-tooltip li.valid {
+    color: var(--success-color);
     font-weight: 700;
 }
 
-.password-guide li.invalid {
-    color: #e74c3c;
+.validation-tooltip li.invalid {
+    color: var(--text-sub); 
 }
 
 .email-row {
     display: flex;
-    align-items: flex-start; 
+    align-items: flex-start;
     gap: 8px;
 }
 
@@ -190,7 +223,7 @@ body {
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--text-sub);
-    margin-top: 12px; 
+    margin-top: 12px;
     align-self: center;
 }
 

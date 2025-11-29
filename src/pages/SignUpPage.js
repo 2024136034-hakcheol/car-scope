@@ -20,7 +20,6 @@ const SignUpPage = () => {
     const [step, setStep] = useState(1);
     const [modalState, setModalState] = useState({ isOpen: false, type: '' });
     
-    // 포커스 상태 관리 (조건부 표시를 위함)
     const [focusedField, setFocusedField] = useState(null);
 
     const [agreements, setAgreements] = useState({
@@ -50,6 +49,8 @@ const SignUpPage = () => {
         special: false,
     });
 
+    const [idValidation, setIdValidation] = useState(false);
+
     const validatePassword = (password) => {
         const length = password.length >= 8 && password.length <= 20;
         const letter = /[a-zA-Z]/.test(password);
@@ -58,10 +59,16 @@ const SignUpPage = () => {
         setPasswordValidations({ length, letter, number, special });
     };
 
+    const validateId = (id) => {
+        const isValid = id.length >= 4 && id.length <= 20;
+        setIdValidation(isValid);
+    };
+
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
         if (name === 'password') validatePassword(value);
+        if (name === 'loginId') validateId(value);
     };
 
     const handleAgreementChange = (e) => {
@@ -143,10 +150,21 @@ const SignUpPage = () => {
                                     <input 
                                         type="text" 
                                         name="loginId" 
-                                        placeholder="아이디 입력 (4~20자)" 
+                                        placeholder="아이디 입력" 
                                         value={formData.loginId} 
                                         onChange={handleInputChange} 
+                                        onFocus={() => setFocusedField('loginId')}
+                                        onBlur={() => setFocusedField(null)}
                                     />
+                                    {focusedField === 'loginId' && (
+                                        <div className="validation-tooltip">
+                                            <ul>
+                                                <li className={idValidation ? 'valid' : 'invalid'}>
+                                                    {idValidation ? '✓' : '•'} 4~20자 이내
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    )}
                                 </div>
                                 <button className="action-btn">중복확인</button>
                             </div>
@@ -167,18 +185,18 @@ const SignUpPage = () => {
                                 <button type="button" className="toggle-pw" onClick={() => setShowPassword(!showPassword)}>
                                     {showPassword ? "숨기기" : "보기"}
                                 </button>
+                                
+                                {focusedField === 'password' && (
+                                    <div className="validation-tooltip">
+                                        <ul>
+                                            <li className={passwordValidations.length ? 'valid' : 'invalid'}>{passwordValidations.length ? '✓' : '•'} 8~20자 이내</li>
+                                            <li className={passwordValidations.letter ? 'valid' : 'invalid'}>{passwordValidations.letter ? '✓' : '•'} 영문 포함</li>
+                                            <li className={passwordValidations.number ? 'valid' : 'invalid'}>{passwordValidations.number ? '✓' : '•'} 숫자 포함</li>
+                                            <li className={passwordValidations.special ? 'valid' : 'invalid'}>{passwordValidations.special ? '✓' : '•'} 특수문자 포함</li>
+                                        </ul>
+                                    </div>
+                                )}
                             </div>
-                            {/* 포커스 되었을 때만 조건문 표시 */}
-                            {(focusedField === 'password' || formData.password.length > 0) && (
-                                <div className="password-guide">
-                                    <ul>
-                                        <li className={passwordValidations.length ? 'valid' : 'invalid'}>{passwordValidations.length ? '✓' : '•'} 8~20자 이내</li>
-                                        <li className={passwordValidations.letter ? 'valid' : 'invalid'}>{passwordValidations.letter ? '✓' : '•'} 영문 포함</li>
-                                        <li className={passwordValidations.number ? 'valid' : 'invalid'}>{passwordValidations.number ? '✓' : '•'} 숫자 포함</li>
-                                        <li className={passwordValidations.special ? 'valid' : 'invalid'}>{passwordValidations.special ? '✓' : '•'} 특수문자 포함</li>
-                                    </ul>
-                                </div>
-                            )}
                         </div>
 
                         <div className="input-group">
