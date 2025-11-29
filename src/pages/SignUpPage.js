@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
 
@@ -36,7 +36,6 @@ const SignUpPage = () => {
         name: '',
         birthdate: '',
         phone: '',
-        verificationCode: '',
         emailLocal: '',
         emailDomain: 'naver.com',
         emailDomainCustom: '',
@@ -67,7 +66,32 @@ const SignUpPage = () => {
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
+
+        if (name === 'loginId') {
+            const regex = /^[a-zA-Z0-9]*$/;
+            if (!regex.test(value)) {
+                return;
+            }
+        }
+
+        if (name === 'birthdate') {
+            const regex = /^[0-9]*$/;
+            if (!regex.test(value)) {
+                return;
+            }
+            if (value.length > 8) {
+                alert('생년월일은 8자리까지만 입력 가능합니다.');
+                return;
+            }
+        }
+
+        if (name === 'phone') {
+            const regex = /^[0-9]*$/;
+            if (!regex.test(value)) return;
+        }
+
         setFormData({ ...formData, [name]: value });
+
         if (name === 'password') validatePassword(value);
         if (name === 'loginId') validateId(value);
     };
@@ -94,7 +118,19 @@ const SignUpPage = () => {
             setStep(2);
             window.scrollTo(0,0);
         } else if (step === 2) {
-            if (!formData.loginId || !formData.password || !formData.name || !formData.phone) return alert('필수 정보를 입력해주세요.');
+            if (!formData.loginId) return alert('아이디를 입력해주세요.');
+            if (!formData.password) return alert('비밀번호를 입력해주세요.');
+            if (!formData.confirmPassword) return alert('비밀번호 확인을 입력해주세요.');
+            if (formData.password !== formData.confirmPassword) return alert('비밀번호가 일치하지 않습니다.');
+            if (!formData.name) return alert('이름을 입력해주세요.');
+            
+            if (!formData.birthdate) return alert('생년월일을 입력해주세요.');
+            if (formData.birthdate.length !== 8) {
+                return alert('생년월일은 8자리로 입력해주세요. (예: 19900101)');
+            }
+
+            if (!formData.phone) return alert('휴대폰 번호를 입력해주세요.');
+            
             setStep(3);
             window.scrollTo(0,0);
         }
@@ -151,11 +187,12 @@ const SignUpPage = () => {
                                     <input 
                                         type="text" 
                                         name="loginId" 
-                                        placeholder="아이디 입력" 
+                                        placeholder="아이디 입력 (영문, 숫자만 가능)" 
                                         value={formData.loginId} 
                                         onChange={handleInputChange} 
                                         onFocus={() => setFocusedField('loginId')}
                                         onBlur={() => setFocusedField(null)}
+                                        maxLength={20}
                                     />
                                     {focusedField === 'loginId' && (
                                         <div className="validation-tooltip">
@@ -228,12 +265,18 @@ const SignUpPage = () => {
 
                         <div className="input-group">
                             <label>생년월일</label>
-                            <input type="text" name="birthdate" placeholder="생년월일 8자리 (예: 19900101)" value={formData.birthdate} onChange={handleInputChange} maxLength={8} />
+                            <input 
+                                type="text" 
+                                name="birthdate" 
+                                placeholder="생년월일 8자리 (예: 19900101)" 
+                                value={formData.birthdate} 
+                                onChange={handleInputChange} 
+                            />
                         </div>
 
                         <div className="input-group">
                             <label>휴대폰 번호</label>
-                            <input type="tel" name="phone" placeholder="'-' 없이 입력" value={formData.phone} onChange={handleInputChange} />
+                            <input type="tel" name="phone" placeholder="'-' 없이 입력" value={formData.phone} onChange={handleInputChange} maxLength={11} />
                         </div>
 
                         <div className="input-group">
