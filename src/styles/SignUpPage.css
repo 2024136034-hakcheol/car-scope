@@ -22,6 +22,7 @@ body {
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
+    text-align: left;
 }
 
 .signup-step {
@@ -80,6 +81,31 @@ body {
     border-color: var(--primary-color);
     outline: none;
     box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.1);
+}
+
+.gender-options {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    height: 50px;
+    padding-left: 5px;
+}
+
+.gender-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 1rem;
+    cursor: pointer;
+    color: var(--text-main);
+}
+
+.gender-label input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-color);
+    margin: 0;
+    cursor: pointer;
 }
 
 .input-row {

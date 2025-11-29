@@ -40,6 +40,7 @@ const SignUpPage = () => {
         confirmPassword: '',
         name: '',
         birthdate: '',
+        gender: '',
         phone: '',
         emailLocal: '',
         emailDomain: 'naver.com',
@@ -224,6 +225,8 @@ const SignUpPage = () => {
             if (!formData.birthdate) return alert('생년월일을 입력해주세요.');
             if (formData.birthdate.length !== 8) return alert('생년월일은 8자리로 입력해주세요. (예: 19900101)');
 
+            if (!formData.gender) return alert('성별을 선택해주세요.');
+
             if (!formData.phone) return alert('휴대폰 번호를 입력해주세요.');
             
             if (!formData.emailLocal) return alert('이메일을 입력해주세요.');
@@ -252,6 +255,7 @@ const SignUpPage = () => {
                     name: formData.name,
                     nickname: formData.nickname,
                     birthdate: formData.birthdate,
+                    gender: formData.gender,
                     phone: formData.phone,
                     createdAt: new Date()
                 });
@@ -418,6 +422,32 @@ const SignUpPage = () => {
                                 value={formData.birthdate} 
                                 onChange={handleInputChange} 
                             />
+                        </div>
+
+                        <div className="input-group">
+                            <label>성별</label>
+                            <div className="gender-options">
+                                <label className="gender-label">
+                                    <input 
+                                        type="radio" 
+                                        name="gender" 
+                                        value="male" 
+                                        checked={formData.gender === 'male'} 
+                                        onChange={handleInputChange} 
+                                    />
+                                    남성
+                                </label>
+                                <label className="gender-label">
+                                    <input 
+                                        type="radio" 
+                                        name="gender" 
+                                        value="female" 
+                                        checked={formData.gender === 'female'} 
+                                        onChange={handleInputChange} 
+                                    />
+                                    여성
+                                </label>
+                            </div>
                         </div>
 
                         <div className="input-group">
