@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
 import { db, auth } from '../firebase';
 import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
 
 const TermsModal = ({ isOpen, onClose, title, content }) => {
     if (!isOpen) return null;
@@ -255,6 +255,8 @@ const SignUpPage = () => {
                     phone: formData.phone,
                     createdAt: new Date()
                 });
+
+                await signOut(auth);
 
                 setStep(3);
                 window.scrollTo(0,0);
