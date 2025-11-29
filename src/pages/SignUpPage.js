@@ -22,9 +22,7 @@ const SignUpPage = () => {
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [modalState, setModalState] = useState({ isOpen: false, type: '' });
-    
     const [isSigningUp, setIsSigningUp] = useState(false);
-
     const [focusedField, setFocusedField] = useState(null);
 
     const [agreements, setAgreements] = useState({
