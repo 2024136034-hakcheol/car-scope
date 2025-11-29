@@ -23,6 +23,8 @@ const SignUpPage = () => {
     const [step, setStep] = useState(1);
     const [modalState, setModalState] = useState({ isOpen: false, type: '' });
     
+    const [isSigningUp, setIsSigningUp] = useState(false);
+
     const [focusedField, setFocusedField] = useState(null);
 
     const [agreements, setAgreements] = useState({
@@ -39,7 +41,6 @@ const SignUpPage = () => {
         name: '',
         birthdate: '',
         phone: '',
-        verificationCode: '',
         emailLocal: '',
         emailDomain: 'naver.com',
         emailDomainCustom: '',
@@ -146,8 +147,8 @@ const SignUpPage = () => {
                 setIsIdChecked(true);
             }
         } catch (error) {
-            console.error("아이디 중복 확인 에러:", error);
-            alert("중복 확인 중 오류가 발생했습니다. (콘솔 확인 필요)");
+            console.error(error);
+            alert("중복 확인 중 오류가 발생했습니다.");
         }
     };
 
@@ -173,7 +174,7 @@ const SignUpPage = () => {
                 setIsEmailChecked(true);
             }
         } catch (error) {
-            console.error("이메일 중복 확인 에러:", error);
+            console.error(error);
             alert("중복 확인 중 오류가 발생했습니다.");
         }
     };
@@ -198,7 +199,7 @@ const SignUpPage = () => {
                 setIsNicknameChecked(true);
             }
         } catch (error) {
-            console.error("닉네임 중복 확인 에러:", error);
+            console.error(error);
             alert("중복 확인 중 오류가 발생했습니다.");
         }
     };
@@ -231,24 +232,20 @@ const SignUpPage = () => {
             if (!formData.nickname) return alert('닉네임을 입력해주세요.');
             if (!isNicknameChecked) return alert('닉네임 중복확인을 해주세요.');
             
-            console.log("🚀 회원가입 프로세스 시작...");
+            if (isSigningUp) return;
+            setIsSigningUp(true);
 
             try {
                 const domain = formData.emailDomain === 'custom' ? formData.emailDomainCustom : formData.emailDomain;
                 const fullEmail = `${formData.emailLocal}@${domain}`;
 
-                console.log("1. Firebase Auth 사용자 생성 중...", fullEmail);
                 const userCredential = await createUserWithEmailAndPassword(auth, fullEmail, formData.password);
                 const user = userCredential.user;
-                console.log("✅ Auth 생성 완료! UID:", user.uid);
 
-                console.log("2. 프로필 업데이트 중...");
                 await updateProfile(user, {
                     displayName: formData.nickname 
                 });
-                console.log("✅ 프로필 업데이트 완료");
 
-                console.log("3. Firestore DB 저장 시도 중...");
                 await setDoc(doc(db, "users", user.uid), {
                     id: formData.loginId,
                     email: fullEmail,
@@ -258,13 +255,18 @@ const SignUpPage = () => {
                     phone: formData.phone,
                     createdAt: new Date()
                 });
-                console.log("✅ Firestore 저장 완료!");
 
                 setStep(3);
                 window.scrollTo(0,0);
             } catch (error) {
-                console.error("🔥 회원가입 에러 발생:", error);
-                alert("회원가입 중 오류가 발생했습니다: " + error.message);
+                console.error(error);
+                if (error.code === 'auth/email-already-in-use') {
+                    alert("이미 가입된 이메일 주소입니다.");
+                } else {
+                    alert("회원가입 중 오류가 발생했습니다: " + error.message);
+                }
+            } finally {
+                setIsSigningUp(false);
             }
         }
     };
@@ -484,7 +486,14 @@ const SignUpPage = () => {
                             </div>
                         </div>
 
-                        <button type="button" className="full-btn" onClick={nextStep}>회원가입 완료</button>
+                        <button 
+                            type="button" 
+                            className="full-btn" 
+                            onClick={nextStep}
+                            disabled={isSigningUp}
+                        >
+                            {isSigningUp ? "가입 처리중..." : "회원가입 완료"}
+                        </button>
                     </form>
                 </div>
             )}
