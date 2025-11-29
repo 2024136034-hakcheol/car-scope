@@ -1,6 +1,8 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
+import { db } from '../firebase';
+import { collection, query, where, getDocs } from "firebase/firestore";
 
 const TermsModal = ({ isOpen, onClose, title, content }) => {
     if (!isOpen) return null;
@@ -36,6 +38,7 @@ const SignUpPage = () => {
         name: '',
         birthdate: '',
         phone: '',
+        verificationCode: '',
         emailLocal: '',
         emailDomain: 'naver.com',
         emailDomainCustom: '',
@@ -117,7 +120,7 @@ const SignUpPage = () => {
         }
     };
 
-    const checkDuplicateId = () => {
+    const checkDuplicateId = async () => {
         if (!formData.loginId) {
             alert('아이디를 입력해주세요.');
             loginIdRef.current.focus();
@@ -129,34 +132,74 @@ const SignUpPage = () => {
             return;
         }
         
-        const mockExistingIds = ['admin', 'test', 'carscope'];
-        if (mockExistingIds.includes(formData.loginId)) {
-            alert('이미 사용 중인 아이디입니다.');
-            setIsIdChecked(false);
-        } else {
-            alert('사용 가능한 아이디입니다.');
-            setIsIdChecked(true);
+        try {
+            const q = query(collection(db, "users"), where("id", "==", formData.loginId));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                alert('이미 사용 중인 아이디입니다.');
+                setIsIdChecked(false);
+                loginIdRef.current.focus();
+            } else {
+                alert('사용 가능한 아이디입니다.');
+                setIsIdChecked(true);
+            }
+        } catch (error) {
+            console.error("Error checking ID:", error);
+            alert("중복 확인 중 오류가 발생했습니다.");
         }
     };
 
-    const checkEmail = () => {
+    const checkEmail = async () => {
         if (!formData.emailLocal) {
             alert('이메일 아이디를 입력해주세요.');
             emailLocalRef.current.focus();
             return;
         }
-        alert('사용 가능한 이메일입니다.');
-        setIsEmailChecked(true);
+
+        const domain = formData.emailDomain === 'custom' ? formData.emailDomainCustom : formData.emailDomain;
+        const fullEmail = `${formData.emailLocal}@${domain}`;
+
+        try {
+            const q = query(collection(db, "users"), where("email", "==", fullEmail));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                alert('이미 사용 중인 이메일입니다.');
+                setIsEmailChecked(false);
+            } else {
+                alert('사용 가능한 이메일입니다.');
+                setIsEmailChecked(true);
+            }
+        } catch (error) {
+            console.error("Error checking Email:", error);
+            alert("중복 확인 중 오류가 발생했습니다.");
+        }
     };
 
-    const checkDuplicateNickname = () => {
+    const checkDuplicateNickname = async () => {
         if (!formData.nickname) {
             alert('닉네임을 입력해주세요.');
             nicknameRef.current.focus();
             return;
         }
-        alert('사용 가능한 닉네임입니다.');
-        setIsNicknameChecked(true);
+
+        try {
+            const q = query(collection(db, "users"), where("nickname", "==", formData.nickname));
+            const querySnapshot = await getDocs(q);
+
+            if (!querySnapshot.empty) {
+                alert('이미 사용 중인 닉네임입니다.');
+                setIsNicknameChecked(false);
+                nicknameRef.current.focus();
+            } else {
+                alert('사용 가능한 닉네임입니다.');
+                setIsNicknameChecked(true);
+            }
+        } catch (error) {
+            console.error("Error checking Nickname:", error);
+            alert("중복 확인 중 오류가 발생했습니다.");
+        }
     };
 
     const [showPassword, setShowPassword] = useState(false);
@@ -252,7 +295,7 @@ const SignUpPage = () => {
                                         maxLength={20}
                                         disabled={isIdChecked}
                                     />
-                                    {focusedField === 'loginId' && (
+                                    {focusedField === 'loginId' && !isIdChecked && (
                                         <div className="validation-tooltip">
                                             <ul>
                                                 <li className={idValidation ? 'valid' : 'invalid'}>
@@ -268,7 +311,7 @@ const SignUpPage = () => {
                                     onClick={checkDuplicateId}
                                     disabled={isIdChecked}
                                 >
-                                    중복확인
+                                    {isIdChecked ? '확인완료' : '중복확인'}
                                 </button>
                             </div>
                         </div>
@@ -353,7 +396,7 @@ const SignUpPage = () => {
                                         name="emailLocal" 
                                         placeholder="이메일 아이디" 
                                         value={formData.emailLocal} 
-                                        onChange={handleInputChange}
+                                        onChange={handleInputChange} 
                                         ref={emailLocalRef}
                                         disabled={isEmailChecked}
                                     />
@@ -377,7 +420,7 @@ const SignUpPage = () => {
                                     onClick={checkEmail}
                                     disabled={isEmailChecked}
                                 >
-                                    중복확인
+                                    {isEmailChecked ? '확인완료' : '중복확인'}
                                 </button>
                             </div>
                         </div>
@@ -391,7 +434,7 @@ const SignUpPage = () => {
                                         name="nickname" 
                                         placeholder="닉네임 입력" 
                                         value={formData.nickname} 
-                                        onChange={handleInputChange}
+                                        onChange={handleInputChange} 
                                         ref={nicknameRef}
                                         disabled={isNicknameChecked}
                                     />
@@ -402,7 +445,7 @@ const SignUpPage = () => {
                                     onClick={checkDuplicateNickname}
                                     disabled={isNicknameChecked}
                                 >
-                                    중복확인
+                                    {isNicknameChecked ? '확인완료' : '중복확인'}
                                 </button>
                             </div>
                         </div>
