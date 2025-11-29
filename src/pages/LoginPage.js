@@ -38,7 +38,8 @@ const LoginPage = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        
+        console.log("로그인 시도:", idOrEmail);
+
         if (loading) {
             return;
         }
@@ -49,7 +50,6 @@ const LoginPage = () => {
         }
 
         let emailToLogin = idOrEmail;
-        let isIdLogin = false;
         setLoading(true);
 
         try {
@@ -57,12 +57,11 @@ const LoginPage = () => {
             await setPersistence(auth, persistenceMode);
 
             if (!idOrEmail.includes('@')) {
-                isIdLogin = true;
                 const q = query(collection(db, "users"), where("id", "==", idOrEmail));
                 const querySnapshot = await getDocs(q);
                 
                 if (querySnapshot.empty) {
-                    alert("아이디가 틀렸습니다 다시 입력해주세요");
+                    alert("아이디가 존재하지 않습니다.");
                     setLoading(false);
                     return;
                 }
@@ -81,13 +80,18 @@ const LoginPage = () => {
             navigate('/');
 
         } catch (error) {
+            console.error("로그인 에러:", error);
+
             if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
                 alert("비밀번호가 틀렸습니다 다시 입력해주세요");
             } else if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
-                alert("아이디가 틀렸습니다 다시 입력해주세요");
+                alert("아이디가 존재하지 않습니다.");
+            } else if (error.code === 'auth/invalid-api-key') {
+                alert("Firebase API 키 설정 오류입니다. 관리자에게 문의하세요.");
             } else {
                 alert('로그인 실패: ' + error.message);
             }
+        } finally {
             setLoading(false);
         }
     };
@@ -127,6 +131,7 @@ const LoginPage = () => {
                 alert(platform + ' 로그인은 현재 지원되지 않습니다.');
             }
         } catch (error) {
+            console.error("소셜 로그인 에러:", error);
             alert(platform + ' 로그인 실패: ' + error.message);
         } finally {
             setLoading(false);
