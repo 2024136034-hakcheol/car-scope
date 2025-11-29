@@ -2,7 +2,9 @@ import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
 import { db } from '../firebase';
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { auth } from '../firebase';
 
 const TermsModal = ({ isOpen, onClose, title, content }) => {
     if (!isOpen) return null;
@@ -205,7 +207,7 @@ const SignUpPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-    const nextStep = () => {
+    const nextStep = async () => {
         if (step === 1) {
             if (!agreements.terms || !agreements.privacy) return alert('필수 약관에 동의해주세요.');
             setStep(2);
@@ -230,8 +232,33 @@ const SignUpPage = () => {
             if (!formData.nickname) return alert('닉네임을 입력해주세요.');
             if (!isNicknameChecked) return alert('닉네임 중복확인을 해주세요.');
             
-            setStep(3);
-            window.scrollTo(0,0);
+            try {
+                const domain = formData.emailDomain === 'custom' ? formData.emailDomainCustom : formData.emailDomain;
+                const fullEmail = `${formData.emailLocal}@${domain}`;
+
+                const userCredential = await createUserWithEmailAndPassword(auth, fullEmail, formData.password);
+                const user = userCredential.user;
+
+                await updateProfile(user, {
+                    displayName: formData.nickname 
+                });
+
+                await setDoc(doc(db, "users", user.uid), {
+                    id: formData.loginId,
+                    email: fullEmail,
+                    name: formData.name,
+                    nickname: formData.nickname,
+                    birthdate: formData.birthdate,
+                    phone: formData.phone,
+                    createdAt: new Date()
+                });
+
+                setStep(3);
+                window.scrollTo(0,0);
+            } catch (error) {
+                console.error("Error creating user:", error);
+                alert("회원가입 중 오류가 발생했습니다: " + error.message);
+            }
         }
     };
 
@@ -458,7 +485,7 @@ const SignUpPage = () => {
             {step === 3 && (
                 <div className="signup-step step-3">
                     <h2>회원가입이 완료되었습니다!</h2>
-                    <p className="welcome-name">{formData.name || '회원'}님</p>
+                    <p className="welcome-name">{formData.nickname || '회원'}님</p>
                     <p className="complete-msg">CarScope의 회원이 되신 것을 환영합니다.</p>
                     <button className="full-btn" onClick={() => navigate('/login')}>로그인하러 가기</button>
                 </div>
