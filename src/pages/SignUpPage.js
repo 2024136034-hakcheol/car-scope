@@ -34,6 +34,7 @@ const SignUpPage = () => {
         password: '',
         confirmPassword: '',
         name: '',
+        birthdate: '',
         phone: '',
         verificationCode: '',
         emailLocal: '',
@@ -93,7 +94,7 @@ const SignUpPage = () => {
             setStep(2);
             window.scrollTo(0,0);
         } else if (step === 2) {
-            if (!formData.loginId || !formData.password || !formData.name) return alert('필수 정보를 입력해주세요.');
+            if (!formData.loginId || !formData.password || !formData.name || !formData.phone) return alert('필수 정보를 입력해주세요.');
             setStep(3);
             window.scrollTo(0,0);
         }
@@ -226,13 +227,13 @@ const SignUpPage = () => {
                         </div>
 
                         <div className="input-group">
+                            <label>생년월일</label>
+                            <input type="text" name="birthdate" placeholder="생년월일 8자리 (예: 19900101)" value={formData.birthdate} onChange={handleInputChange} maxLength={8} />
+                        </div>
+
+                        <div className="input-group">
                             <label>휴대폰 번호</label>
-                            <div className="input-row">
-                                <div className="input-wrapper">
-                                    <input type="tel" name="phone" placeholder="'-' 없이 입력" value={formData.phone} onChange={handleInputChange} />
-                                </div>
-                                <button className="action-btn">인증번호 전송</button>
-                            </div>
+                            <input type="tel" name="phone" placeholder="'-' 없이 입력" value={formData.phone} onChange={handleInputChange} />
                         </div>
 
                         <div className="input-group">
