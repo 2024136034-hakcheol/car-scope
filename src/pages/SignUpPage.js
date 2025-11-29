@@ -1,10 +1,9 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
-import { db } from '../firebase';
+import { db, auth } from '../firebase';
 import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
-import { auth } from '../firebase';
 
 const TermsModal = ({ isOpen, onClose, title, content }) => {
     if (!isOpen) return null;
@@ -106,7 +105,7 @@ const SignUpPage = () => {
         if (name === 'emailLocal' || name === 'emailDomain') setIsEmailChecked(false);
         if (name === 'nickname') setIsNicknameChecked(false);
 
-        setFormData({ ...formData, [name]: value });
+        setFormData(prev => ({ ...prev, [name]: value }));
     };
 
     const handleAgreementChange = (e) => {
@@ -147,8 +146,8 @@ const SignUpPage = () => {
                 setIsIdChecked(true);
             }
         } catch (error) {
-            console.error("Error checking ID:", error);
-            alert("중복 확인 중 오류가 발생했습니다.");
+            console.error("아이디 중복 확인 에러:", error);
+            alert("중복 확인 중 오류가 발생했습니다. (콘솔 확인 필요)");
         }
     };
 
@@ -174,7 +173,7 @@ const SignUpPage = () => {
                 setIsEmailChecked(true);
             }
         } catch (error) {
-            console.error("Error checking Email:", error);
+            console.error("이메일 중복 확인 에러:", error);
             alert("중복 확인 중 오류가 발생했습니다.");
         }
     };
@@ -199,7 +198,7 @@ const SignUpPage = () => {
                 setIsNicknameChecked(true);
             }
         } catch (error) {
-            console.error("Error checking Nickname:", error);
+            console.error("닉네임 중복 확인 에러:", error);
             alert("중복 확인 중 오류가 발생했습니다.");
         }
     };
@@ -232,17 +231,24 @@ const SignUpPage = () => {
             if (!formData.nickname) return alert('닉네임을 입력해주세요.');
             if (!isNicknameChecked) return alert('닉네임 중복확인을 해주세요.');
             
+            console.log("🚀 회원가입 프로세스 시작...");
+
             try {
                 const domain = formData.emailDomain === 'custom' ? formData.emailDomainCustom : formData.emailDomain;
                 const fullEmail = `${formData.emailLocal}@${domain}`;
 
+                console.log("1. Firebase Auth 사용자 생성 중...", fullEmail);
                 const userCredential = await createUserWithEmailAndPassword(auth, fullEmail, formData.password);
                 const user = userCredential.user;
+                console.log("✅ Auth 생성 완료! UID:", user.uid);
 
+                console.log("2. 프로필 업데이트 중...");
                 await updateProfile(user, {
                     displayName: formData.nickname 
                 });
+                console.log("✅ 프로필 업데이트 완료");
 
+                console.log("3. Firestore DB 저장 시도 중...");
                 await setDoc(doc(db, "users", user.uid), {
                     id: formData.loginId,
                     email: fullEmail,
@@ -252,11 +258,12 @@ const SignUpPage = () => {
                     phone: formData.phone,
                     createdAt: new Date()
                 });
+                console.log("✅ Firestore 저장 완료!");
 
                 setStep(3);
                 window.scrollTo(0,0);
             } catch (error) {
-                console.error("Error creating user:", error);
+                console.error("🔥 회원가입 에러 발생:", error);
                 alert("회원가입 중 오류가 발생했습니다: " + error.message);
             }
         }
@@ -279,7 +286,7 @@ const SignUpPage = () => {
                                 <input type="checkbox" name="terms" checked={agreements.terms} onChange={handleAgreementChange} />
                                 [필수] 이용약관 동의
                             </label>
-                            <button className="details-button" onClick={() => setModalState({isOpen:true, type:'terms'})}>보기</button>
+                            <button type="button" className="details-button" onClick={() => setModalState({isOpen:true, type:'terms'})}>보기</button>
                         </div>
                     </div>
                     <div className="agreement-box">
@@ -288,7 +295,7 @@ const SignUpPage = () => {
                                 <input type="checkbox" name="privacy" checked={agreements.privacy} onChange={handleAgreementChange} />
                                 [필수] 개인정보 수집 및 이용 동의
                             </label>
-                            <button className="details-button" onClick={() => setModalState({isOpen:true, type:'privacy'})}>보기</button>
+                            <button type="button" className="details-button" onClick={() => setModalState({isOpen:true, type:'privacy'})}>보기</button>
                         </div>
                     </div>
                     <div className="agreement-box">
@@ -297,7 +304,7 @@ const SignUpPage = () => {
                             [선택] 마케팅 정보 수신 동의
                         </label>
                     </div>
-                    <button className="full-btn" onClick={nextStep}>다음</button>
+                    <button type="button" className="full-btn" onClick={nextStep}>다음</button>
                 </div>
             )}
 
@@ -477,7 +484,7 @@ const SignUpPage = () => {
                             </div>
                         </div>
 
-                        <button className="full-btn" onClick={nextStep}>회원가입 완료</button>
+                        <button type="button" className="full-btn" onClick={nextStep}>회원가입 완료</button>
                     </form>
                 </div>
             )}
@@ -487,7 +494,7 @@ const SignUpPage = () => {
                     <h2>회원가입이 완료되었습니다!</h2>
                     <p className="welcome-name">{formData.nickname || '회원'}님</p>
                     <p className="complete-msg">CarScope의 회원이 되신 것을 환영합니다.</p>
-                    <button className="full-btn" onClick={() => navigate('/login')}>로그인하러 가기</button>
+                    <button type="button" className="full-btn" onClick={() => navigate('/login')}>로그인하러 가기</button>
                 </div>
             )}
 
