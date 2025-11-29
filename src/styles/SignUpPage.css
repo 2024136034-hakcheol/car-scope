@@ -22,68 +22,26 @@ body {
     border-radius: 16px;
     box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
     box-sizing: border-box;
+    text-align: left; 
+}
+
+.signup-step {
+    width: 100%;
 }
 
 .signup-step h2 {
     font-size: 1.8rem;
     font-weight: 800;
     color: var(--text-main);
-    text-align: center;
+    text-align: center; 
     margin-top: 0;
     margin-bottom: 40px;
-}
-
-.agreement-box {
-    background-color: #fff;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 16px;
-    margin-bottom: 12px;
-    transition: all 0.2s;
-}
-
-.agreement-box:hover {
-    border-color: var(--primary-color);
-}
-
-.agreement-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.agreement-box label {
-    font-size: 1rem;
-    font-weight: 600;
-    color: var(--text-main);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    cursor: pointer;
-    width: 100%;
-}
-
-.agreement-box input[type="checkbox"] {
-    width: 20px;
-    height: 20px;
-    accent-color: var(--primary-color);
-    cursor: pointer;
-}
-
-.details-button {
-    background: none;
-    border: none;
-    color: var(--text-sub);
-    font-size: 0.9rem;
-    text-decoration: underline;
-    cursor: pointer;
-    flex-shrink: 0;
 }
 
 .signup-form {
     display: flex;
     flex-direction: column;
-    gap: 24px;
+    gap: 20px;
 }
 
 .input-group {
@@ -97,7 +55,8 @@ body {
     font-size: 0.95rem;
     font-weight: 700;
     color: var(--text-main);
-    margin-left: 2px;
+    display: block;
+    text-align: left;
 }
 
 .input-group input,
@@ -124,19 +83,22 @@ body {
 .input-row {
     display: flex;
     gap: 10px;
-    align-items: flex-end;
+    align-items: flex-end; 
     width: 100%;
 }
 
 .input-row .input-wrapper {
-    flex: 1;
+    flex: 1; 
     display: flex;
     flex-direction: column;
-    gap: 8px;
+}
+
+.input-row .input-wrapper input {
+    width: 100%;
 }
 
 .action-btn {
-    height: 50px;
+    height: 50px; 
     padding: 0 20px;
     background-color: var(--primary-color);
     color: white;
@@ -145,9 +107,10 @@ body {
     font-size: 0.95rem;
     font-weight: 600;
     cursor: pointer;
-    white-space: nowrap;
+    white-space: nowrap; 
     transition: all 0.2s;
     box-shadow: 0 2px 5px rgba(30, 144, 255, 0.2);
+    margin-bottom: 0;
 }
 
 .action-btn:hover {
@@ -191,12 +154,6 @@ body {
     padding: 15px;
     border-radius: 8px;
     margin-top: 5px;
-    animation: slideDown 0.3s ease-out;
-}
-
-@keyframes slideDown {
-    from { opacity: 0; transform: translateY(-10px); }
-    to { opacity: 1; transform: translateY(0); }
 }
 
 .password-guide ul {
@@ -225,7 +182,7 @@ body {
 
 .email-row {
     display: flex;
-    align-items: center;
+    align-items: flex-start; 
     gap: 8px;
 }
 
@@ -233,7 +190,56 @@ body {
     font-size: 1.2rem;
     font-weight: 600;
     color: var(--text-sub);
-    margin-top: 25px; 
+    margin-top: 12px; 
+    align-self: center;
+}
+
+.agreement-box {
+    background-color: #fff;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 16px;
+    margin-bottom: 12px;
+    transition: all 0.2s;
+    text-align: left;
+}
+
+.agreement-box:hover {
+    border-color: var(--primary-color);
+}
+
+.agreement-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.agreement-box label {
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    width: 100%;
+}
+
+.agreement-box input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: var(--primary-color);
+    cursor: pointer;
+}
+
+.details-button {
+    background: none;
+    border: none;
+    color: var(--text-sub);
+    font-size: 0.9rem;
+    text-decoration: underline;
+    cursor: pointer;
+    flex-shrink: 0;
 }
 
 .full-btn {
@@ -308,6 +314,7 @@ body {
     line-height: 1.6;
     color: var(--text-sub);
     white-space: pre-wrap;
+    text-align: left;
 }
 
 .close-btn {
@@ -332,6 +339,7 @@ body {
     }
     .action-btn {
         width: 100%;
+        margin-top: 5px;
     }
     .email-at {
         display: none;
