@@ -449,17 +449,16 @@ body {
     background-color: var(--bg-body);
 }
 
-/* --- 서비스 통계 섹션 (이중 카드 디자인 적용) --- */
 .company-stats-section {
     width: 100%;
     max-width: var(--container-width);
     margin-bottom: 60px;
-    padding: 50px 40px; /* 내부 패딩 */
+    padding: 50px 40px;
     box-sizing: border-box;
     border-radius: var(--radius-lg);
     text-align: center;
-    background-color: var(--white); /* 바깥쪽 큰 하얀 카드 */
-    box-shadow: var(--shadow-card); /* 바깥쪽 카드 그림자 */
+    background-color: var(--white);
+    box-shadow: var(--shadow-card);
 }
 
 .company-stats-section h2 {
@@ -491,11 +490,12 @@ body {
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-    background-color: var(--white); /* 안쪽 작은 하얀 카드 */
+    background-color: var(--white);
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* 안쪽 카드 그림자 (좀 더 진하게) */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border: 1px solid #f0f0f0; /* 테두리로 구분을 명확하게 */
+    border: 1px solid #f0f0f0;
+    text-align: center;
 }
 
 .stat-item:hover {
