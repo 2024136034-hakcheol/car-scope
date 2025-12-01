@@ -457,6 +457,8 @@ body {
     box-sizing: border-box;
     border-radius: var(--radius-lg);
     text-align: center;
+    background-color: transparent; 
+    box-shadow: none; 
 }
 
 .company-stats-section h2 {
@@ -488,9 +490,9 @@ body {
     align-items: center;
     justify-content: center;
     padding: 40px 20px;
-    background-color: var(--white);
-    border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
+    background-color: var(--white); 
+    border-radius: 20px; 
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid transparent;
 }
@@ -498,7 +500,6 @@ body {
 .stat-item:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-    border-color: var(--primary-color);
 }
 
 .stat-value {
