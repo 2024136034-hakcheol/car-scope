@@ -4,7 +4,7 @@ import { collection, getDocs, query, where } from 'firebase/firestore';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import UserList from '../components/admin/UserList'; 
 import EmergencyList from '../components/admin/EmergencyList';
-import InquiryList from '../components/admin/InquiryList';
+import InquiryList from '../components/admin/InquiryList'; 
 import '../styles/AdminPage.css';
 
 const AdminPage = () => {
@@ -102,8 +102,9 @@ const AdminPage = () => {
                     </div>
                 </div>
 
-                {/* 여기에 긴급출동 목록 추가 */}
                 <EmergencyList />
+                
+                <InquiryList />
 
                 <UserList />
             </div>
