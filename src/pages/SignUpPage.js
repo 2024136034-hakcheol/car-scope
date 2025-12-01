@@ -6,6 +6,50 @@ import { collection, query, where, getDocs, doc, setDoc } from "firebase/firesto
 import { createUserWithEmailAndPassword, updateProfile, getAuth, signOut } from "firebase/auth";
 import { initializeApp, getApp, deleteApp } from "firebase/app";
 
+const termsText = {
+    terms: `제1조 (목적)
+본 약관은 CarScope(이하 "회사")가 제공하는 자동차 정보 및 커뮤니티 서비스(이하 "서비스")의 이용조건 및 절차, 회사와 회원 간의 권리, 의무 및 책임사항 등을 규정함을 목적으로 합니다.
+
+제2조 (용어의 정의)
+1. "회원"이라 함은 본 약관에 동의하고 가입신청을 하여 회사의 승낙을 받은 자를 말합니다.
+2. "아이디(ID)"라 함은 회원의 식별과 서비스 이용을 위하여 회원이 정하고 회사가 승인하는 문자와 숫자의 조합을 말합니다.
+
+제3조 (약관의 효력 및 변경)
+1. 본 약관은 서비스 화면에 게시하거나 기타의 방법으로 회원에게 공지함으로써 효력이 발생합니다.
+2. 회사는 사정상 중요한 사유가 발생될 경우 약관을 변경할 수 있으며, 변경된 약관은 전항과 같은 방법으로 공지함으로써 효력이 발생합니다.
+
+제4조 (회원의 의무)
+1. 회원은 관계법령, 본 약관의 규정, 이용안내 및 주의사항 등 회사가 통지하는 사항을 준수하여야 합니다.
+2. 회원은 회사의 사전 승낙 없이 서비스를 이용하여 어떠한 영리행위도 할 수 없습니다.`,
+
+    privacy: `1. 수집하는 개인정보 항목
+회사는 회원가입, 상담, 서비스 신청 등을 위해 아래와 같은 개인정보를 수집하고 있습니다.
+- 수집항목: 이름, 생년월일, 성별, 로그인ID, 비밀번호, 휴대전화번호, 이메일, 닉네임
+- 개인정보 수집방법: 홈페이지(회원가입)
+
+2. 개인정보의 수집 및 이용목적
+회사는 수집한 개인정보를 다음의 목적을 위해 활용합니다.
+- 서비스 제공에 관한 계약 이행 및 서비스 제공에 따른 본인확인
+- 회원 관리: 회원제 서비스 이용에 따른 식별, 가입 의사 확인, 연령확인
+
+3. 개인정보의 보유 및 이용기간
+회사는 개인정보 수집 및 이용목적이 달성된 후에는 예외 없이 해당 정보를 지체 없이 파기합니다. 단, 관계법령의 규정에 의하여 보존할 필요가 있는 경우 회사는 아래와 같이 관계법령에서 정한 일정한 기간 동안 회원정보를 보관합니다.`,
+
+    marketing: `1. 마케팅 정보 수신 동의
+CarScope는 서비스를 운영함에 있어 각종 정보를 서비스 화면에 게재하거나 이메일, SMS, 알림톡 등의 방법으로 회원에게 제공할 수 있습니다.
+
+2. 전송 방법
+- 이메일 (E-mail)
+- 휴대폰 문자메시지 (SMS/LMS/MMS)
+- 앱 푸시 (App Push)
+
+3. 전송 내용
+- 혜택 정보, 이벤트 정보, 상품 정보, 신규 서비스 안내 등 광고성 정보
+
+4. 철회 안내
+회원은 언제든지 마케팅 정보 수신 동의를 철회할 수 있으며, 철회 시 혜택 및 이벤트 정보 제공이 제한될 수 있습니다. 철회는 '마이페이지 > 설정'에서 가능합니다.`
+};
+
 const TermsModal = ({ isOpen, onClose, title, content }) => {
     if (!isOpen) return null;
     return (
@@ -288,6 +332,17 @@ const SignUpPage = () => {
         }
     };
 
+    const getModalContent = () => {
+        switch(modalState.type) {
+            case 'terms': return { title: '이용약관', content: termsText.terms };
+            case 'privacy': return { title: '개인정보 처리방침', content: termsText.privacy };
+            case 'marketing': return { title: '마케팅 정보 수신 동의', content: termsText.marketing };
+            default: return { title: '', content: '' };
+        }
+    };
+
+    const { title: modalTitle, content: modalContent } = getModalContent();
+
     return (
         <div className="signup-container">
             {step === 1 && (
@@ -318,10 +373,13 @@ const SignUpPage = () => {
                         </div>
                     </div>
                     <div className="agreement-box">
-                        <label>
-                            <input type="checkbox" name="marketing" checked={agreements.marketing} onChange={handleAgreementChange} />
-                            [선택] 마케팅 정보 수신 동의
-                        </label>
+                        <div className="agreement-header">
+                            <label>
+                                <input type="checkbox" name="marketing" checked={agreements.marketing} onChange={handleAgreementChange} />
+                                [선택] 마케팅 정보 수신 동의
+                            </label>
+                            <button type="button" className="details-button" onClick={() => setModalState({isOpen:true, type:'marketing'})}>보기</button>
+                        </div>
                     </div>
                     <button type="button" className="full-btn" onClick={nextStep}>다음</button>
                 </div>
@@ -553,8 +611,8 @@ const SignUpPage = () => {
             <TermsModal 
                 isOpen={modalState.isOpen} 
                 onClose={() => setModalState({isOpen:false, type:''})}
-                title={modalState.type === 'terms' ? '이용약관' : '개인정보 처리방침'}
-                content="약관 내용이 여기에 표시됩니다..." 
+                title={modalTitle}
+                content={modalContent} 
             />
         </div>
     );
