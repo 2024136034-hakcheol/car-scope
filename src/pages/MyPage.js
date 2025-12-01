@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../styles/MyPage.css';
 import { AuthContext } from '../AuthContext';
 import { db } from '../firebase';
-import { doc, updateDoc } from 'firebase/firestore';
+import { doc, updateDoc, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 
 const MyPage = () => {
   const { currentUser, dbUser } = useContext(AuthContext);
@@ -13,6 +13,8 @@ const MyPage = () => {
     phone: '',
   });
 
+  const [reservationList, setReservationList] = useState([]);
+
   useEffect(() => {
     if (dbUser) {
       setEditData({
@@ -21,6 +23,29 @@ const MyPage = () => {
       });
     }
   }, [dbUser]);
+
+  useEffect(() => {
+    const fetchReservations = async () => {
+      if (currentUser) {
+        try {
+          const q = query(
+            collection(db, "reservations"),
+            where("userId", "==", currentUser.uid),
+            orderBy("createdAt", "desc")
+          );
+          const querySnapshot = await getDocs(q);
+          const list = querySnapshot.docs.map(doc => ({
+            id: doc.id,
+            ...doc.data()
+          }));
+          setReservationList(list);
+        } catch (error) {
+          console.error("예약 내역 불러오기 실패:", error);
+        }
+      }
+    };
+    fetchReservations();
+  }, [currentUser]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -129,9 +154,33 @@ const MyPage = () => {
                <h3>최근 예약 내역</h3>
                <button className="btn-text-more">더보기 &gt;</button>
              </div>
-             <div className="no-data" style={{padding: '20px', color:'#777'}}>
-               아직 예약 내역이 없습니다.
-             </div>
+             
+             {reservationList.length > 0 ? (
+                <div className="reservation-list">
+                  {reservationList.map((res) => (
+                    <div key={res.id} className="res-card">
+                      <div className="res-top">
+                        <span className={`status-tag ${res.status === '이용예정' ? 'active' : 'done'}`}>
+                          {res.status}
+                        </span>
+                        <span className="res-date">{res.date}</span>
+                      </div>
+                      <h4>{res.parkingName}</h4>
+                      <p className="res-time">{res.startTime}부터 ({res.hours}시간)</p>
+                      <div className="res-bottom">
+                        <span className="res-price">{res.price.toLocaleString()}원</span>
+                        {res.status === '이용예정' && (
+                          <button className="btn-cancel">예약취소</button>
+                        )}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+             ) : (
+               <div className="no-data" style={{padding: '20px', color:'#777'}}>
+                 아직 예약 내역이 없습니다.
+               </div>
+             )}
            </div>
 
            <div className="section-quick">

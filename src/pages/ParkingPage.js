@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import '../styles/ParkingPage.css';
-import ReservationModal from '../components/ReservationModal'; // [1] 모달 불러오기
+import ReservationModal from '../components/ReservationModal';
+import { db } from '../firebase';
+import { collection, addDoc } from 'firebase/firestore';
+import { AuthContext } from '../AuthContext';
 
-// 임시 데이터
 const DUMMY_PARKING_LOTS = [
   {
     id: 1,
@@ -38,38 +40,51 @@ const DUMMY_PARKING_LOTS = [
 
 const ParkingPage = () => {
   const [searchTerm, setSearchTerm] = useState('');
-  
-  // [2] 모달 상태 관리 (열림 여부, 선택된 주차장)
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedLot, setSelectedLot] = useState(null);
+  const { currentUser } = useContext(AuthContext);
 
-  // 검색 기능
   const filteredList = DUMMY_PARKING_LOTS.filter((lot) =>
     lot.name.includes(searchTerm) || lot.address.includes(searchTerm)
   );
 
-  // [3] 예약 버튼 클릭 시 실행되는 함수
   const handleReserve = (lot) => {
-    setSelectedLot(lot);   // 어떤 주차장을 눌렀는지 저장
-    setIsModalOpen(true);  // 모달 창 열기
+    if (!currentUser) {
+      alert('로그인이 필요한 서비스입니다.');
+      return;
+    }
+    setSelectedLot(lot);
+    setIsModalOpen(true);
   };
 
-  // [4] 모달에서 '예약 확정' 눌렀을 때 실행되는 함수
-  const handleConfirmReservation = (reservationData) => {
-    console.log('예약 완료 데이터:', reservationData);
-    alert(`${reservationData.parkingLotName}\n예약이 완료되었습니다!`);
-    setIsModalOpen(false); // 모달 닫기
+  const handleConfirmReservation = async (reservationData) => {
+    try {
+      await addDoc(collection(db, "reservations"), {
+        userId: currentUser.uid,
+        parkingName: reservationData.parkingLotName,
+        date: reservationData.date,
+        startTime: reservationData.startTime,
+        hours: reservationData.hours,
+        price: reservationData.totalPrice,
+        status: '이용예정',
+        createdAt: new Date()
+      });
+
+      alert(`${reservationData.parkingLotName}\n예약이 완료되었습니다!`);
+      setIsModalOpen(false);
+    } catch (error) {
+      console.error("Error adding reservation: ", error);
+      alert("예약 중 오류가 발생했습니다.");
+    }
   };
 
   return (
     <div className="parking-container">
-      {/* 상단 배너 */}
       <div className="parking-banner">
         <h2>주차장 예약 최대 70% 할인</h2>
         <p>CarScope 회원만의 특별한 혜택을 누리세요.</p>
       </div>
 
-      {/* 검색창 */}
       <div className="search-section">
         <input 
           type="text" 
@@ -80,7 +95,6 @@ const ParkingPage = () => {
         <button>검색</button>
       </div>
 
-      {/* 주차장 리스트 */}
       <div className="parking-list">
         {filteredList.map((lot) => (
           <div key={lot.id} className="parking-card">
@@ -97,8 +111,6 @@ const ParkingPage = () => {
                   {lot.availableSpots > 0 ? `잔여 ${lot.availableSpots}대` : '만차'}
                 </span>
               </div>
-              
-              {/* 예약 버튼 수정됨: onClick에 함수 직접 연결 */}
               <button 
                 className="btn-reserve" 
                 disabled={lot.availableSpots === 0}
@@ -111,7 +123,6 @@ const ParkingPage = () => {
         ))}
       </div>
 
-      {/* [5] 모달 컴포넌트 렌더링 (맨 아래에 추가) */}
       {selectedLot && (
         <ReservationModal 
           isOpen={isModalOpen}
