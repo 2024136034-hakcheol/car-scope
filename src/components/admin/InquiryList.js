@@ -2,10 +2,12 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase';
 import { collection, query, orderBy, getDocs, doc, updateDoc, deleteDoc } from 'firebase/firestore';
 import '../../styles/AdminPage.css';
+import InquiryReplyModal from './InquiryReplyModal';
 
 const InquiryList = () => {
     const [inquiries, setInquiries] = useState([]);
     const [loading, setLoading] = useState(true);
+    const [selectedInquiry, setSelectedInquiry] = useState(null);
 
     const fetchInquiries = async () => {
         setLoading(true);
@@ -29,9 +31,27 @@ const InquiryList = () => {
         fetchInquiries();
     }, []);
 
+    const handleSaveReply = async (id, replyContent) => {
+        try {
+            const reqRef = doc(db, "inquiries", id);
+            await updateDoc(reqRef, { 
+                reply: replyContent,
+                status: '답변완료'
+            });
+            
+            setInquiries(prev => prev.map(item => 
+                item.id === id ? { ...item, reply: replyContent, status: '답변완료' } : item
+            ));
+            
+            alert("답변이 성공적으로 등록되었습니다.");
+            setSelectedInquiry(null);
+        } catch (error) {
+            alert("답변 저장 실패: " + error.message);
+        }
+    };
+
     const handleStatusChange = async (id, newStatus) => {
         if (!window.confirm(`상태를 '${newStatus}'(으)로 변경하시겠습니까?`)) return;
-        
         try {
             const reqRef = doc(db, "inquiries", id);
             await updateDoc(reqRef, { status: newStatus });
@@ -45,7 +65,6 @@ const InquiryList = () => {
 
     const handleDelete = async (id) => {
         if (!window.confirm("정말로 이 문의 내역을 삭제하시겠습니까?")) return;
-        
         try {
             await deleteDoc(doc(db, "inquiries", id));
             setInquiries(prev => prev.filter(item => item.id !== id));
@@ -73,7 +92,6 @@ const InquiryList = () => {
                             <th>상태</th>
                             <th>유형</th>
                             <th>작성자</th>
-                            <th>연락처</th>
                             <th>제목</th>
                             <th>내용</th>
                             <th>관리</th>
@@ -81,7 +99,7 @@ const InquiryList = () => {
                     </thead>
                     <tbody>
                         {inquiries.length === 0 ? (
-                            <tr><td colSpan="8" style={{textAlign:'center', padding:'20px'}}>접수된 문의가 없습니다.</td></tr>
+                            <tr><td colSpan="7" style={{textAlign:'center', padding:'20px'}}>접수된 문의가 없습니다.</td></tr>
                         ) : (
                             inquiries.map(item => (
                                 <tr key={item.id}>
@@ -93,21 +111,25 @@ const InquiryList = () => {
                                     </td>
                                     <td>{item.category}</td>
                                     <td>{item.name}</td>
-                                    <td>{item.contact}</td>
                                     <td>{item.title}</td>
                                     <td title={item.content}>
                                         {item.content.length > 15 ? item.content.substring(0, 15) + '...' : item.content}
                                     </td>
                                     <td className="action-buttons">
-                                        <select 
-                                            className="role-select"
-                                            value={item.status} 
-                                            onChange={(e) => handleStatusChange(item.id, e.target.value)}
+                                        <button 
+                                            className="edit-button" 
+                                            style={{marginRight: '5px', backgroundColor: item.reply ? '#e8f5e9' : 'white', borderColor: item.reply ? '#2ecc71' : '#1E90FF', color: item.reply ? '#2ecc71' : '#1E90FF'}}
+                                            onClick={() => setSelectedInquiry(item)}
                                         >
-                                            <option value="답변대기">답변대기</option>
-                                            <option value="답변완료">답변완료</option>
-                                        </select>
-                                        <button className="delete-button" style={{padding:'5px', marginLeft:'5px'}} onClick={() => handleDelete(item.id)}>삭제</button>
+                                            {item.reply ? "답변수정" : "답변하기"}
+                                        </button>
+                                        <button 
+                                            className="delete-button" 
+                                            style={{padding:'5px'}} 
+                                            onClick={() => handleDelete(item.id)}
+                                        >
+                                            삭제
+                                        </button>
                                     </td>
                                 </tr>
                             ))
@@ -115,6 +137,14 @@ const InquiryList = () => {
                     </tbody>
                 </table>
             </div>
+
+            {selectedInquiry && (
+                <InquiryReplyModal 
+                    inquiry={selectedInquiry}
+                    onSave={handleSaveReply}
+                    onClose={() => setSelectedInquiry(null)}
+                />
+            )}
         </div>
     );
 };
