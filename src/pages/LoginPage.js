@@ -7,7 +7,8 @@ import {
     signInWithPopup, 
     setPersistence, 
     browserSessionPersistence, 
-    browserLocalPersistence 
+    browserLocalPersistence,
+    signOut
 } from "firebase/auth";
 import { collection, query, where, getDocs, doc, getDoc, setDoc } from "firebase/firestore";
 
@@ -36,13 +37,25 @@ const LoginPage = () => {
         setter(e.target.checked);
     };
 
+    const checkUserStatus = async (uid) => {
+        const userDocRef = doc(db, "users", uid);
+        const userDoc = await getDoc(userDocRef);
+        
+        if (userDoc.exists()) {
+            const userData = userDoc.data();
+            if (userData.disabled) {
+                await signOut(auth);
+                throw new Error("ACCOUNT_DISABLED");
+            }
+        } else {
+            await signOut(auth);
+            throw new Error("ACCOUNT_DELETED");
+        }
+    };
+
     const handleLogin = async (e) => {
         e.preventDefault();
-        console.log("로그인 시도:", idOrEmail);
-
-        if (loading) {
-            return;
-        }
+        if (loading) return;
 
         if (idOrEmail.trim() === '' || password.trim() === '') {
             alert('아이디(이메일)와 비밀번호를 모두 입력해주세요.');
@@ -65,11 +78,12 @@ const LoginPage = () => {
                     setLoading(false);
                     return;
                 }
-                
                 emailToLogin = querySnapshot.docs[0].data().email;
             }
 
-            await signInWithEmailAndPassword(auth, emailToLogin, password);
+            const userCredential = await signInWithEmailAndPassword(auth, emailToLogin, password);
+            
+            await checkUserStatus(userCredential.user.uid);
 
             if (rememberId) {
                 localStorage.setItem('savedId', idOrEmail);
@@ -80,14 +94,14 @@ const LoginPage = () => {
             navigate('/');
 
         } catch (error) {
-            console.error("로그인 에러:", error);
-
-            if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
-                alert("비밀번호가 틀렸습니다 다시 입력해주세요");
+            if (error.message === "ACCOUNT_DISABLED") {
+                alert("관리자에 의해 사용이 중지된 계정입니다.");
+            } else if (error.message === "ACCOUNT_DELETED") {
+                alert("존재하지 않는 계정입니다.");
+            } else if (error.code === 'auth/invalid-credential' || error.code === 'auth/wrong-password') {
+                alert("비밀번호가 틀렸습니다.");
             } else if (error.code === 'auth/user-not-found' || error.code === 'auth/invalid-email') {
-                alert("아이디가 존재하지 않습니다.");
-            } else if (error.code === 'auth/invalid-api-key') {
-                alert("Firebase API 키 설정 오류입니다. 관리자에게 문의하세요.");
+                alert("존재하지 않는 아이디입니다.");
             } else {
                 alert('로그인 실패: ' + error.message);
             }
@@ -97,9 +111,7 @@ const LoginPage = () => {
     };
 
     const handleSocialLogin = async (platform) => {
-        if (loading) {
-            return;
-        }
+        if (loading) return;
         setLoading(true);
 
         try {
@@ -108,8 +120,10 @@ const LoginPage = () => {
 
             if (platform === 'Google') {
                 const userCredential = await signInWithPopup(auth, googleProvider);
-                const user = userCredential.user;
+                
+                await checkUserStatus(userCredential.user.uid);
 
+                const user = userCredential.user;
                 const userDocRef = doc(db, "users", user.uid);
                 const userDoc = await getDoc(userDocRef);
 
@@ -125,14 +139,18 @@ const LoginPage = () => {
                         phone: ''
                     });
                 }
-                
                 navigate('/');
             } else {
                 alert(platform + ' 로그인은 현재 지원되지 않습니다.');
             }
         } catch (error) {
-            console.error("소셜 로그인 에러:", error);
-            alert(platform + ' 로그인 실패: ' + error.message);
+            if (error.message === "ACCOUNT_DISABLED") {
+                alert("관리자에 의해 사용이 중지된 계정입니다.");
+            } else if (error.message === "ACCOUNT_DELETED") {
+                alert("계정 정보가 없습니다.");
+            } else {
+                alert(platform + ' 로그인 실패: ' + error.message);
+            }
         } finally {
             setLoading(false);
         }
