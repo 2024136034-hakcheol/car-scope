@@ -28,7 +28,8 @@ const InquiryReplyModal = ({ inquiry, onSave, onClose }) => {
 
                 <form onSubmit={handleSubmit} className="modal-form">
                     <div className="input-group">
-                        <label>관리자 답변</label>
+                        {/* 수정된 부분: whiteSpace: 'nowrap' 추가 */}
+                        <label style={{ whiteSpace: 'nowrap' }}>관리자 답변</label>
                         <textarea
                             rows="6"
                             value={reply}
