@@ -1,277 +1,190 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/HomePage.css';
 
-const generateStars = (rating) => {
-    let stars = '';
-    for (let i = 0; i < 5; i++) {
-        stars += i < rating ? '★' : '☆';
-    }
-    return stars;
-};
-
-const mainBanners = [
-    { id: 1, title: '2024 신차 트렌드 리포트', subtitle: '올해 주목해야 할 전기차, 하이브리드 모델 분석!', cta: '자세히 보기', bgColor: '#1E90FF' },
-    { id: 2, title: 'CarScope 첫 오픈 기념!', subtitle: '프리미엄 리뷰를 7일간 무료로 경험하세요.', cta: '자세히 보기', bgColor: '#007bff' },
-    { id: 3, title: '🚗 주차장 예약 최대 50% 할인!', subtitle: '지금 바로 가까운 주차장을 예약하세요.', cta: '자세히 보기', bgColor: '#17a2b8' },
-];
-
-const hotTrends = [
-    { id: 1, rank: 1, keyword: '카니발 하이브리드' },
-    { id: 2, rank: 2, keyword: '쏘렌토 플러그인' },
-    { id: 3, rank: 3, keyword: 'GV80 페이스리프트' },
-    { id: 4, rank: 4, keyword: '전기차 보조금' },
-    { id: 5, rank: 5, keyword: '테슬라 모델 Y' },
-];
-
-const latestNews = [
-    { id: 1, title: '현대차, 신형 전기차 플랫폼 공개', date: '2025.11.12', link: '/news' },
-    { id: 2, title: '테슬라 모델 Y, 국내 판매 가격 인하', date: '2021.11.11', link: '/news' },
-    { id: 3, title: '정부, 전기차 충전소 확대 계획 발표', date: '2025.11.10', link: '/news' },
-];
-
-const topReviews = [
-    { id: 1, title: '제네시스 GV80: 압도적인 디자인과 성능', rating: 5, link: '/news/1' },
-    { id: 2, title: '기아 EV6: 완벽한 밸런스를 갖춘 전기차', rating: 4, link: '/news/2' },
-    { id: 3, title: '벤츠 E클래스: 시대를 초월하는 클래식', rating: 5, link: '/news/3' },
-];
-
-const recommendedParking = [
-    { id: 1, area: '강남구', name: '강남 N 타워 주차장', price: '500원/5분', link: '/parking/1' },
-    { id: 2, area: '마포구', name: '홍대입구역 인근', price: '1,500원/10분', link: '/parking/2' },
-    { id: 3, area: '영등포구', name: '여의도 더현대 파크', price: '4,000원/30분', link: '/parking/3' },
-];
-
-const AnimatedNumber = ({ endValue, duration = 2000, suffix = '' }) => {
-    const [currentValue, setCurrentValue] = useState(0);
-    const observerRef = useRef(null);
-    const [inView, setInView] = useState(false);
-    const animationFrameRef = useRef(null);
-
-    useEffect(() => {
-        const currentRef = observerRef.current;
-        let observer;
-
-        if (typeof window !== 'undefined' && window.IntersectionObserver) {
-            observer = new IntersectionObserver(
-                ([entry]) => {
-                    if (entry.isIntersecting) {
-                        setInView(true);
-                        if (observer) observer.unobserve(entry.target);
-                    }
-                },
-                { threshold: 0.1 }
-            );
-        } else {
-            setInView(true);
-        }
-
-        if (currentRef && observer) {
-            observer.observe(currentRef);
-        }
-
-        return () => {
-            if (animationFrameRef.current) {
-                cancelAnimationFrame(animationFrameRef.current);
-            }
-            if (observer && currentRef) {
-                observer.unobserve(currentRef);
-            }
-        };
-    }, []);
-
-    useEffect(() => {
-        if (!inView) return;
-
-        const startTime = Date.now();
-
-        const animate = () => {
-            const now = Date.now();
-            const elapsed = now - startTime;
-            const progress = Math.min(elapsed / duration, 1);
-            const animated = Math.floor(progress * endValue);
-            setCurrentValue(animated);
-
-            if (progress < 1) {
-                animationFrameRef.current = requestAnimationFrame(animate);
-            }
-        };
-
-        animationFrameRef.current = requestAnimationFrame(animate);
-
-        return () => {
-            if (animationFrameRef.current) {
-                cancelAnimationFrame(animationFrameRef.current);
-            }
-        };
-    }, [endValue, duration, inView]);
-
-    const formatNumber = (num) => {
-        return num.toLocaleString();
-    };
-
-    return (
-        <span ref={observerRef} className="animated-number">
-            {formatNumber(currentValue)}{suffix}
-        </span>
-    );
-};
-
 const HomePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
+    
+    const bannerSlides = [
+        {
+            id: 1,
+            title: "CarScope 첫 오픈 기념!",
+            desc: "프리미엄 리뷰를 7일간 무료로 경험하세요.",
+            color: "#5c84ff",
+            link: "/membership"
+        },
+        {
+            id: 2,
+            title: "2024 신차 트렌드 리포트",
+            desc: "올해 주목해야 할 전기차, 하이브리드 모델 분석!",
+            color: "#6c5ce7",
+            link: "/news"
+        },
+        {
+            id: 3,
+            title: "주차장 예약 최대 50% 할인!",
+            desc: "지금 바로 가까운 주차장을 예약하세요.",
+            color: "#00b894",
+            link: "/parking"
+        }
+    ];
 
     useEffect(() => {
-        const interval = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % mainBanners.length);
+        const timer = setInterval(() => {
+            setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
         }, 5000);
-        return () => clearInterval(interval);
-    }, []);
-
-    const goToSlide = (index) => {
-        setCurrentSlide(index);
-    };
+        return () => clearInterval(timer);
+    }, [bannerSlides.length]);
 
     const nextSlide = () => {
-        setCurrentSlide((prev) => (prev + 1) % mainBanners.length);
+        setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
     };
 
     const prevSlide = () => {
-        setCurrentSlide((prev) => (prev - 1 + mainBanners.length) % mainBanners.length);
+        setCurrentSlide((prev) => (prev - 1 + bannerSlides.length) % bannerSlides.length);
+    };
+
+    const handleDotClick = (index) => {
+        setCurrentSlide(index);
     };
 
     return (
-        <div className={`homepage-container page-content`}> 
+        <div className="homepage-container">
             <div className="main-banner-slider-wrapper">
                 <div className="main-banner-slider">
                     <div 
-                        className="slider-track"
+                        className="slider-track" 
                         style={{ transform: `translateX(-${currentSlide * 100}%)` }}
                     >
-                        {mainBanners.map((banner) => (
+                        {bannerSlides.map((slide) => (
                             <div 
-                                key={banner.id}
-                                className="slide-item"
-                                style={{ backgroundColor: banner.bgColor }}
+                                key={slide.id} 
+                                className="slide-item" 
+                                style={{ backgroundColor: slide.color }}
                             >
                                 <div className="banner-content">
-                                    <h2>{banner.title}</h2>
-                                    <p>{banner.subtitle}</p>
-                                    <Link to={banner.id === 3 ? "/parking" : "/news"} className="banner-cta">
-                                        {banner.cta}
-                                    </Link>
+                                    <h2>{slide.title}</h2>
+                                    <p>{slide.desc}</p>
+                                    <Link to={slide.link} className="banner-cta">자세히 보기</Link>
                                 </div>
                             </div>
                         ))}
                     </div>
-                </div>
-                <div className="slider-nav-arrows">
-                    <button className={`arrow prev`} onClick={prevSlide}>&lt;</button>
-                    <button className={`arrow next`} onClick={nextSlide}>&gt;</button>
-                </div>
-                <div className="slider-dots">
-                    {mainBanners.map((_, index) => (
-                        <span
-                            key={index}
-                            className={`dot ${index === currentSlide ? 'active' : ''}`}
-                            onClick={() => goToSlide(index)}
-                        ></span>
-                    ))}
+                    
+                    <div className="slider-nav-arrows">
+                        <button className="arrow prev" onClick={prevSlide}>&lt;</button>
+                        <button className="arrow next" onClick={nextSlide}>&gt;</button>
+                    </div>
+
+                    <div className="slider-dots">
+                        {bannerSlides.map((_, idx) => (
+                            <span 
+                                key={idx} 
+                                className={`dot ${currentSlide === idx ? 'active' : ''}`}
+                                onClick={() => handleDotClick(idx)}
+                            ></span>
+                        ))}
+                    </div>
                 </div>
             </div>
 
-            <section className="hot-trends-section">
-                <h2>🔥 실시간 인기 검색어</h2>
-                <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
-                <div className="trend-list-container">
-                    {hotTrends.map(trend => (
-                        <div key={trend.id} className="trend-item-card">
-                            <span className="trend-rank">{trend.rank}</span>
-                            <span>{trend.keyword}</span> 
+            <section className="integrated-info-section">
+                <div className="trend-wrapper">
+                    <h2>실시간 인기 검색어</h2>
+                    <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
+                    <div className="trend-list-container">
+                        {['카니발 하이브리드', '쏘렌토 플러그인', 'GV80 페이스리프트', '전기차 보조금', '테슬라 모델 Y'].map((item, index) => (
+                            <div key={index} className="trend-item-card">
+                                <span className="trend-rank">{index + 1}</span>
+                                {item}
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                <div className="content-divider"></div>
+
+                <div className="info-grid-wrapper">
+                    <div className="info-column">
+                        <div className="column-header">
+                            <h3>최신 뉴스</h3>
+                            <Link to="/news" className="more-link">더보기 &gt;</Link>
                         </div>
-                    ))}
+                        <ul className="info-list">
+                            <li>
+                                <span className="info-title">현대차, 신형 전기차 플랫폼 공개</span>
+                                <span className="info-date">2025.11.12</span>
+                            </li>
+                            <li>
+                                <span className="info-title">테슬라 모델 Y, 국내 판매 가격 인하</span>
+                                <span className="info-date">2025.11.11</span>
+                            </li>
+                            <li>
+                                <span className="info-title">정부, 전기차 충전소 확대 계획 발표</span>
+                                <span className="info-date">2025.11.10</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div className="info-column">
+                        <div className="column-header">
+                            <h3>인기 리뷰</h3>
+                            <Link to="/reviews" className="more-link">더보기 &gt;</Link>
+                        </div>
+                        <ul className="info-list">
+                            <li>
+                                <span className="info-title">제네시스 GV80: 압도적인 디자인과 성능</span>
+                                <span className="info-rating">★★★★★</span>
+                            </li>
+                            <li>
+                                <span className="info-title">기아 EV9: 완벽한 밸런스를 갖춘 전기차</span>
+                                <span className="info-rating">★★★★☆</span>
+                            </li>
+                            <li>
+                                <span className="info-title">벤츠 E클래스: 시대를 소유하는 품격</span>
+                                <span className="info-rating">★★★★★</span>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
             </section>
 
-            <div className="main-content-grid">
-                <div className={`card`}>
-                    <h3>최신 뉴스</h3>
-                    <ul>
-                        {latestNews.map(news => (
-                            <li key={news.id}>
-                                <Link to={news.link} className="more-link">{news.title}</Link> ({news.date})
-                            </li>
-                        ))}
-                    </ul>
-                    <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                        <Link to="/news" className="more-link">전체 뉴스 보기 &gt;</Link>
-                    </div>
-                </div>
-
-                <div className={`card`}>
-                    <h3>인기 리뷰</h3>
-                    <ul>
-                        {topReviews.map(review => (
-                            <li key={review.id}>
-                                {generateStars(review.rating)} 
-                                <Link to={review.link} className="more-link">{review.title}</Link>
-                            </li>
-                        ))}
-                    </ul>
-                    <div style={{ textAlign: 'right', marginTop: '10px' }}>
-                        <Link to="/news" className="more-link">전체 리뷰 보기 &gt;</Link>
-                    </div>
-                </div>
-            </div>
-
             <section className="parking-recommendation-section">
                 <h2>📍 추천 주차장</h2>
-                <p>내 주변 혹은 방문하려는 지역의 주차장을 빠르게 확인하세요.</p>
+                <p>내 주변 제휴 주차장을 최저가로 예약하고 편하게 주차하세요.</p>
+                
                 <div className="parking-spot-grid">
-                    {recommendedParking.map(spot => (
-                        <div key={spot.id} className="parking-spot-card">
-                            <div className="spot-header">
-                                <span className="spot-area">{spot.area}</span>
-                                <span className="spot-price">{spot.price}</span>
-                            </div>
-                            <h4 className="spot-name">{spot.name}</h4>
-                            <Link to={spot.link} className="spot-cta">예약/정보 확인 &gt;</Link>
+                    <div className="parking-spot-card">
+                        <div className="spot-header">
+                            <span className="spot-area">강남구</span>
+                            <span className="spot-price">500원/10분</span>
                         </div>
-                    ))}
+                        <h4 className="spot-name">강남 N 타워 주차장</h4>
+                        <Link to="/parking" className="spot-cta">예약/정보 확인 &gt;</Link>
+                    </div>
+                    <div className="parking-spot-card">
+                        <div className="spot-header">
+                            <span className="spot-area">마포구</span>
+                            <span className="spot-price">3,000원/1시간</span>
+                        </div>
+                        <h4 className="spot-name">홍대입구역 링크</h4>
+                        <Link to="/parking" className="spot-cta">예약/정보 확인 &gt;</Link>
+                    </div>
+                    <div className="parking-spot-card">
+                        <div className="spot-header">
+                            <span className="spot-area">영등포구</span>
+                            <span className="spot-price">4,000원/30분</span>
+                        </div>
+                        <h4 className="spot-name">여의도 더현대 파크</h4>
+                        <Link to="/parking" className="spot-cta">예약/정보 확인 &gt;</Link>
+                    </div>
                 </div>
-                <div style={{ textAlign: 'center', marginTop: '30px' }}>
-                    <Link to="/parking" className="parking-more-link">다른 지역 주차장 찾기 &gt;</Link>
-                </div>
+                <Link to="/parking" className="parking-more-link">다른 지역 주차장 찾기 &gt;</Link>
             </section>
 
             <section className="company-stats-section">
                 <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
-                <div className="stats-grid">
-                    <div className="stat-item">
-                        <span className="stat-value">
-                            <AnimatedNumber endValue={250000} suffix="+" />
-                        </span>
-                        <span className="stat-label-box">사용자 누적 예약 수</span>
-                        <br />
-                        <span className="stat-description">가장 인기 있는 주차 예약 서비스</span>
-                    </div>
-                    <div className="stat-item">
-                        <span className="stat-value">
-                            <AnimatedNumber endValue={5000} suffix="+" />
-                        </span>
-                        <span className="stat-label-box">주차장 제휴 수</span>
-                        <br />
-                        <span className="stat-description">전국 주요 주차장과 함께합니다.</span>
-                    </div>
-                    <div className="stat-item">
-                        <span className="stat-value">
-                            <AnimatedNumber endValue={500000} suffix="+" />
-                        </span>
-                        <span className="stat-label-box">사용자 평가 및 평점</span>
-                        <br />
-                        <span className="stat-description">운전자의 생생한 후기</span>
-                    </div>
-                </div>
             </section>
         </div>
     );
