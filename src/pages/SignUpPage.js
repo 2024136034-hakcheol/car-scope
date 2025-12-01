@@ -1,9 +1,10 @@
 import React, { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../styles/SignUpPage.css';
-import { db, auth } from '../firebase';
+import { db } from '../firebase';
 import { collection, query, where, getDocs, doc, setDoc } from "firebase/firestore";
-import { createUserWithEmailAndPassword, updateProfile, signOut } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile, getAuth, signOut } from "firebase/auth";
+import { initializeApp, getApp, deleteApp } from "firebase/app";
 
 const TermsModal = ({ isOpen, onClose, title, content }) => {
     if (!isOpen) return null;
@@ -22,7 +23,9 @@ const SignUpPage = () => {
     const navigate = useNavigate();
     const [step, setStep] = useState(1);
     const [modalState, setModalState] = useState({ isOpen: false, type: '' });
+    
     const [isSigningUp, setIsSigningUp] = useState(false);
+
     const [focusedField, setFocusedField] = useState(null);
 
     const [agreements, setAgreements] = useState({
@@ -236,11 +239,16 @@ const SignUpPage = () => {
             if (isSigningUp) return;
             setIsSigningUp(true);
 
+            let secondaryApp;
             try {
                 const domain = formData.emailDomain === 'custom' ? formData.emailDomainCustom : formData.emailDomain;
                 const fullEmail = `${formData.emailLocal}@${domain}`;
 
-                const userCredential = await createUserWithEmailAndPassword(auth, fullEmail, formData.password);
+                const mainApp = getApp();
+                secondaryApp = initializeApp(mainApp.options, "Secondary");
+                const secondaryAuth = getAuth(secondaryApp);
+
+                const userCredential = await createUserWithEmailAndPassword(secondaryAuth, fullEmail, formData.password);
                 const user = userCredential.user;
 
                 await updateProfile(user, {
@@ -255,13 +263,15 @@ const SignUpPage = () => {
                     birthdate: formData.birthdate,
                     gender: formData.gender,
                     phone: formData.phone,
-                    createdAt: new Date()
+                    createdAt: new Date(),
+                    isAdmin: false,
+                    isJournalist: false
                 });
 
-                await signOut(auth);
-
+                await signOut(secondaryAuth);
                 setStep(3);
                 window.scrollTo(0,0);
+
             } catch (error) {
                 console.error(error);
                 if (error.code === 'auth/email-already-in-use') {
@@ -270,6 +280,9 @@ const SignUpPage = () => {
                     alert("회원가입 중 오류가 발생했습니다: " + error.message);
                 }
             } finally {
+                if (secondaryApp) {
+                    deleteApp(secondaryApp);
+                }
                 setIsSigningUp(false);
             }
         }
