@@ -1,6 +1,51 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/HomePage.css';
+
+const AnimatedCounter = ({ end, suffix }) => {
+    const [count, setCount] = useState(0);
+    const countRef = useRef(null);
+    const [isVisible, setIsVisible] = useState(false);
+
+    useEffect(() => {
+        const observer = new IntersectionObserver(
+            (entries) => {
+                if (entries[0].isIntersecting) {
+                    setIsVisible(true);
+                }
+            },
+            { threshold: 0.5 }
+        );
+
+        if (countRef.current) {
+            observer.observe(countRef.current);
+        }
+
+        return () => observer.disconnect();
+    }, []);
+
+    useEffect(() => {
+        if (!isVisible) return;
+
+        let start = 0;
+        const duration = 2000;
+        const increment = end / (duration / 16);
+
+        const timer = setInterval(() => {
+            start += increment;
+            if (start >= end) {
+                setCount(end);
+                clearInterval(timer);
+            } else {
+                setCount(Math.ceil(start));
+            }
+        }, 16);
+
+        return () => clearInterval(timer);
+    }, [isVisible, end]);
+
+    return <span ref={countRef}>{count.toLocaleString()}{suffix}</span>;
+};
 
 const HomePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
@@ -187,19 +232,25 @@ const HomePage = () => {
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
                 <div className="stats-grid">
                     <div className="stat-item">
-                        <span className="stat-value">500만+</span>
-                        <span className="stat-label-box">누적 이용자</span>
-                        <p className="stat-description">대한민국 운전자 3명 중 1명이 선택한<br/>국내 1위 자동차 종합 플랫폼</p>
+                        <div className="stat-value">
+                            <AnimatedCounter end={500} suffix="만+" />
+                        </div>
+                        <span className="stat-label-box">누적 사용자</span>
+                        <p className="stat-description">대한민국 운전자 3명 중 1명이<br/>CarScope를 경험했습니다.</p>
                     </div>
                     <div className="stat-item">
-                        <span className="stat-value">2,500+</span>
+                        <div className="stat-value">
+                            <AnimatedCounter end={2500} suffix="+" />
+                        </div>
                         <span className="stat-label-box">제휴 주차장</span>
-                        <p className="stat-description">서울 중심가부터 공항까지,<br/>전국 주요 주차장 최저가 예약</p>
+                        <p className="stat-description">전국 어디서나 편리하게<br/>주차장을 예약하세요.</p>
                     </div>
                     <div className="stat-item">
-                        <span className="stat-value">85만+</span>
-                        <span className="stat-label-box">검증된 데이터</span>
-                        <p className="stat-description">실차주가 직접 남긴 생생한 후기와<br/>신뢰할 수 있는 빅데이터 분석</p>
+                        <div className="stat-value">
+                            <AnimatedCounter end={85} suffix="만+" />
+                        </div>
+                        <span className="stat-label-box">누적 리뷰</span>
+                        <p className="stat-description">실제 오너들의 생생한 후기로<br/>내 차를 선택하세요.</p>
                     </div>
                 </div>
             </section>

@@ -453,12 +453,10 @@ body {
     width: 100%;
     max-width: var(--container-width);
     margin-bottom: 60px;
-    padding: 50px 40px;
+    padding: 50px 0;
     box-sizing: border-box;
-    background-color: var(--white);
     border-radius: var(--radius-lg);
     text-align: center;
-    box-shadow: var(--shadow-card);
 }
 
 .company-stats-section h2 {
@@ -492,22 +490,22 @@ body {
     padding: 40px 20px;
     background-color: var(--white);
     border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); 
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    position: relative;
-    top: 0;
+    border: 1px solid transparent;
 }
 
 .stat-item:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary-color);
 }
 
 .stat-value {
     font-size: 3rem;
     font-weight: 900;
     color: var(--primary-color);
-    margin-bottom: 5px;
+    margin-bottom: 10px;
     line-height: 1;
     display: block;
 }
@@ -516,9 +514,7 @@ body {
     font-size: 1.2rem;
     font-weight: 700;
     color: var(--text-dark);
-    margin: 0;
-    padding: 0;
-    line-height: 1.2;
+    margin: 0 0 10px 0;
     display: block;
 }
 
@@ -528,7 +524,7 @@ body {
     display: block;
     margin: 0;
     padding: 0;
-    line-height: 1.4;
+    line-height: 1.6;
 }
 
 @media (max-width: 768px) {
