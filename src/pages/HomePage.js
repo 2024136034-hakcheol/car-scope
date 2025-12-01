@@ -135,7 +135,7 @@ const HomePage = () => {
 
             <section className="integrated-info-section">
                 <div className="trend-wrapper">
-                    <h2>🔥 실시간 인기 검색어</h2>
+                    <h2>실시간 인기 검색어</h2>
                     <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
                     <div className="trend-list-container">
                         {['카니발 하이브리드', '쏘렌토 플러그인', 'GV80 페이스리프트', '전기차 보조금', '테슬라 모델 Y'].map((item, index) => (
