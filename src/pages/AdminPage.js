@@ -3,7 +3,8 @@ import { db } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
 import UserList from '../components/admin/UserList'; 
-import EmergencyList from '../components/admin/EmergencyList'; // 새로 추가
+import EmergencyList from '../components/admin/EmergencyList';
+import InquiryList from '../components/admin/InquiryList';
 import '../styles/AdminPage.css';
 
 const AdminPage = () => {
