@@ -5,19 +5,21 @@
     text-align: center;
 }
 
-.membership-container h1 {
+/* React 코드의 구조에 맞춰 헤더 스타일 연결 */
+.membership-header h2 {
     font-size: 2.5rem;
-    color: var(--text-primary);
+    color: var(--text-primary, #333); /* 변수가 없으면 기본색 적용 */
     margin-bottom: 10px;
 }
 
-.membership-subtitle {
+.membership-header p {
     font-size: 1.1rem;
-    color: var(--text-secondary);
+    color: var(--text-secondary, #666);
     margin-bottom: 40px;
 }
 
-.plans-container {
+/* plans-container -> pricing-grid 로 이름 매칭 */
+.pricing-grid {
     display: flex;
     justify-content: center;
     align-items: stretch;
@@ -25,9 +27,10 @@
     flex-wrap: wrap;
 }
 
-.plan-card {
+/* plan-card -> pricing-card 로 이름 매칭 */
+.pricing-card {
     background-color: white;
-    border: 1px solid var(--border-color);
+    border: 1px solid var(--border-color, #ddd);
     border-radius: 10px;
     padding: 30px;
     width: 300px;
@@ -38,16 +41,23 @@
     flex-direction: column;
 }
 
-.plan-card:hover {
+.pricing-card:hover {
     transform: translateY(-5px);
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-.popular-badge {
+/* 프리미엄 카드 강조 스타일 */
+.pricing-card.premium {
+    border: 2px solid var(--primary-color, #1E90FF);
+    box-shadow: 0 8px 25px rgba(30, 144, 255, 0.15);
+}
+
+/* popular-badge -> badge 로 이름 매칭 */
+.badge {
     position: absolute;
     top: 15px;
     right: 15px;
-    background-color: var(--primary-color);
+    background-color: var(--primary-color, #1E90FF);
     color: white;
     font-size: 0.8rem;
     font-weight: 600;
@@ -55,30 +65,33 @@
     border-radius: 5px;
 }
 
-.plan-card h2 {
+.card-header h3 {
     font-size: 1.8rem;
-    color: var(--primary-color);
+    color: var(--text-primary, #333);
     margin-bottom: 15px;
+    margin-top: 0;
 }
 
-.plan-card.free-plan h2 {
-    color: var(--text-primary);
+.pricing-card.premium h3 {
+    color: var(--primary-color, #1E90FF);
 }
 
-.plan-price {
+.pricing-card .price {
     font-size: 2.2rem;
     font-weight: 700;
-    color: var(--text-primary);
+    color: var(--text-primary, #333);
     margin-bottom: 25px;
+    margin-top: 0;
 }
 
-.plan-price span {
+.pricing-card .price span {
     font-size: 1rem;
     font-weight: 400;
-    color: var(--text-secondary);
+    color: var(--text-secondary, #666);
 }
 
-.plan-features {
+/* plan-features -> features-list 로 이름 매칭 */
+.features-list {
     list-style: none;
     padding: 0;
     margin: 0 0 30px 0;
@@ -86,14 +99,21 @@
     flex-grow: 1;
 }
 
-.plan-features li {
+.features-list li {
     font-size: 1rem;
-    color: var(--text-secondary);
+    color: var(--text-secondary, #666);
     margin-bottom: 12px;
     line-height: 1.4;
 }
 
-.plan-button {
+/* 비활성화된 기능(X 표시) 스타일 추가 */
+.features-list li.disabled {
+    color: #ccc;
+    text-decoration: line-through;
+}
+
+/* plan-button -> plan-btn 으로 이름 매칭 */
+.plan-btn {
     display: block;
     width: 100%;
     padding: 12px;
@@ -101,65 +121,46 @@
     font-weight: 600;
     text-decoration: none;
     border-radius: 6px;
-    border: 1px solid var(--primary-color);
+    border: 1px solid var(--border-color, #ddd);
     background-color: white;
-    color: var(--primary-color);
+    color: var(--text-secondary, #666);
     cursor: pointer;
     transition: background-color 0.2s, color 0.2s;
 }
 
-.plan-button:hover {
+.plan-btn:hover {
     background-color: #f1f3f5;
 }
 
-.premium-button {
-    background-color: var(--primary-color);
+/* 프리미엄 버튼 스타일 */
+.premium-btn {
+    background-color: var(--primary-color, #1E90FF);
+    border-color: var(--primary-color, #1E90FF);
     color: white;
 }
 
-.premium-button:hover {
-    background-color: #3b74b8;
-    border-color: #3b74b8;
+.premium-btn:hover {
+    background-color: var(--primary-hover, #0069d9);
+    border-color: var(--primary-hover, #0069d9);
     color: white;
 }
 
-.premium-plan {
-    border-color: var(--primary-color);
-    border-width: 2px;
-}
-
-.login-prompt-section {
-    margin-top: 60px;
-    padding: 30px;
-    background-color: #f8f8f8;
-    border-radius: 10px;
-}
-
-.login-prompt-section p {
-    font-size: 1.1rem;
-    color: var(--text-secondary);
-    margin: 0;
-    line-height: 1.6;
-}
-
-.login-link {
-    color: var(--primary-color);
-    font-weight: 600;
-    text-decoration: none;
-    margin: 0 4px;
-}
-
-.login-link:hover {
-    text-decoration: underline;
+/* 버튼 비활성화 상태 (이미 구독중이거나 처리중일 때) */
+.plan-btn:disabled {
+    background-color: #e9ecef;
+    border-color: #e9ecef;
+    color: #adb5bd;
+    cursor: not-allowed;
+    transform: none;
 }
 
 @media (max-width: 768px) {
-    .plans-container {
+    .pricing-grid {
         flex-direction: column;
         align-items: center;
     }
 
-    .plan-card {
+    .pricing-card {
         width: 100%;
         max-width: 350px;
     }

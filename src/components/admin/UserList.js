@@ -212,6 +212,7 @@ const UserList = () => {
                                 <th>생년월일</th>
                                 <th>성별</th>
                                 <th>전화번호</th>
+                                <th>멤버십</th>
                                 <th>권한</th>
                                 <th>관리</th>
                             </tr>
@@ -229,6 +230,13 @@ const UserList = () => {
                                     <td>{user.birthdate}</td>
                                     <td>{user.gender === 'male' ? '남성' : user.gender === 'female' ? '여성' : '-'}</td>
                                     <td>{user.phone}</td>
+                                    <td>
+                                        {user.membershipLevel === 'premium' ? (
+                                            <span style={{color: '#6c5ce7', fontWeight: 'bold'}}>프리미엄</span>
+                                        ) : (
+                                            <span style={{color: '#999'}}>일반</span>
+                                        )}
+                                    </td>
                                     <td>
                                         <select 
                                             className="role-select"

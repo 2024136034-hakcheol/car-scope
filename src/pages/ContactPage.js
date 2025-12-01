@@ -1,12 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, addDoc } from "firebase/firestore";
-import '../styles/ContactPage.css'; // CSS 파일명도 변경
+import { AuthContext } from '../AuthContext'; 
+import '../styles/ContactPage.css';
 
 const ContactPage = () => {
     const navigate = useNavigate();
+    const { currentUser } = useContext(AuthContext); 
     const [isLoading, setIsLoading] = useState(false);
+    
     const [formData, setFormData] = useState({
         name: '',
         contact: '',
@@ -31,15 +34,16 @@ const ContactPage = () => {
 
         setIsLoading(true);
         try {
-            // DB 컬렉션 이름은 'inquiries' 그대로 유지 (관리자 페이지 연동 위해)
             await addDoc(collection(db, "inquiries"), {
                 ...formData,
+                userId: currentUser ? currentUser.uid : 'anonymous', 
                 status: '답변대기',
-                createdAt: new Date()
+                createdAt: new Date(),
+                answer: ''
             });
             
-            alert("문의가 정상적으로 접수되었습니다.\n빠른 시일 내에 답변드리겠습니다.");
-            navigate('/');
+            alert("문의가 정상적으로 접수되었습니다.\n마이페이지에서 내역을 확인하실 수 있습니다.");
+            navigate('/mypage');
         } catch (error) {
             console.error(error);
             alert("접수 중 오류가 발생했습니다.");
