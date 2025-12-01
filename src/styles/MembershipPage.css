@@ -5,10 +5,9 @@
     text-align: center;
 }
 
-/* React 코드의 구조에 맞춰 헤더 스타일 연결 */
 .membership-header h2 {
     font-size: 2.5rem;
-    color: var(--text-primary, #333); /* 변수가 없으면 기본색 적용 */
+    color: var(--text-primary, #333);
     margin-bottom: 10px;
 }
 
@@ -18,7 +17,6 @@
     margin-bottom: 40px;
 }
 
-/* plans-container -> pricing-grid 로 이름 매칭 */
 .pricing-grid {
     display: flex;
     justify-content: center;
@@ -27,11 +25,10 @@
     flex-wrap: wrap;
 }
 
-/* plan-card -> pricing-card 로 이름 매칭 */
 .pricing-card {
     background-color: white;
     border: 1px solid var(--border-color, #ddd);
-    border-radius: 10px;
+    border-radius: 16px;
     padding: 30px;
     width: 300px;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
@@ -46,23 +43,35 @@
     box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
 }
 
-/* 프리미엄 카드 강조 스타일 */
 .pricing-card.premium {
     border: 2px solid var(--primary-color, #1E90FF);
     box-shadow: 0 8px 25px rgba(30, 144, 255, 0.15);
+    transform: scale(1.02); 
 }
 
-/* popular-badge -> badge 로 이름 매칭 */
+.pricing-card.premium:hover {
+    transform: scale(1.02) translateY(-5px);
+}
+
+/* --- 수정된 추천 뱃지 스타일 --- */
 .badge {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: -15px; 
+    left: 50%;
+    transform: translateX(-50%);
     background-color: var(--primary-color, #1E90FF);
     color: white;
-    font-size: 0.8rem;
-    font-weight: 600;
-    padding: 4px 8px;
-    border-radius: 5px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    padding: 8px 20px;
+    border-radius: 20px;
+    box-shadow: 0 4px 10px rgba(30, 144, 255, 0.3);
+    z-index: 1;
+    letter-spacing: 1px;
+}
+
+.card-header {
+    margin-top: 10px;
 }
 
 .card-header h3 {
@@ -90,7 +99,6 @@
     color: var(--text-secondary, #666);
 }
 
-/* plan-features -> features-list 로 이름 매칭 */
 .features-list {
     list-style: none;
     padding: 0;
@@ -104,54 +112,58 @@
     color: var(--text-secondary, #666);
     margin-bottom: 12px;
     line-height: 1.4;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-/* 비활성화된 기능(X 표시) 스타일 추가 */
 .features-list li.disabled {
     color: #ccc;
     text-decoration: line-through;
+    opacity: 0.7;
 }
 
-/* plan-button -> plan-btn 으로 이름 매칭 */
 .plan-btn {
     display: block;
     width: 100%;
-    padding: 12px;
+    padding: 14px;
     font-size: 1.1rem;
     font-weight: 600;
     text-decoration: none;
-    border-radius: 6px;
+    border-radius: 8px;
     border: 1px solid var(--border-color, #ddd);
     background-color: white;
     color: var(--text-secondary, #666);
     cursor: pointer;
-    transition: background-color 0.2s, color 0.2s;
+    transition: all 0.2s;
 }
 
 .plan-btn:hover {
     background-color: #f1f3f5;
 }
 
-/* 프리미엄 버튼 스타일 */
 .premium-btn {
     background-color: var(--primary-color, #1E90FF);
     border-color: var(--primary-color, #1E90FF);
     color: white;
+    box-shadow: 0 4px 10px rgba(30, 144, 255, 0.2);
 }
 
 .premium-btn:hover {
     background-color: var(--primary-hover, #0069d9);
     border-color: var(--primary-hover, #0069d9);
     color: white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 15px rgba(30, 144, 255, 0.3);
 }
 
-/* 버튼 비활성화 상태 (이미 구독중이거나 처리중일 때) */
 .plan-btn:disabled {
     background-color: #e9ecef;
     border-color: #e9ecef;
     color: #adb5bd;
     cursor: not-allowed;
     transform: none;
+    box-shadow: none;
 }
 
 @media (max-width: 768px) {
@@ -163,5 +175,14 @@
     .pricing-card {
         width: 100%;
         max-width: 350px;
+    }
+    
+    .pricing-card.premium {
+        transform: none;
+        margin-top: 10px;
+    }
+    
+    .pricing-card.premium:hover {
+        transform: translateY(-5px);
     }
 }

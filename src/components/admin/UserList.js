@@ -90,6 +90,24 @@ const UserList = () => {
         }
     };
 
+    const handleMembershipChange = async (uid, newLevel) => {
+        if (!window.confirm("사용자의 멤버십 등급을 변경하시겠습니까?")) return;
+        
+        setIsUpdating(uid);
+        const userDocRef = doc(db, "users", uid);
+
+        try {
+            await updateDoc(userDocRef, { membershipLevel: newLevel });
+            setUsers(users.map(user => 
+                user.uid === uid ? { ...user, membershipLevel: newLevel } : user
+            ));
+        } catch (error) {
+            alert("멤버십 등급 변경에 실패했습니다: " + error.message);
+        } finally {
+            setIsUpdating(null);
+        }
+    };
+
     const handleSaveUser = async (updatedUser) => {
         setIsUpdating(updatedUser.uid);
         const { uid, ...userData } = updatedUser;
@@ -122,7 +140,7 @@ const UserList = () => {
     };
 
     const handleDisableUser = async (uid, email) => {
-        if (!window.confirm(`${email} 사용자의 계정을 사용 중지하시겠습니까?\n(사용자가 로그인할 수 없게 됩니다.)`)) {
+        if (!window.confirm(`${email} 사용자의 계정을 사용 중지하시겠습니까?`)) {
             return;
         }
         setIsUpdating(uid);
@@ -160,7 +178,7 @@ const UserList = () => {
     };
 
     const handleDeleteUser = async (uid, email) => {
-        if (!window.confirm(`${email} 사용자의 데이터를 DB에서 삭제하시겠습니까?\n(주의: 실제 로그인 계정은 Firebase 콘솔에서 삭제해야 할 수도 있습니다.)`)) {
+        if (!window.confirm(`${email} 사용자의 데이터를 삭제하시겠습니까?`)) {
             return;
         }
         setIsUpdating(uid);
@@ -231,11 +249,20 @@ const UserList = () => {
                                     <td>{user.gender === 'male' ? '남성' : user.gender === 'female' ? '여성' : '-'}</td>
                                     <td>{user.phone}</td>
                                     <td>
-                                        {user.membershipLevel === 'premium' ? (
-                                            <span style={{color: '#6c5ce7', fontWeight: 'bold'}}>프리미엄</span>
-                                        ) : (
-                                            <span style={{color: '#999'}}>일반</span>
-                                        )}
+                                        <select 
+                                            className="role-select"
+                                            value={user.membershipLevel || 'standard'} 
+                                            onChange={(e) => handleMembershipChange(user.uid, e.target.value)}
+                                            disabled={isUpdating === user.uid}
+                                            style={{
+                                                color: user.membershipLevel === 'premium' ? '#6c5ce7' : '#333',
+                                                fontWeight: user.membershipLevel === 'premium' ? 'bold' : 'normal',
+                                                borderColor: user.membershipLevel === 'premium' ? '#6c5ce7' : '#ddd'
+                                            }}
+                                        >
+                                            <option value="standard">일반</option>
+                                            <option value="premium">프리미엄</option>
+                                        </select>
                                     </td>
                                     <td>
                                         <select 
