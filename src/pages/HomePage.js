@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/HomePage.css';
 
+// 숫자 카운팅 애니메이션 컴포넌트
 const AnimatedCounter = ({ end, suffix }) => {
     const [count, setCount] = useState(0);
     const countRef = useRef(null);
@@ -50,6 +51,7 @@ const AnimatedCounter = ({ end, suffix }) => {
 const HomePage = () => {
     const [currentSlide, setCurrentSlide] = useState(0);
     
+    // 배너 슬라이드 데이터
     const bannerSlides = [
         {
             id: 1,
@@ -74,6 +76,7 @@ const HomePage = () => {
         }
     ];
 
+    // 자동 슬라이드 기능
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
@@ -95,6 +98,7 @@ const HomePage = () => {
 
     return (
         <div className="homepage-container">
+            {/* 메인 배너 슬라이더 */}
             <div className="main-banner-slider-wrapper">
                 <div className="main-banner-slider">
                     <div 
@@ -133,9 +137,10 @@ const HomePage = () => {
                 </div>
             </div>
 
+            {/* 통합 정보 섹션 (검색어, 뉴스, 리뷰) */}
             <section className="integrated-info-section">
                 <div className="trend-wrapper">
-                    <h2>실시간 인기 검색어</h2>
+                    <h2>🔥 실시간 인기 검색어</h2>
                     <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
                     <div className="trend-list-container">
                         {['카니발 하이브리드', '쏘렌토 플러그인', 'GV80 페이스리프트', '전기차 보조금', '테슬라 모델 Y'].map((item, index) => (
@@ -194,6 +199,7 @@ const HomePage = () => {
                 </div>
             </section>
 
+            {/* 주차장 추천 섹션 */}
             <section className="parking-recommendation-section">
                 <h2>📍 추천 주차장</h2>
                 <p>내 주변 제휴 주차장을 최저가로 예약하고 편하게 주차하세요.</p>
@@ -227,10 +233,12 @@ const HomePage = () => {
                 <Link to="/parking" className="parking-more-link">다른 지역 주차장 찾기 &gt;</Link>
             </section>
 
+            {/* 서비스 통계 섹션 (여기가 핵심입니다!) */}
             <section className="company-stats-section">
                 <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
                 <div className="stats-grid">
+                    {/* 카드 1 */}
                     <div className="stat-item">
                         <div className="stat-value">
                             <AnimatedCounter end={500} suffix="만+" />
@@ -238,6 +246,7 @@ const HomePage = () => {
                         <span className="stat-label-box">누적 사용자</span>
                         <p className="stat-description">대한민국 운전자 3명 중 1명이<br/>CarScope를 경험했습니다.</p>
                     </div>
+                    {/* 카드 2 */}
                     <div className="stat-item">
                         <div className="stat-value">
                             <AnimatedCounter end={2500} suffix="+" />
@@ -245,6 +254,7 @@ const HomePage = () => {
                         <span className="stat-label-box">제휴 주차장</span>
                         <p className="stat-description">전국 어디서나 편리하게<br/>주차장을 예약하세요.</p>
                     </div>
+                    {/* 카드 3 */}
                     <div className="stat-item">
                         <div className="stat-value">
                             <AnimatedCounter end={85} suffix="만+" />
