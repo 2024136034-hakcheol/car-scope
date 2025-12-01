@@ -453,12 +453,9 @@ body {
     width: 100%;
     max-width: var(--container-width);
     margin-bottom: 60px;
-    padding: 50px 40px;
+    padding: 50px 0;
     box-sizing: border-box;
-    border-radius: var(--radius-lg);
     text-align: center;
-    background-color: var(--white);
-    box-shadow: var(--shadow-card);
 }
 
 .company-stats-section h2 {
@@ -487,8 +484,8 @@ body {
     min-width: 250px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     padding: 40px 20px;
     background-color: var(--white);
     border-radius: 20px;
@@ -496,8 +493,7 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid #f0f0f0;
     text-align: center;
-    height: 100%;
-    min-height: 240px;
+    height: 320px;
     gap: 15px;
 }
 
@@ -514,6 +510,7 @@ body {
     line-height: 1;
     display: block;
     margin: 0;
+    padding: 0;
 }
 
 .stat-label-box {
@@ -522,14 +519,17 @@ body {
     color: var(--text-dark);
     display: block;
     margin: 0;
+    padding: 0;
+    line-height: 1.2;
 }
 
 .stat-description {
     font-size: 0.95rem;
     color: var(--text-medium);
     display: block;
-    line-height: 1.6;
     margin: 0;
+    padding: 0;
+    line-height: 1.5;
 }
 
 @media (max-width: 768px) {
