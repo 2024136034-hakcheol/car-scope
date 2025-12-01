@@ -208,10 +208,12 @@
 
 .modal-buttons {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: flex-end;
     gap: 10px;
     margin-top: 25px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .modal-buttons button {
@@ -233,21 +235,8 @@
     color: white;
 }
 
-.reset-button-modal {
-    padding: 10px 15px;
-    font-size: 0.9rem;
-    font-weight: 600;
-    border-radius: 4px;
-    cursor: pointer;
-    color: #e74c3c;
-    background-color: white;
-    border: 1px solid #e74c3c;
-}
-
 .modal-danger-zone {
-    margin-top: 30px;
-    padding-top: 20px;
-    border-top: 2px solid #e74c3c;
+    margin-top: 10px;
 }
 
 .modal-danger-zone h3 {
@@ -263,6 +252,7 @@
     flex-wrap: wrap;
 }
 
+.reset-password-btn,
 .disable-button,
 .enable-button,
 .delete-button {
@@ -274,11 +264,20 @@
     cursor: pointer;
     flex: 1;
     min-width: 140px;
+    color: white;
+    transition: background-color 0.2s;
+}
+
+.reset-password-btn {
+    background-color: #34495e;
+}
+
+.reset-password-btn:hover {
+    background-color: #2c3e50;
 }
 
 .disable-button {
     background-color: #f39c12;
-    color: white;
 }
 
 .disable-button:hover {
@@ -287,7 +286,6 @@
 
 .enable-button {
     background-color: #27ae60;
-    color: white;
 }
 
 .enable-button:hover {
@@ -296,7 +294,6 @@
 
 .delete-button {
     background-color: #e74c3c;
-    color: white;
 }
 
 .delete-button:hover {

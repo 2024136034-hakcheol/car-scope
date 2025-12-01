@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { collection, getDocs, doc, updateDoc, query, where, orderBy, limit, startAfter, endBefore, limitToLast, deleteDoc } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, query, orderBy, limit, startAfter, endBefore, limitToLast, deleteDoc } from 'firebase/firestore';
 import '../../styles/AdminPage.css';
 import UserEditModal from './UserEditModal';
 
@@ -20,14 +20,16 @@ const UserList = () => {
         setLoading(true);
         try {
             let q;
+            const usersRef = collection(db, "users");
+
             if (page === 1) {
-                q = query(collection(db, "users"), orderBy("email"), limit(USERS_PER_PAGE));
+                q = query(usersRef, orderBy("email"), limit(USERS_PER_PAGE));
             } else if (direction === 'next' && lastDoc) {
-                q = query(collection(db, "users"), orderBy("email"), startAfter(lastDoc), limit(USERS_PER_PAGE));
+                q = query(usersRef, orderBy("email"), startAfter(lastDoc), limit(USERS_PER_PAGE));
             } else if (direction === 'prev' && firstDoc) {
-                q = query(collection(db, "users"), orderBy("email"), endBefore(firstDoc), limitToLast(USERS_PER_PAGE));
+                q = query(usersRef, orderBy("email"), endBefore(firstDoc), limitToLast(USERS_PER_PAGE));
             } else {
-                q = query(collection(db, "users"), orderBy("email"), limit(USERS_PER_PAGE));
+                q = query(usersRef, orderBy("email"), limit(USERS_PER_PAGE));
             }
 
             const querySnapshot = await getDocs(q);
@@ -51,7 +53,7 @@ const UserList = () => {
             }
             
         } catch (error) {
-            console.error("Error fetching users: ", error);
+            console.error(error);
         } finally {
             setLoading(false);
         }
@@ -93,24 +95,15 @@ const UserList = () => {
         const { uid, ...userData } = updatedUser;
         const userDocRef = doc(db, "users", uid);
 
-        if (updatedUser.id !== editingUser.id) {
-            const q = query(collection(db, "users"), where("id", "==", updatedUser.id));
-            const querySnapshot = await getDocs(q);
-            if (!querySnapshot.empty) {
-                alert("이미 사용 중인 아이디입니다. 다른 아이디를 입력해주세요.");
-                setIsUpdating(null);
-                return;
-            }
-        }
-        
         try {
             await updateDoc(userDocRef, userData);
             setUsers(users.map(user => 
                 user.uid === uid ? updatedUser : user
             ));
             setEditingUser(null);
+            alert("정보가 저장되었습니다.");
         } catch (error) {
-            alert("정보 저장에 실패했습니다.");
+            alert("정보 저장에 실패했습니다: " + error.message);
         } finally {
             setIsUpdating(null);
         }
@@ -129,7 +122,7 @@ const UserList = () => {
     };
 
     const handleDisableUser = async (uid, email) => {
-        if (!window.confirm(`${email} 사용자의 계정을 사용 중지하시겠습니까?\n이 작업은 사용자가 로그인할 수 없게 합니다.`)) {
+        if (!window.confirm(`${email} 사용자의 계정을 사용 중지하시겠습니까?\n(사용자가 로그인할 수 없게 됩니다.)`)) {
             return;
         }
         setIsUpdating(uid);
@@ -141,7 +134,7 @@ const UserList = () => {
             ));
             alert("계정이 사용 중지되었습니다.");
         } catch (error) {
-            alert("계정 사용 중지에 실패했습니다: " + error.message);
+            alert("처리 실패: " + error.message);
         } finally {
             setIsUpdating(null);
         }
@@ -160,17 +153,14 @@ const UserList = () => {
             ));
             alert("계정이 활성화되었습니다.");
         } catch (error) {
-            alert("계정 활성화에 실패했습니다: " + error.message);
+            alert("처리 실패: " + error.message);
         } finally {
             setIsUpdating(null);
         }
     };
 
     const handleDeleteUser = async (uid, email) => {
-        if (!window.confirm(`${email} 사용자의 계정을 완전히 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
-            return;
-        }
-        if (!window.confirm("정말로 삭제하시겠습니까? 사용자의 모든 데이터가 삭제됩니다.")) {
+        if (!window.confirm(`${email} 사용자의 데이터를 DB에서 삭제하시겠습니까?\n(주의: 실제 로그인 계정은 Firebase 콘솔에서 삭제해야 할 수도 있습니다.)`)) {
             return;
         }
         setIsUpdating(uid);
@@ -178,9 +168,10 @@ const UserList = () => {
         try {
             await deleteDoc(userDocRef);
             setUsers(users.filter(user => user.uid !== uid));
-            alert("계정이 삭제되었습니다.");
+            setEditingUser(null); 
+            alert("사용자 데이터가 삭제되었습니다.");
         } catch (error) {
-            alert("계정 삭제에 실패했습니다: " + error.message);
+            alert("삭제 실패: " + error.message);
         } finally {
             setIsUpdating(null);
         }
@@ -199,18 +190,11 @@ const UserList = () => {
     };
 
     const goToPrevPage = () => {
-        if (currentPage === 1) {
-            alert("첫 페이지입니다.");
-            return;
-        }
+        if (currentPage === 1) return;
         const newPage = currentPage - 1;
         setCurrentPage(newPage);
         fetchUsers(newPage, 'prev');
     };
-
-    if (loading && users.length === 0) {
-        return <div className="admin-widget"><h2>사용자 목록</h2><p>로딩 중...</p></div>;
-    }
 
     return (
         <>
@@ -220,6 +204,7 @@ const UserList = () => {
                     <table className="user-table">
                         <thead>
                             <tr>
+                                <th>상태</th>
                                 <th>아이디</th>
                                 <th>닉네임</th>
                                 <th>이메일</th>
@@ -228,18 +213,21 @@ const UserList = () => {
                                 <th>성별</th>
                                 <th>전화번호</th>
                                 <th>권한</th>
-                                <th>수정</th>
+                                <th>관리</th>
                             </tr>
                         </thead>
                         <tbody>
                             {users.map(user => (
-                                <tr key={user.uid}>
+                                <tr key={user.uid} style={{ opacity: user.disabled ? 0.5 : 1, backgroundColor: user.disabled ? '#f0f0f0' : 'transparent' }}>
+                                    <td>
+                                        {user.disabled ? <span style={{color: 'red', fontWeight:'bold'}}>정지됨</span> : <span style={{color: 'green'}}>정상</span>}
+                                    </td>
                                     <td>{user.id}</td>
                                     <td>{user.nickname}</td>
                                     <td>{user.email}</td>
                                     <td>{user.name}</td>
                                     <td>{user.birthdate}</td>
-                                    <td>{user.gender}</td>
+                                    <td>{user.gender === 'male' ? '남성' : user.gender === 'female' ? '여성' : '-'}</td>
                                     <td>{user.phone}</td>
                                     <td>
                                         <select 
@@ -259,7 +247,7 @@ const UserList = () => {
                                             onClick={() => setEditingUser(user)}
                                             disabled={isUpdating === user.uid}
                                         >
-                                            수정
+                                            관리
                                         </button>
                                     </td>
                                 </tr>
@@ -269,7 +257,7 @@ const UserList = () => {
                 </div>
                 <div className="pagination-controls">
                     <button onClick={goToPrevPage} disabled={currentPage === 1 || loading}>이전</button>
-                    <span>페이지 {currentPage}</span>
+                    <span>{currentPage}</span>
                     <button onClick={goToNextPage} disabled={users.length < USERS_PER_PAGE || loading}>다음</button>
                 </div>
             </div>

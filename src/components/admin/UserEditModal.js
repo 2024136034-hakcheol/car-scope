@@ -31,6 +31,7 @@ const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, 
                             name="id"
                             value={formData.id}
                             onChange={handleChange}
+                            disabled
                         />
                     </div>
                     <div className="input-group">
@@ -87,22 +88,23 @@ const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, 
                             <option value="female">여성</option>
                         </select>
                     </div>
+                    
                     <div className="modal-buttons">
-                        <button 
-                            type="button" 
-                            className="reset-button-modal" 
-                            onClick={() => onPasswordReset(user.email)}
-                        >
-                            비밀번호 재설정
-                        </button>
-                        <div>
-                            <button type="button" className="cancel-button" onClick={onClose}>취소</button>
-                            <button type="submit" className="save-button">저장</button>
-                        </div>
+                        <button type="button" className="cancel-button" onClick={onClose}>취소</button>
+                        <button type="submit" className="save-button">저장</button>
                     </div>
+
                     <div className="modal-danger-zone">
                         <h3>계정 관리</h3>
                         <div className="danger-buttons">
+                            <button 
+                                type="button" 
+                                className="reset-password-btn" 
+                                onClick={() => onPasswordReset(user.email)}
+                            >
+                                비밀번호 재설정
+                            </button>
+
                             {user.disabled ? (
                                 <button 
                                     type="button" 
@@ -120,6 +122,7 @@ const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, 
                                     계정 사용 중지
                                 </button>
                             )}
+                            
                             <button 
                                 type="button" 
                                 className="delete-button" 
