@@ -88,64 +88,56 @@ const HomePage = () => {
                 </div>
             </div>
 
-            <section className="integrated-info-section">
-                <div className="trend-wrapper">
-                    <h2>실시간 인기 검색어</h2>
-                    <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
-                    <div className="trend-list-container">
-                        {['카니발 하이브리드', '쏘렌토 플러그인', 'GV80 페이스리프트', '전기차 보조금', '테슬라 모델 Y'].map((item, index) => (
-                            <div key={index} className="trend-item-card">
-                                <span className="trend-rank">{index + 1}</span>
-                                {item}
-                            </div>
-                        ))}
-                    </div>
+            <section className="hot-trends-section">
+                <h2>실시간 인기 검색어</h2>
+                <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
+                <div className="trend-list-container">
+                    {['카니발 하이브리드', '쏘렌토 플러그인', 'GV80 페이스리프트', '전기차 보조금', '테슬라 모델 Y'].map((item, index) => (
+                        <div key={index} className="trend-item-card">
+                            <span className="trend-rank">{index + 1}</span>
+                            {item}
+                        </div>
+                    ))}
+                </div>
+            </section>
+
+            <section className="main-content-grid">
+                <div className="card latest-news-card">
+                    <h3>최신 뉴스</h3>
+                    <ul>
+                        <li>
+                            <span>현대차, 신형 전기차 플랫폼 공개</span>
+                            <span className="date">2025.11.12</span>
+                        </li>
+                        <li>
+                            <span>테슬라 모델 Y, 국내 판매 가격 인하</span>
+                            <span className="date">2025.11.11</span>
+                        </li>
+                        <li>
+                            <span>정부, 전기차 충전소 확대 계획 발표</span>
+                            <span className="date">2025.11.10</span>
+                        </li>
+                    </ul>
+                    <Link to="/news" className="more-link">전체 뉴스 보기 &gt;</Link>
                 </div>
 
-                <div className="content-divider"></div>
-
-                <div className="info-grid-wrapper">
-                    <div className="info-column">
-                        <div className="column-header">
-                            <h3>최신 뉴스</h3>
-                            <Link to="/news" className="more-link">더보기 &gt;</Link>
-                        </div>
-                        <ul className="info-list">
-                            <li>
-                                <span className="info-title">현대차, 신형 전기차 플랫폼 공개</span>
-                                <span className="info-date">2025.11.12</span>
-                            </li>
-                            <li>
-                                <span className="info-title">테슬라 모델 Y, 국내 판매 가격 인하</span>
-                                <span className="info-date">2025.11.11</span>
-                            </li>
-                            <li>
-                                <span className="info-title">정부, 전기차 충전소 확대 계획 발표</span>
-                                <span className="info-date">2025.11.10</span>
-                            </li>
-                        </ul>
-                    </div>
-
-                    <div className="info-column">
-                        <div className="column-header">
-                            <h3>인기 리뷰</h3>
-                            <Link to="/reviews" className="more-link">더보기 &gt;</Link>
-                        </div>
-                        <ul className="info-list">
-                            <li>
-                                <span className="info-title">제네시스 GV80: 압도적인 디자인과 성능</span>
-                                <span className="info-rating">★★★★★</span>
-                            </li>
-                            <li>
-                                <span className="info-title">기아 EV9: 완벽한 밸런스를 갖춘 전기차</span>
-                                <span className="info-rating">★★★★☆</span>
-                            </li>
-                            <li>
-                                <span className="info-title">벤츠 E클래스: 시대를 소유하는 품격</span>
-                                <span className="info-rating">★★★★★</span>
-                            </li>
-                        </ul>
-                    </div>
+                <div className="card popular-reviews-card">
+                    <h3>인기 리뷰</h3>
+                    <ul>
+                        <li>
+                            <span>제네시스 GV80: 압도적인 디자인과 성능</span>
+                            <span className="rating">★★★★★</span>
+                        </li>
+                        <li>
+                            <span>기아 EV9: 완벽한 밸런스를 갖춘 전기차</span>
+                            <span className="rating">★★★★☆</span>
+                        </li>
+                        <li>
+                            <span>벤츠 E클래스: 시대를 소유하는 품격</span>
+                            <span className="rating">★★★★★</span>
+                        </li>
+                    </ul>
+                    <Link to="/reviews" className="more-link">전체 리뷰 보기 &gt;</Link>
                 </div>
             </section>
 
@@ -185,6 +177,23 @@ const HomePage = () => {
             <section className="company-stats-section">
                 <h2>CarScope와 함께하는 스마트한 자동차 생활</h2>
                 <p>CarScope는 수백만 명의 운전자와 함께 성장하고 있습니다.</p>
+                <div className="stats-grid">
+                    <div className="stat-item">
+                        <span className="stat-value">500만+</span>
+                        <span className="stat-label-box">누적 사용자</span>
+                        <p className="stat-description">대한민국 운전자 3명 중 1명이<br/>CarScope를 경험했습니다.</p>
+                    </div>
+                    <div className="stat-item">
+                        <span className="stat-value">2,500+</span>
+                        <span className="stat-label-box">제휴 주차장</span>
+                        <p className="stat-description">전국 어디서나 편리하게<br/>주차장을 예약하세요.</p>
+                    </div>
+                    <div className="stat-item">
+                        <span className="stat-value">85만+</span>
+                        <span className="stat-label-box">누적 리뷰</span>
+                        <p className="stat-description">실제 오너들의 생생한 후기로<br/>내 차를 선택하세요.</p>
+                    </div>
+                </div>
             </section>
         </div>
     );
