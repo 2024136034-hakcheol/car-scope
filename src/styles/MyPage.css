@@ -311,3 +311,93 @@
   border-radius: 6px;
   cursor: pointer;
 }
+
+.car-box {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 120px;
+}
+
+.no-car {
+    font-size: 18px;
+    color: #999;
+    font-weight: 500;
+    margin-bottom: 10px;
+}
+
+.btn-register-car {
+    background-color: #f1f3f5;
+    color: #007bff;
+    border: 1px dashed #007bff;
+    padding: 8px 16px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 0.2s;
+}
+
+.btn-register-car:hover {
+    background-color: #e3f2fd;
+}
+
+.btn-text-small {
+    background: none;
+    border: none;
+    font-size: 12px;
+    color: #999;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.car-register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+}
+
+.car-input {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+}
+
+.car-btn-row {
+    display: flex;
+    gap: 5px;
+    justify-content: center;
+}
+
+.btn-car-save {
+    padding: 6px 12px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.btn-car-cancel {
+    padding: 6px 12px;
+    background-color: #eee;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 13px;
+}
+
+.no-data-box {
+    padding: 40px 0;
+    text-align: center;
+    color: #888;
+    background-color: #f8f9fa;
+    border-radius: 8px;
+    border: 1px dashed #ddd;
+}

@@ -8,9 +8,16 @@ const MyPage = () => {
   const { currentUser, dbUser } = useContext(AuthContext);
 
   const [isEditing, setIsEditing] = useState(false);
+  const [isRegisteringCar, setIsRegisteringCar] = useState(false);
+
   const [editData, setEditData] = useState({
     nickname: '',
     phone: '',
+  });
+
+  const [carInput, setCarInput] = useState({
+    carNumber: '',
+    carModel: ''
   });
 
   const [reservationList, setReservationList] = useState([]);
@@ -20,6 +27,10 @@ const MyPage = () => {
       setEditData({
         nickname: dbUser.nickname || '',
         phone: dbUser.phone || '',
+      });
+      setCarInput({
+        carNumber: dbUser.carNumber || '',
+        carModel: dbUser.carModel || '',
       });
     }
   }, [dbUser]);
@@ -40,35 +51,52 @@ const MyPage = () => {
           }));
           setReservationList(list);
         } catch (error) {
-          console.error("예약 내역 불러오기 실패:", error);
+          console.error(error);
         }
       }
     };
     fetchReservations();
   }, [currentUser]);
 
-  const handleChange = (e) => {
+  const handleUserChange = (e) => {
     const { name, value } = e.target;
     setEditData(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleSave = async () => {
-    if (!currentUser) return;
+  const handleCarChange = (e) => {
+    const { name, value } = e.target;
+    setCarInput(prev => ({ ...prev, [name]: value }));
+  };
 
+  const handleSaveUser = async () => {
+    if (!currentUser) return;
     try {
       const userDocRef = doc(db, "users", currentUser.uid);
       await updateDoc(userDocRef, {
         nickname: editData.nickname,
         phone: editData.phone
       });
-
-      alert("정보가 성공적으로 수정되었습니다!");
+      alert("회원 정보가 수정되었습니다.");
       setIsEditing(false);
       window.location.reload();
-
     } catch (error) {
-      console.error("업데이트 실패:", error);
-      alert("정보 수정 중 오류가 발생했습니다.");
+      alert("오류 발생: " + error.message);
+    }
+  };
+
+  const handleSaveCar = async () => {
+    if (!currentUser) return;
+    try {
+      const userDocRef = doc(db, "users", currentUser.uid);
+      await updateDoc(userDocRef, {
+        carNumber: carInput.carNumber,
+        carModel: carInput.carModel
+      });
+      alert("차량 정보가 등록되었습니다.");
+      setIsRegisteringCar(false);
+      window.location.reload();
+    } catch (error) {
+      alert("차량 등록 실패: " + error.message);
     }
   };
 
@@ -88,33 +116,21 @@ const MyPage = () => {
                 <div className="edit-mode-inputs">
                   <div className="input-group">
                     <label>닉네임</label>
-                    <input 
-                      type="text" 
-                      name="nickname" 
-                      value={editData.nickname} 
-                      onChange={handleChange} 
-                      className="edit-input"
-                    />
+                    <input type="text" name="nickname" value={editData.nickname} onChange={handleUserChange} className="edit-input"/>
                   </div>
                   <div className="input-group">
                     <label>전화번호</label>
-                    <input 
-                      type="text" 
-                      name="phone" 
-                      value={editData.phone} 
-                      onChange={handleChange} 
-                      className="edit-input"
-                    />
+                    <input type="text" name="phone" value={editData.phone} onChange={handleUserChange} className="edit-input"/>
                   </div>
                 </div>
               ) : (
                 <>
                   <div className="name-row">
                     <h2>{dbUser.nickname}님</h2>
-                    <span className="badge-level">{dbUser.isAdmin ? 'ADMIN' : 'GOLD'}</span>
+                    <span className="badge-level">{dbUser.isAdmin ? 'ADMIN' : 'MEMBER'}</span>
                   </div>
                   <p className="user-email">{dbUser.email}</p>
-                  <p className="user-phone">{dbUser.phone}</p>
+                  <p className="user-phone">{dbUser.phone || '전화번호 미등록'}</p>
                 </>
               )}
             </div>
@@ -123,7 +139,7 @@ const MyPage = () => {
           <div className="btn-group">
             {isEditing ? (
               <>
-                <button className="btn-save" onClick={handleSave}>저장</button>
+                <button className="btn-save" onClick={handleSaveUser}>저장</button>
                 <button className="btn-cancel-edit" onClick={() => setIsEditing(false)}>취소</button>
               </>
             ) : (
@@ -135,16 +151,56 @@ const MyPage = () => {
         <div className="stats-container">
           <div className="stat-box">
             <p>보유 마일리지</p>
-            <h3>3,500 P</h3>
+            <h3>{dbUser.mileage ? dbUser.mileage.toLocaleString() : 0} P</h3>
           </div>
+
           <div className="stat-box">
             <p>할인 쿠폰</p>
-            <h3>2 장</h3>
+            <h3>{dbUser.coupons ? dbUser.coupons : 0} 장</h3>
           </div>
-          <div className="stat-box">
+
+          <div className="stat-box car-box">
             <p>등록된 차량</p>
-            <h3>12가 3456</h3>
-            <span className="sub-text">Hyundai Ioniq 5</span>
+            
+            {isRegisteringCar ? (
+              <div className="car-register-form">
+                <input 
+                  type="text" 
+                  name="carNumber" 
+                  placeholder="예: 12가 3456" 
+                  value={carInput.carNumber} 
+                  onChange={handleCarChange}
+                  className="car-input"
+                />
+                <input 
+                  type="text" 
+                  name="carModel" 
+                  placeholder="예: 아반떼 (선택)" 
+                  value={carInput.carModel} 
+                  onChange={handleCarChange}
+                  className="car-input"
+                />
+                <div className="car-btn-row">
+                  <button className="btn-car-save" onClick={handleSaveCar}>완료</button>
+                  <button className="btn-car-cancel" onClick={() => setIsRegisteringCar(false)}>취소</button>
+                </div>
+              </div>
+            ) : (
+              <>
+                {dbUser.carNumber ? (
+                  <>
+                    <h3>{dbUser.carNumber}</h3>
+                    <span className="sub-text">{dbUser.carModel || '차종 정보 없음'}</span>
+                    <button className="btn-text-small" onClick={() => setIsRegisteringCar(true)}>변경</button>
+                  </>
+                ) : (
+                  <>
+                    <h3 className="no-car">등록된 차량 없음</h3>
+                    <button className="btn-register-car" onClick={() => setIsRegisteringCar(true)}>+ 차량 등록하기</button>
+                  </>
+                )}
+              </>
+            )}
           </div>
         </div>
 
@@ -152,7 +208,7 @@ const MyPage = () => {
            <div className="section-reservations">
              <div className="section-header">
                <h3>최근 예약 내역</h3>
-               <button className="btn-text-more">더보기 &gt;</button>
+               {reservationList.length > 0 && <button className="btn-text-more">더보기 &gt;</button>}
              </div>
              
              {reservationList.length > 0 ? (
@@ -177,8 +233,8 @@ const MyPage = () => {
                   ))}
                 </div>
              ) : (
-               <div className="no-data" style={{padding: '20px', color:'#777'}}>
-                 아직 예약 내역이 없습니다.
+               <div className="no-data-box">
+                 <p>아직 예약 내역이 없습니다.</p>
                </div>
              )}
            </div>
