@@ -16,6 +16,7 @@ import ParkingPage from './pages/ParkingPage';
 import NotFoundPage from './pages/NotFoundPage';
 import EmergencyBanner from './components/EmergencyBanner';
 import MyPage from './pages/MyPage';
+import EmergencyPage from './pages/EmergencyPage';
 
 function App() {
   return (
@@ -48,6 +49,7 @@ function App() {
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
         <Route path="/parking" element={<ParkingPage />} />
         <Route path="/mypage" element={<MyPage />} />
+        <Route path="/emergency" element={<EmergencyPage />} />
         
         <Route 
           path="/admin" 

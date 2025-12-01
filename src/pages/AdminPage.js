@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { db } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-import UserList from '../components/admin/UserList'; // 경로 수정됨 (Admin -> admin)
+import UserList from '../components/admin/UserList'; 
+import EmergencyList from '../components/admin/EmergencyList'; // 새로 추가
 import '../styles/AdminPage.css';
 
 const AdminPage = () => {
@@ -99,6 +100,9 @@ const AdminPage = () => {
                         </div>
                     </div>
                 </div>
+
+                {/* 여기에 긴급출동 목록 추가 */}
+                <EmergencyList />
 
                 <UserList />
             </div>
