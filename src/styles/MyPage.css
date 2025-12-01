@@ -1,6 +1,6 @@
 .mypage-wrapper {
-  background-color: #f8f9fa; /* 배경은 아주 연한 회색 */
-  min-height: calc(100vh - 80px); /* 헤더 높이 뺌 */
+  background-color: #f8f9fa;
+  min-height: calc(100vh - 80px);
   padding: 40px 20px;
 }
 
@@ -16,7 +16,6 @@
   color: #333;
 }
 
-/* 1. 프로필 카드 */
 .profile-card {
   background: white;
   padding: 30px;
@@ -75,6 +74,12 @@
   font-size: 14px;
 }
 
+.user-phone {
+  margin: 5px 0 0 0;
+  color: #555;
+  font-size: 14px;
+}
+
 .btn-edit {
   padding: 8px 16px;
   border: 1px solid #ddd;
@@ -85,7 +90,6 @@
   color: #555;
 }
 
-/* 2. 통계 박스 */
 .stats-container {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -121,14 +125,12 @@
   color: #999;
 }
 
-/* 3. 하단 콘텐츠 영역 (2단 분리) */
 .content-row {
   display: grid;
-  grid-template-columns: 2fr 1fr; /* 2:1 비율 */
+  grid-template-columns: 2fr 1fr;
   gap: 20px;
 }
 
-/* 좌측 예약 내역 */
 .section-header {
   display: flex;
   justify-content: space-between;
@@ -224,7 +226,6 @@
   cursor: pointer;
 }
 
-/* 우측 퀵메뉴 */
 .section-quick {
   background: white;
   padding: 20px;
@@ -259,4 +260,54 @@
 
 .quick-list li:last-child {
   border-bottom: none;
+}
+
+.edit-mode-inputs {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.input-group {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.input-group label {
+  font-size: 13px;
+  color: #777;
+  width: 60px;
+}
+
+.edit-input {
+  padding: 6px 10px;
+  border: 1px solid #007bff;
+  border-radius: 4px;
+  font-size: 14px;
+  outline: none;
+}
+
+.btn-group {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-save {
+  padding: 8px 16px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.btn-cancel-edit {
+  padding: 8px 16px;
+  background-color: #f1f3f5;
+  color: #333;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }
