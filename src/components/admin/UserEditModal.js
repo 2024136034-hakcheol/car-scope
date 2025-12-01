@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import '../../styles/AdminPage.css';
 
-const UserEditModal = ({ user, onSave, onClose, onPasswordReset }) => {
+const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, onEnableUser, onDeleteUser }) => {
     const [formData, setFormData] = useState(user);
 
     useEffect(() => {
@@ -98,6 +98,35 @@ const UserEditModal = ({ user, onSave, onClose, onPasswordReset }) => {
                         <div>
                             <button type="button" className="cancel-button" onClick={onClose}>취소</button>
                             <button type="submit" className="save-button">저장</button>
+                        </div>
+                    </div>
+                    <div className="modal-danger-zone">
+                        <h3>계정 관리</h3>
+                        <div className="danger-buttons">
+                            {user.disabled ? (
+                                <button 
+                                    type="button" 
+                                    className="enable-button" 
+                                    onClick={() => onEnableUser(user.uid, user.email)}
+                                >
+                                    계정 활성화
+                                </button>
+                            ) : (
+                                <button 
+                                    type="button" 
+                                    className="disable-button" 
+                                    onClick={() => onDisableUser(user.uid, user.email)}
+                                >
+                                    계정 사용 중지
+                                </button>
+                            )}
+                            <button 
+                                type="button" 
+                                className="delete-button" 
+                                onClick={() => onDeleteUser(user.uid, user.email)}
+                            >
+                                계정 완전 삭제
+                            </button>
                         </div>
                     </div>
                 </form>

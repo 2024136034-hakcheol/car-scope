@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { auth, db } from '../../firebase';
 import { sendPasswordResetEmail } from 'firebase/auth';
-import { collection, getDocs, doc, updateDoc, query, where, orderBy, limit, startAfter, endBefore, limitToLast } from 'firebase/firestore';
+import { collection, getDocs, doc, updateDoc, query, where, orderBy, limit, startAfter, endBefore, limitToLast, deleteDoc } from 'firebase/firestore';
 import '../../styles/AdminPage.css';
 import UserEditModal from './UserEditModal';
 
@@ -128,6 +128,64 @@ const UserList = () => {
         }
     };
 
+    const handleDisableUser = async (uid, email) => {
+        if (!window.confirm(`${email} 사용자의 계정을 사용 중지하시겠습니까?\n이 작업은 사용자가 로그인할 수 없게 합니다.`)) {
+            return;
+        }
+        setIsUpdating(uid);
+        const userDocRef = doc(db, "users", uid);
+        try {
+            await updateDoc(userDocRef, { disabled: true });
+            setUsers(users.map(user => 
+                user.uid === uid ? { ...user, disabled: true } : user
+            ));
+            alert("계정이 사용 중지되었습니다.");
+        } catch (error) {
+            alert("계정 사용 중지에 실패했습니다: " + error.message);
+        } finally {
+            setIsUpdating(null);
+        }
+    };
+
+    const handleEnableUser = async (uid, email) => {
+        if (!window.confirm(`${email} 사용자의 계정을 다시 활성화하시겠습니까?`)) {
+            return;
+        }
+        setIsUpdating(uid);
+        const userDocRef = doc(db, "users", uid);
+        try {
+            await updateDoc(userDocRef, { disabled: false });
+            setUsers(users.map(user => 
+                user.uid === uid ? { ...user, disabled: false } : user
+            ));
+            alert("계정이 활성화되었습니다.");
+        } catch (error) {
+            alert("계정 활성화에 실패했습니다: " + error.message);
+        } finally {
+            setIsUpdating(null);
+        }
+    };
+
+    const handleDeleteUser = async (uid, email) => {
+        if (!window.confirm(`${email} 사용자의 계정을 완전히 삭제하시겠습니까?\n이 작업은 되돌릴 수 없습니다.`)) {
+            return;
+        }
+        if (!window.confirm("정말로 삭제하시겠습니까? 사용자의 모든 데이터가 삭제됩니다.")) {
+            return;
+        }
+        setIsUpdating(uid);
+        const userDocRef = doc(db, "users", uid);
+        try {
+            await deleteDoc(userDocRef);
+            setUsers(users.filter(user => user.uid !== uid));
+            alert("계정이 삭제되었습니다.");
+        } catch (error) {
+            alert("계정 삭제에 실패했습니다: " + error.message);
+        } finally {
+            setIsUpdating(null);
+        }
+    };
+
     const getUserRole = (user) => {
         if (user.isAdmin) return 'admin';
         if (user.isJournalist) return 'journalist';
@@ -222,6 +280,9 @@ const UserList = () => {
                     onSave={handleSaveUser}
                     onClose={() => setEditingUser(null)}
                     onPasswordReset={handlePasswordReset}
+                    onDisableUser={handleDisableUser}
+                    onEnableUser={handleEnableUser}
+                    onDeleteUser={handleDeleteUser}
                 />
             )}
         </>
