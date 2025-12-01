@@ -487,15 +487,16 @@ body {
     min-width: 250px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    padding: 40px 20px;
+    align-items: center;
+    padding: 0 20px;
     background-color: var(--white);
     border-radius: 20px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
     transition: transform 0.3s ease, box-shadow 0.3s ease;
     border: 1px solid #f0f0f0;
     text-align: center;
+    min-height: 280px;
 }
 
 .stat-item:hover {
@@ -508,16 +509,17 @@ body {
     font-size: 3rem;
     font-weight: 900;
     color: var(--primary-color);
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     line-height: 1;
     display: block;
+    margin-top: 0;
 }
 
 .stat-label-box {
     font-size: 1.2rem;
     font-weight: 700;
     color: var(--text-dark);
-    margin: 0 0 10px 0;
+    margin-bottom: 15px;
     display: block;
 }
 
