@@ -15,6 +15,7 @@ import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import ParkingPage from './pages/ParkingPage';
 import NotFoundPage from './pages/NotFoundPage';
 import EmergencyBanner from './components/EmergencyBanner';
+import MyPage from './pages/MyPage';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
         <Route path="/terms" element={<TermsOfServicePage />} />
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
         <Route path="/parking" element={<ParkingPage />} />
+        <Route path="/mypage" element={<MyPage />} />
         
         <Route 
           path="/admin" 

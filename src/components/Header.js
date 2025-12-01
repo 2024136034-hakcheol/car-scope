@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link } from 'react-router-dom';
 import '../styles/Header.css';
 import { AuthContext } from '../AuthContext';
@@ -7,6 +7,8 @@ import { signOut } from 'firebase/auth';
 
 const Header = () => {
     const { currentUser, dbUser, loading, setLoading } = useContext(AuthContext);
+    
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
     const handleLogout = async () => {
         setLoading(true);
@@ -45,18 +47,29 @@ const Header = () => {
                     </nav>
                     <div className="auth-buttons">
                         {currentUser ? (
-                            <>
+                            <div 
+                                className="user-menu-container"
+                                onMouseEnter={() => setIsDropdownOpen(true)}
+                                onMouseLeave={() => setIsDropdownOpen(false)}
+                            >
                                 <span className="user-nickname">
-                                    {dbUser ? dbUser.nickname : (currentUser.displayName || "사용자")}님
+                                    {dbUser ? dbUser.nickname : (currentUser.displayName || "사용자")}님 ▼
                                 </span>
-                                <button 
-                                    onClick={handleLogout} 
-                                    className="logout-button" 
-                                    disabled={loading}
-                                >
-                                    {loading ? "로그아웃중..." : "로그아웃"}
-                                </button>
-                            </>
+                                
+                                {}
+                                {isDropdownOpen && (
+                                    <div className="dropdown-menu">
+                                        <Link to="/mypage" className="dropdown-item">마이페이지</Link>
+                                        <button 
+                                            onClick={handleLogout} 
+                                            className="dropdown-item logout-item"
+                                            disabled={loading}
+                                        >
+                                            로그아웃
+                                        </button>
+                                    </div>
+                                )}
+                            </div>
                         ) : (
                             <>
                                 <Link to="/login" className="auth-button login-button">로그인</Link>
