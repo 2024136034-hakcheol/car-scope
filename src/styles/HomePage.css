@@ -29,7 +29,6 @@ body {
     padding-bottom: 80px;
 }
 
-/* --- 메인 배너 슬라이더 --- */
 .main-banner-slider-wrapper {
     position: relative;
     width: 100%;
@@ -41,6 +40,16 @@ body {
     box-shadow: var(--shadow-soft);
     background-color: var(--white);
     padding: 0;
+}
+
+@media (max-width: 1200px) {
+    .homepage-container .main-banner-slider-wrapper,
+    .homepage-container .integrated-info-section,
+    .homepage-container .parking-recommendation-section,
+    .homepage-container .company-stats-section {
+        width: 95%;
+        max-width: none;
+    }
 }
 
 .main-banner-slider {
@@ -165,7 +174,6 @@ body {
     border-radius: 10px;
 }
 
-/* --- 통합 정보 섹션 --- */
 .integrated-info-section {
     width: 100%;
     max-width: var(--container-width);
@@ -328,7 +336,6 @@ body {
     color: var(--primary-color);
 }
 
-/* --- 주차장 추천 섹션 --- */
 .parking-recommendation-section {
     width: 100%;
     max-width: var(--container-width);
@@ -442,14 +449,17 @@ body {
     background-color: var(--bg-body);
 }
 
-/* --- 서비스 통계 섹션 (카드 디자인 핵심) --- */
+/* --- 서비스 통계 섹션 (이중 카드 디자인 적용) --- */
 .company-stats-section {
     width: 100%;
     max-width: var(--container-width);
     margin-bottom: 60px;
-    padding: 50px 0;
+    padding: 50px 40px; /* 내부 패딩 */
     box-sizing: border-box;
+    border-radius: var(--radius-lg);
     text-align: center;
+    background-color: var(--white); /* 바깥쪽 큰 하얀 카드 */
+    box-shadow: var(--shadow-card); /* 바깥쪽 카드 그림자 */
 }
 
 .company-stats-section h2 {
@@ -473,25 +483,25 @@ body {
     width: 100%;
 }
 
-/* 여기가 하얀색 카드를 만드는 부분입니다 */
 .stat-item {
     flex: 1;
     min-width: 250px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* 수평 중앙 정렬 */
-    justify-content: center; /* 수직 중앙 정렬 */
+    align-items: center;
+    justify-content: center;
     padding: 40px 20px;
-    background-color: var(--white); /* 하얀색 배경 */
+    background-color: var(--white); /* 안쪽 작은 하얀 카드 */
     border-radius: 20px;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08); /* 그림자 */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* 안쪽 카드 그림자 (좀 더 진하게) */
     transition: transform 0.3s ease, box-shadow 0.3s ease;
-    text-align: center; /* 텍스트 중앙 정렬 */
+    border: 1px solid #f0f0f0; /* 테두리로 구분을 명확하게 */
 }
 
 .stat-item:hover {
     transform: translateY(-10px);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    border-color: var(--primary-color);
 }
 
 .stat-value {
@@ -518,17 +528,6 @@ body {
     margin: 0;
     padding: 0;
     line-height: 1.6;
-}
-
-/* --- 반응형 디자인 --- */
-@media (max-width: 1200px) {
-    .homepage-container .main-banner-slider-wrapper,
-    .homepage-container .integrated-info-section,
-    .homepage-container .parking-recommendation-section,
-    .homepage-container .company-stats-section {
-        width: 95%;
-        max-width: none;
-    }
 }
 
 @media (max-width: 768px) {
