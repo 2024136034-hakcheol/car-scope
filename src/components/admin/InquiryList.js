@@ -94,9 +94,15 @@ const InquiryList = () => {
                                 <tr key={item.id}>
                                     <td>{item.createdAt}</td>
                                     <td>
-                                        <span style={{ fontWeight: 'bold', color: getStatusColor(item.status) }}>
-                                            {item.status}
-                                        </span>
+                                        {item.isGuest ? (
+                                            <span style={{ fontWeight: 'bold', color: '#95a5a6' }}>
+                                                답변불가
+                                            </span>
+                                        ) : (
+                                            <span style={{ fontWeight: 'bold', color: getStatusColor(item.status) }}>
+                                                {item.status}
+                                            </span>
+                                        )}
                                     </td>
                                     <td>{item.category}</td>
                                     <td>
