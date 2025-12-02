@@ -35,7 +35,6 @@ const EmergencyList = () => {
         try {
             const reqRef = doc(db, "emergency_requests", id);
             await updateDoc(reqRef, { status: newStatus });
-            // UI 즉시 업데이트
             setRequests(prev => prev.map(req => 
                 req.id === id ? { ...req, status: newStatus } : req
             ));
@@ -56,9 +55,9 @@ const EmergencyList = () => {
     };
 
     const getStatusColor = (status) => {
-        if (status === '접수대기') return '#e74c3c'; // 빨강
-        if (status === '출동중') return '#f39c12'; // 주황
-        if (status === '처리완료') return '#2ecc71'; // 초록
+        if (status === '접수대기') return '#e74c3c';
+        if (status === '출동중') return '#f39c12';
+        if (status === '처리완료') return '#2ecc71';
         return '#333';
     };
 
@@ -94,7 +93,10 @@ const EmergencyList = () => {
                                             {req.status}
                                         </span>
                                     </td>
-                                    <td>{req.name}</td>
+                                    <td>
+                                        {req.name}
+                                        {req.isGuest && <span style={{fontSize: '0.8rem', color: '#e74c3c', marginLeft: '4px', fontWeight:'bold'}}>(비회원)</span>}
+                                    </td>
                                     <td>{req.phone}</td>
                                     <td>{req.carNumber}</td>
                                     <td>{req.issueType}</td>
