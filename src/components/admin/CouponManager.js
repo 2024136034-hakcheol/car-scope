@@ -83,31 +83,31 @@ const CouponManager = () => {
             
             <div style={{marginBottom: '30px', padding: '20px', backgroundColor: '#f8f9fa', borderRadius: '12px'}}>
                 <h3 style={{marginTop: 0, marginBottom: '15px', fontSize: '1.1rem'}}>새 쿠폰 생성</h3>
-                <form onSubmit={handleCreate} style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px'}}>
-                    <div className="input-group">
-                        <label>쿠폰명</label>
+                <form onSubmit={handleCreate} style={{display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '15px', alignItems: 'end'}}>
+                    <div className="input-group" style={{marginBottom: 0}}>
+                        <label style={{whiteSpace: 'nowrap'}}>쿠폰명</label>
                         <input type="text" name="name" value={newCoupon.name} onChange={handleChange} placeholder="예: 신규가입 환영 쿠폰" />
                     </div>
-                    <div className="input-group">
-                        <label>할인 금액 (원)</label>
+                    <div className="input-group" style={{marginBottom: 0}}>
+                        <label style={{whiteSpace: 'nowrap'}}>할인 금액 (원)</label>
                         <input type="number" name="discount" value={newCoupon.discount} onChange={handleChange} placeholder="예: 3000" />
                     </div>
-                    <div className="input-group" style={{gridColumn: '1 / -1'}}>
+                    <div className="input-group" style={{gridColumn: '1 / -1', marginBottom: 0}}>
                         <label>쿠폰 설명</label>
                         <input type="text" name="description" value={newCoupon.description} onChange={handleChange} placeholder="예: 5만원 이상 결제 시 사용 가능" />
                     </div>
-                    <div className="input-group">
+                    <div className="input-group" style={{marginBottom: 0}}>
                         <label>유효기간</label>
                         <input type="date" name="expiryDate" value={newCoupon.expiryDate} onChange={handleChange} />
                     </div>
-                    <div className="input-group">
+                    <div className="input-group" style={{marginBottom: 0}}>
                         <label>쿠폰 코드</label>
                         <div style={{display: 'flex', gap: '10px'}}>
-                            <input type="text" name="code" value={newCoupon.code} onChange={handleChange} placeholder="자동 생성 또는 직접 입력" />
-                            <button type="button" onClick={generateRandomCode} style={{padding: '0 15px', backgroundColor: '#6c5ce7', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', whiteSpace:'nowrap'}}>코드 생성</button>
+                            <input type="text" name="code" value={newCoupon.code} onChange={handleChange} placeholder="자동 생성 또는 직접 입력" style={{flex: 1}} />
+                            <button type="button" onClick={generateRandomCode} style={{padding: '0 15px', backgroundColor: '#6c5ce7', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', whiteSpace:'nowrap', height: '42px'}}>코드 생성</button>
                         </div>
                     </div>
-                    <button type="submit" style={{gridColumn: '1 / -1', padding: '12px', backgroundColor: '#1E90FF', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem'}}>쿠폰 발급하기</button>
+                    <button type="submit" style={{gridColumn: '1 / -1', padding: '12px', backgroundColor: '#1E90FF', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem', marginTop: '10px'}}>쿠폰 발급하기</button>
                 </form>
             </div>
 
