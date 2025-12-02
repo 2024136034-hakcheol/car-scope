@@ -111,17 +111,16 @@ const InquiryList = () => {
                                     <td className="action-buttons">
                                         <button 
                                             className="edit-button" 
-                                            disabled={item.isGuest}
                                             style={{
                                                 marginRight: '5px', 
-                                                backgroundColor: item.isGuest ? '#f0f0f0' : ((item.answer || item.reply) ? '#e8f5e9' : 'white'), 
-                                                borderColor: item.isGuest ? '#ccc' : ((item.answer || item.reply) ? '#2ecc71' : '#1E90FF'), 
-                                                color: item.isGuest ? '#999' : ((item.answer || item.reply) ? '#2ecc71' : '#1E90FF'),
-                                                cursor: item.isGuest ? 'not-allowed' : 'pointer'
+                                                backgroundColor: item.isGuest ? '#f8f9fa' : ((item.answer || item.reply) ? '#e8f5e9' : 'white'), 
+                                                borderColor: item.isGuest ? '#666' : ((item.answer || item.reply) ? '#2ecc71' : '#1E90FF'), 
+                                                color: item.isGuest ? '#333' : ((item.answer || item.reply) ? '#2ecc71' : '#1E90FF'),
+                                                cursor: 'pointer'
                                             }}
-                                            onClick={() => !item.isGuest && setSelectedInquiry(item)}
+                                            onClick={() => setSelectedInquiry(item)}
                                         >
-                                            {item.isGuest ? "답변불가" : ((item.answer || item.reply) ? "답변수정" : "답변하기")}
+                                            {item.isGuest ? "확인하기" : ((item.answer || item.reply) ? "답변수정" : "답변하기")}
                                         </button>
                                         <button 
                                             className="delete-button" 
