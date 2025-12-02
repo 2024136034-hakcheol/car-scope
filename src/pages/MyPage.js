@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../styles/MyPage.css';
 import { AuthContext } from '../AuthContext';
 import { db } from '../firebase';
-import { doc, updateDoc, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { doc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
 import InquiryDetailModal from '../components/InquiryDetailModal';
 
 const MyPage = () => {
@@ -34,11 +34,16 @@ const MyPage = () => {
         try {
           const resQuery = query(
             collection(db, "reservations"),
-            where("userId", "==", currentUser.uid),
-            orderBy("createdAt", "desc")
+            where("userId", "==", currentUser.uid)
           );
           const resSnap = await getDocs(resQuery);
-          setReservationList(resSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+          const sortedRes = resSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                                      .sort((a, b) => {
+                                          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+                                          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+                                          return dateB - dateA;
+                                      });
+          setReservationList(sortedRes);
 
           const inqQuery = query(
             collection(db, "inquiries"),

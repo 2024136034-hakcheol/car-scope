@@ -7,7 +7,7 @@ import '../styles/ContactPage.css';
 
 const ContactPage = () => {
     const navigate = useNavigate();
-    const { currentUser, loading } = useContext(AuthContext); 
+    const { currentUser, dbUser, loading } = useContext(AuthContext); 
     const [isLoading, setIsLoading] = useState(false);
     
     const [formData, setFormData] = useState({
@@ -24,6 +24,16 @@ const ContactPage = () => {
             navigate('/login');
         }
     }, [currentUser, loading, navigate]);
+
+    useEffect(() => {
+        if (currentUser && dbUser) {
+            setFormData(prev => ({
+                ...prev,
+                name: dbUser.name || '',
+                contact: currentUser.email || dbUser.phone || ''
+            }));
+        }
+    }, [currentUser, dbUser]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -66,9 +76,7 @@ const ContactPage = () => {
         }
     };
 
-    if (loading) return null; 
-
-    if (!currentUser) return null; 
+    if (loading || !currentUser) return null; 
 
     return (
         <div className="contact-container">
@@ -81,12 +89,28 @@ const ContactPage = () => {
                 <form onSubmit={handleSubmit} className="contact-form">
                     <div className="form-group">
                         <label>이름 <span className="req">*</span></label>
-                        <input type="text" name="name" value={formData.name} onChange={handleChange} placeholder="홍길동" />
+                        <input 
+                            type="text" 
+                            name="name" 
+                            value={formData.name} 
+                            onChange={handleChange} 
+                            placeholder="이름" 
+                            disabled 
+                            style={{ backgroundColor: '#f5f5f5', color: '#666', cursor: 'not-allowed' }}
+                        />
                     </div>
 
                     <div className="form-group">
-                        <label>연락처 (이메일 또는 전화번호) <span className="req">*</span></label>
-                        <input type="text" name="contact" value={formData.contact} onChange={handleChange} placeholder="답변 받을 연락처 입력" />
+                        <label>연락처 (이메일) <span className="req">*</span></label>
+                        <input 
+                            type="text" 
+                            name="contact" 
+                            value={formData.contact} 
+                            onChange={handleChange} 
+                            placeholder="연락처" 
+                            disabled 
+                            style={{ backgroundColor: '#f5f5f5', color: '#666', cursor: 'not-allowed' }}
+                        />
                     </div>
 
                     <div className="form-group">
