@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, addDoc } from "firebase/firestore";
@@ -7,7 +7,7 @@ import '../styles/ContactPage.css';
 
 const ContactPage = () => {
     const navigate = useNavigate();
-    const { currentUser } = useContext(AuthContext); 
+    const { currentUser, loading } = useContext(AuthContext); 
     const [isLoading, setIsLoading] = useState(false);
     
     const [formData, setFormData] = useState({
@@ -18,6 +18,13 @@ const ContactPage = () => {
         content: ''
     });
 
+    useEffect(() => {
+        if (!loading && !currentUser) {
+            alert("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동합니다.");
+            navigate('/login');
+        }
+    }, [currentUser, loading, navigate]);
+
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData(prev => ({ ...prev, [name]: value }));
@@ -26,6 +33,12 @@ const ContactPage = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (isLoading) return;
+
+        if (!currentUser) {
+            alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
+            navigate('/login');
+            return;
+        }
 
         if (!formData.name || !formData.contact || !formData.title || !formData.content) {
             alert("모든 필수 정보를 입력해주세요.");
@@ -36,10 +49,11 @@ const ContactPage = () => {
         try {
             await addDoc(collection(db, "inquiries"), {
                 ...formData,
-                userId: currentUser ? currentUser.uid : 'anonymous', 
+                userId: currentUser.uid, 
+                userEmail: currentUser.email,
                 status: '답변대기',
                 createdAt: new Date(),
-                answer: ''
+                answer: '' 
             });
             
             alert("문의가 정상적으로 접수되었습니다.\n마이페이지에서 내역을 확인하실 수 있습니다.");
@@ -51,6 +65,10 @@ const ContactPage = () => {
             setIsLoading(false);
         }
     };
+
+    if (loading) return null; 
+
+    if (!currentUser) return null; 
 
     return (
         <div className="contact-container">
