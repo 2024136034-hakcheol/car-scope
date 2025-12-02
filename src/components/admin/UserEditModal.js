@@ -34,6 +34,28 @@ const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, 
                             disabled
                         />
                     </div>
+
+                    <div className="input-group">
+                        <label htmlFor="membershipLevel">멤버십 등급</label>
+                        <select
+                            id="membershipLevel"
+                            name="membershipLevel"
+                            value={formData.membershipLevel || 'standard'}
+                            onChange={handleChange}
+                            className="role-select"
+                            style={{
+                                color: formData.membershipLevel === 'premium' ? '#6c5ce7' : '#333',
+                                fontWeight: formData.membershipLevel === 'premium' ? 'bold' : 'normal',
+                                borderColor: formData.membershipLevel === 'premium' ? '#6c5ce7' : '#ddd',
+                                width: '100%',
+                                padding: '10px'
+                            }}
+                        >
+                            <option value="standard">일반 (Standard)</option>
+                            <option value="premium">프리미엄 (Premium)</option>
+                        </select>
+                    </div>
+
                     <div className="input-group">
                         <label htmlFor="nickname">닉네임</label>
                         <input
@@ -82,6 +104,7 @@ const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, 
                             value={formData.gender}
                             onChange={handleChange}
                             className="role-select"
+                            style={{ width: '100%', padding: '10px' }}
                         >
                             <option value="none">선택 안함</option>
                             <option value="male">남성</option>
