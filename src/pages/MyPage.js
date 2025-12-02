@@ -2,8 +2,9 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../styles/MyPage.css';
 import { AuthContext } from '../AuthContext';
 import { db } from '../firebase';
-import { doc, updateDoc, collection, query, where, getDocs } from 'firebase/firestore';
+import { doc, updateDoc, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
 import InquiryDetailModal from '../components/InquiryDetailModal';
+import CouponListModal from '../components/CouponListModal';
 
 const MyPage = () => {
   const { currentUser, dbUser } = useContext(AuthContext);
@@ -14,6 +15,7 @@ const MyPage = () => {
 
   const [selectedInquiry, setSelectedInquiry] = useState(null);
   const [isInquiryModalOpen, setIsInquiryModalOpen] = useState(false);
+  const [isCouponModalOpen, setIsCouponModalOpen] = useState(false);
 
   const [reservationList, setReservationList] = useState([]);
   const [inquiryList, setInquiryList] = useState([]);
@@ -34,16 +36,11 @@ const MyPage = () => {
         try {
           const resQuery = query(
             collection(db, "reservations"),
-            where("userId", "==", currentUser.uid)
+            where("userId", "==", currentUser.uid),
+            orderBy("createdAt", "desc")
           );
           const resSnap = await getDocs(resQuery);
-          const sortedRes = resSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-                                      .sort((a, b) => {
-                                          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
-                                          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
-                                          return dateB - dateA;
-                                      });
-          setReservationList(sortedRes);
+          setReservationList(resSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
 
           const inqQuery = query(
             collection(db, "inquiries"),
@@ -131,7 +128,9 @@ const MyPage = () => {
 
         <div className="stats-container">
           <div className="stat-box"><p>보유 마일리지</p><h3>{dbUser.mileage ? dbUser.mileage.toLocaleString() : 0} P</h3></div>
-          <div className="stat-box"><p>할인 쿠폰</p><h3>{dbUser.coupons ? dbUser.coupons : 0} 장</h3></div>
+          <div className="stat-box clickable" onClick={() => setIsCouponModalOpen(true)}>
+            <p>할인 쿠폰</p><h3>{dbUser.coupons ? dbUser.coupons : 0} 장</h3>
+          </div>
           <div className="stat-box car-box">
             <p>등록된 차량</p>
             {isRegisteringCar ? (
@@ -233,6 +232,12 @@ const MyPage = () => {
         isOpen={isInquiryModalOpen}
         onClose={() => setIsInquiryModalOpen(false)}
         inquiry={selectedInquiry}
+      />
+
+      <CouponListModal
+        isOpen={isCouponModalOpen}
+        onClose={() => setIsCouponModalOpen(false)}
+        userId={currentUser.uid}
       />
     </div>
   );
