@@ -5,7 +5,7 @@ const InquiryReplyModal = ({ inquiry, onSave, onClose }) => {
     const [reply, setReply] = useState('');
 
     useEffect(() => {
-        setReply(inquiry.reply || '');
+        setReply(inquiry.answer || inquiry.reply || '');
     }, [inquiry]);
 
     const handleSubmit = (e) => {
@@ -28,7 +28,6 @@ const InquiryReplyModal = ({ inquiry, onSave, onClose }) => {
 
                 <form onSubmit={handleSubmit} className="modal-form">
                     <div className="input-group">
-                        {/* 수정된 부분: whiteSpace: 'nowrap' 추가 */}
                         <label style={{ whiteSpace: 'nowrap' }}>관리자 답변</label>
                         <textarea
                             rows="6"

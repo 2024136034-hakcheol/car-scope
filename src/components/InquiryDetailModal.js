@@ -4,6 +4,8 @@ import '../styles/MyPage.css';
 const InquiryDetailModal = ({ isOpen, onClose, inquiry }) => {
     if (!isOpen || !inquiry) return null;
 
+    const adminAnswer = inquiry.answer || inquiry.reply;
+
     return (
         <div className="modal-overlay" onClick={onClose}>
             <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -48,7 +50,7 @@ const InquiryDetailModal = ({ isOpen, onClose, inquiry }) => {
                         <span>💬</span> 관리자 답변
                     </h4>
                     
-                    {inquiry.answer ? (
+                    {adminAnswer ? (
                         <div style={{
                             backgroundColor: '#e3f2fd', 
                             border: '1px solid #bbdefb',
@@ -59,7 +61,7 @@ const InquiryDetailModal = ({ isOpen, onClose, inquiry }) => {
                             whiteSpace: 'pre-wrap',
                             fontSize: '1rem'
                         }}>
-                            {inquiry.answer}
+                            {adminAnswer}
                         </div>
                     ) : (
                         <div style={{

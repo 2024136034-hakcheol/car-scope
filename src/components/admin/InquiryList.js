@@ -35,31 +35,19 @@ const InquiryList = () => {
         try {
             const reqRef = doc(db, "inquiries", id);
             await updateDoc(reqRef, { 
-                reply: replyContent,
+                answer: replyContent,
+                reply: replyContent, 
                 status: '답변완료'
             });
             
             setInquiries(prev => prev.map(item => 
-                item.id === id ? { ...item, reply: replyContent, status: '답변완료' } : item
+                item.id === id ? { ...item, answer: replyContent, reply: replyContent, status: '답변완료' } : item
             ));
             
             alert("답변이 성공적으로 등록되었습니다.");
             setSelectedInquiry(null);
         } catch (error) {
             alert("답변 저장 실패: " + error.message);
-        }
-    };
-
-    const handleStatusChange = async (id, newStatus) => {
-        if (!window.confirm(`상태를 '${newStatus}'(으)로 변경하시겠습니까?`)) return;
-        try {
-            const reqRef = doc(db, "inquiries", id);
-            await updateDoc(reqRef, { status: newStatus });
-            setInquiries(prev => prev.map(item => 
-                item.id === id ? { ...item, status: newStatus } : item
-            ));
-        } catch (error) {
-            alert("상태 변경 실패: " + error.message);
         }
     };
 
@@ -118,10 +106,10 @@ const InquiryList = () => {
                                     <td className="action-buttons">
                                         <button 
                                             className="edit-button" 
-                                            style={{marginRight: '5px', backgroundColor: item.reply ? '#e8f5e9' : 'white', borderColor: item.reply ? '#2ecc71' : '#1E90FF', color: item.reply ? '#2ecc71' : '#1E90FF'}}
+                                            style={{marginRight: '5px', backgroundColor: (item.answer || item.reply) ? '#e8f5e9' : 'white', borderColor: (item.answer || item.reply) ? '#2ecc71' : '#1E90FF', color: (item.answer || item.reply) ? '#2ecc71' : '#1E90FF'}}
                                             onClick={() => setSelectedInquiry(item)}
                                         >
-                                            {item.reply ? "답변수정" : "답변하기"}
+                                            {(item.answer || item.reply) ? "답변수정" : "답변하기"}
                                         </button>
                                         <button 
                                             className="delete-button" 
