@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase';
-import { collection, addDoc, doc, query, orderBy, onSnapshot, writeBatch, collectionGroup, where, getDocs, increment } from 'firebase/firestore';
+import { collection, addDoc, deleteDoc, doc, query, orderBy, onSnapshot, writeBatch, collectionGroup, where, getDocs, increment } from 'firebase/firestore';
 import '../../styles/AdminPage.css';
 
 const CouponManager = () => {
@@ -132,28 +132,28 @@ const CouponManager = () => {
                     
                     <div className="input-group" style={{marginBottom: 0}}>
                         <label>사용 한도 설정</label>
-                        <div style={{display: 'flex', alignItems: 'center', gap: '10px', height: '42px'}}>
-                            <label style={{display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', margin: 0, fontWeight: 'normal'}}>
+                        <div style={{display: 'flex', alignItems: 'center', height: '42px', gap: '20px'}}>
+                            <label style={{display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', margin: 0, fontWeight: 'normal', fontSize: '1rem'}}>
                                 <input 
                                     type="checkbox" 
                                     name="isUnlimited" 
                                     checked={newCoupon.isUnlimited} 
                                     onChange={handleChange} 
-                                    style={{width:'auto'}}
+                                    style={{width: '18px', height: '18px', cursor: 'pointer'}}
                                 />
                                 무제한
                             </label>
                             {!newCoupon.isUnlimited && (
-                                <div style={{display: 'flex', alignItems: 'center', gap: '5px', flex: 1}}>
+                                <div style={{display: 'flex', alignItems: 'center', gap: '8px'}}>
                                     <input 
                                         type="number" 
                                         name="maxUses" 
                                         value={newCoupon.maxUses} 
                                         onChange={handleChange} 
                                         placeholder="100"
-                                        style={{width: '80px'}}
+                                        style={{width: '100px', textAlign: 'right'}}
                                     />
-                                    <span style={{fontSize: '0.9rem', color: '#666'}}>명</span>
+                                    <span style={{fontSize: '1rem', color: '#333'}}>명</span>
                                 </div>
                             )}
                         </div>
