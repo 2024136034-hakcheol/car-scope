@@ -12,7 +12,9 @@ const CouponManager = () => {
         discount: '',
         description: '',
         expiryDate: '',
-        code: ''
+        code: '',
+        maxUses: 100,
+        isUnlimited: false
     });
 
     const fetchCoupons = async () => {
@@ -42,14 +44,20 @@ const CouponManager = () => {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setNewCoupon(prev => ({ ...prev, [name]: value }));
+        const { name, value, type, checked } = e.target;
+        const val = type === 'checkbox' ? checked : value;
+        setNewCoupon(prev => ({ ...prev, [name]: val }));
     };
 
     const handleCreate = async (e) => {
         e.preventDefault();
         if (!newCoupon.name || !newCoupon.discount || !newCoupon.expiryDate || !newCoupon.code) {
-            alert("모든 필수 정보를 입력해주세요.");
+            alert("필수 정보를 입력해주세요.");
+            return;
+        }
+
+        if (!newCoupon.isUnlimited && (!newCoupon.maxUses || newCoupon.maxUses < 1)) {
+            alert("사용 제한 횟수를 1 이상 입력해주세요.");
             return;
         }
 
@@ -57,10 +65,15 @@ const CouponManager = () => {
             await addDoc(collection(db, "coupons"), {
                 ...newCoupon,
                 discount: Number(newCoupon.discount),
+                maxUses: newCoupon.isUnlimited ? -1 : Number(newCoupon.maxUses),
+                currentUses: 0,
                 createdAt: new Date()
             });
             alert("쿠폰이 생성되었습니다.");
-            setNewCoupon({ name: '', discount: '', description: '', expiryDate: '', code: '' });
+            setNewCoupon({ 
+                name: '', discount: '', description: '', expiryDate: '', code: '', 
+                maxUses: 100, isUnlimited: false 
+            });
             fetchCoupons();
         } catch (error) {
             alert("생성 실패: " + error.message);
@@ -96,10 +109,41 @@ const CouponManager = () => {
                         <label>쿠폰 설명</label>
                         <input type="text" name="description" value={newCoupon.description} onChange={handleChange} placeholder="예: 5만원 이상 결제 시 사용 가능" />
                     </div>
+                    
+                    <div className="input-group" style={{marginBottom: 0}}>
+                        <label>사용 한도 설정</label>
+                        <div style={{display: 'flex', alignItems: 'center', gap: '10px', height: '42px'}}>
+                            <label style={{display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', margin: 0, fontWeight: 'normal'}}>
+                                <input 
+                                    type="checkbox" 
+                                    name="isUnlimited" 
+                                    checked={newCoupon.isUnlimited} 
+                                    onChange={handleChange} 
+                                    style={{width:'auto'}}
+                                />
+                                무제한
+                            </label>
+                            {!newCoupon.isUnlimited && (
+                                <div style={{display: 'flex', alignItems: 'center', gap: '5px', flex: 1}}>
+                                    <input 
+                                        type="number" 
+                                        name="maxUses" 
+                                        value={newCoupon.maxUses} 
+                                        onChange={handleChange} 
+                                        placeholder="100"
+                                        style={{width: '80px'}}
+                                    />
+                                    <span style={{fontSize: '0.9rem', color: '#666'}}>명</span>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
                     <div className="input-group" style={{marginBottom: 0}}>
                         <label>유효기간</label>
                         <input type="date" name="expiryDate" value={newCoupon.expiryDate} onChange={handleChange} />
                     </div>
+                    
                     <div className="input-group" style={{marginBottom: 0}}>
                         <label>쿠폰 코드</label>
                         <div style={{display: 'flex', gap: '10px'}}>
@@ -107,6 +151,7 @@ const CouponManager = () => {
                             <button type="button" onClick={generateRandomCode} style={{padding: '0 15px', backgroundColor: '#6c5ce7', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', whiteSpace:'nowrap', height: '42px'}}>코드 생성</button>
                         </div>
                     </div>
+                    
                     <button type="submit" style={{gridColumn: '1 / -1', padding: '12px', backgroundColor: '#1E90FF', color: 'white', border: 'none', borderRadius: '6px', cursor: 'pointer', fontWeight: 'bold', fontSize: '1rem', marginTop: '10px'}}>쿠폰 발급하기</button>
                 </form>
             </div>
@@ -118,7 +163,7 @@ const CouponManager = () => {
                             <th>쿠폰명</th>
                             <th>코드</th>
                             <th>할인액</th>
-                            <th>설명</th>
+                            <th>사용현황 (사용/전체)</th>
                             <th>유효기간</th>
                             <th>관리</th>
                         </tr>
@@ -134,7 +179,13 @@ const CouponManager = () => {
                                     <td>{coupon.name}</td>
                                     <td><span style={{background:'#eee', padding:'2px 6px', borderRadius:'4px', fontWeight:'bold'}}>{coupon.code}</span></td>
                                     <td style={{color:'#e74c3c', fontWeight:'bold'}}>{coupon.discount.toLocaleString()}원</td>
-                                    <td>{coupon.description}</td>
+                                    <td>
+                                        {coupon.isUnlimited ? (
+                                            <span style={{color: '#2ecc71', fontWeight: 'bold'}}>무제한 ({coupon.currentUses}명 사용)</span>
+                                        ) : (
+                                            <span>{coupon.currentUses} / {coupon.maxUses}명</span>
+                                        )}
+                                    </td>
                                     <td>{coupon.expiryDate}</td>
                                     <td>
                                         <button className="delete-button" onClick={() => handleDelete(coupon.id)}>삭제</button>
