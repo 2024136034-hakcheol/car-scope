@@ -183,15 +183,19 @@ const MyPage = () => {
                       {inquiryList.map((inq) => (
                         <div key={inq.id} className="inquiry-card" onClick={() => handleOpenInquiry(inq)}>
                           <div className="inq-top">
-                            <span className={`inq-status ${inq.status === '답변완료' || inq.answer ? 'answered' : 'waiting'}`}>
-                                {inq.status || (inq.answer ? '답변완료' : '답변대기')}
+                            <span className={`inq-status ${inq.answer ? 'answered' : 'waiting'}`}>
+                                {inq.answer ? '답변완료' : '답변대기'}
                             </span>
                             <span className="inq-date">
                                 {inq.createdAt?.toDate ? inq.createdAt.toDate().toLocaleDateString() : '날짜 없음'}
                             </span>
                           </div>
                           <h4 className="inq-title">{inq.title}</h4>
-                          <p className="inq-category">{inq.category === 'general' ? '일반 문의' : inq.category}</p>
+                          <p className="inq-category">{inq.category === 'general' ? '일반 문의' : 
+                             inq.category === 'account' ? '계정/로그인' :
+                             inq.category === 'service' ? '서비스 이용' :
+                             inq.category === 'error' ? '오류 신고' : '제안/기타'}
+                          </p>
                         </div>
                       ))}
                     </div>
