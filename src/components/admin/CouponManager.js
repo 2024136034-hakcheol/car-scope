@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase';
-import { collection, addDoc, deleteDoc, doc, query, orderBy, onSnapshot } from 'firebase/firestore';
+import { collection, addDoc, doc, query, orderBy, onSnapshot, writeBatch, collectionGroup, where, getDocs, increment } from 'firebase/firestore';
 import '../../styles/AdminPage.css';
 
 const CouponManager = () => {
@@ -77,12 +77,36 @@ const CouponManager = () => {
         }
     };
 
-    const handleDelete = async (id) => {
-        if (!window.confirm("이 쿠폰을 삭제하시겠습니까?")) return;
+    const handleDelete = async (id, code) => {
+        if (!window.confirm("이 쿠폰을 영구 삭제하시겠습니까?\n(이미 이 쿠폰을 보유한 사용자들에게서도 회수됩니다.)")) return;
+        
+        setLoading(true);
         try {
-            await deleteDoc(doc(db, "coupons", id));
+            const batch = writeBatch(db);
+
+            const rootCouponRef = doc(db, "coupons", id);
+            batch.delete(rootCouponRef);
+
+            const usersCouponsQuery = query(collectionGroup(db, "coupons"), where("code", "==", code));
+            const querySnapshot = await getDocs(usersCouponsQuery);
+
+            querySnapshot.forEach((document) => {
+                if (document.ref.path.startsWith('users/')) {
+                    batch.delete(document.ref);
+
+                    const userId = document.ref.parent.parent.id;
+                    const userRef = doc(db, "users", userId);
+                    batch.update(userRef, { coupons: increment(-1) });
+                }
+            });
+
+            await batch.commit();
+            alert("쿠폰이 삭제되고 사용자들에게서 회수되었습니다.");
         } catch (error) {
+            console.error(error);
             alert("삭제 실패: " + error.message);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -184,7 +208,7 @@ const CouponManager = () => {
                                     </td>
                                     <td>{coupon.expiryDate}</td>
                                     <td>
-                                        <button className="delete-button" onClick={() => handleDelete(coupon.id)}>삭제</button>
+                                        <button className="delete-button" onClick={() => handleDelete(coupon.id, coupon.code)}>삭제</button>
                                     </td>
                                 </tr>
                             ))
