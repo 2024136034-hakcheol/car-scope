@@ -3,6 +3,7 @@ import '../../styles/AdminPage.css';
 
 const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, onEnableUser, onDeleteUser }) => {
     const [formData, setFormData] = useState(user);
+    const [mileageToAdd, setMileageToAdd] = useState('');
 
     useEffect(() => {
         setFormData(user);
@@ -16,6 +17,21 @@ const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, 
     const handleSubmit = (e) => {
         e.preventDefault();
         onSave(formData);
+    };
+
+    const handleAddMileage = () => {
+        const amount = parseInt(mileageToAdd, 10);
+        if (isNaN(amount) || amount === 0) {
+            alert("유효한 마일리지 금액을 입력해주세요.");
+            return;
+        }
+
+        const currentMileage = formData.mileage || 0;
+        const newMileage = currentMileage + amount;
+
+        setFormData(prev => ({ ...prev, mileage: newMileage }));
+        setMileageToAdd('');
+        alert(`${amount > 0 ? '지급' : '차감'} 예정입니다. '저장' 버튼을 눌러 확정해주세요.`);
     };
 
     return (
@@ -34,6 +50,42 @@ const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, 
                             disabled
                         />
                     </div>
+
+                    <div className="input-group">
+                        <label htmlFor="mileage">보유 마일리지</label>
+                        <div style={{display: 'flex', gap: '10px'}}>
+                            <input
+                                type="number"
+                                id="mileage"
+                                name="mileage"
+                                value={formData.mileage || 0}
+                                onChange={handleChange}
+                                style={{fontWeight: 'bold', color: '#1E90FF'}}
+                            />
+                        </div>
+                    </div>
+
+                    <div style={{backgroundColor: '#f0f8ff', padding: '15px', borderRadius: '8px', marginBottom: '20px', border: '1px solid #cce5ff'}}>
+                        <label style={{display:'block', marginBottom:'8px', fontSize:'0.9rem', color:'#004085', fontWeight:'bold'}}>마일리지 지급/차감</label>
+                        <div style={{display: 'flex', gap: '10px'}}>
+                            <input 
+                                type="number" 
+                                placeholder="금액 입력 (차감은 -)" 
+                                value={mileageToAdd} 
+                                onChange={(e) => setMileageToAdd(e.target.value)}
+                                style={{flex: 1, padding: '8px', borderRadius: '4px', border: '1px solid #b8daff'}}
+                            />
+                            <button 
+                                type="button" 
+                                onClick={handleAddMileage}
+                                style={{padding: '8px 16px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold'}}
+                            >
+                                적용
+                            </button>
+                        </div>
+                        <p style={{fontSize: '0.8rem', color: '#666', marginTop: '5px', marginBottom: 0}}>* 적용 후 하단의 [저장] 버튼을 눌러야 반영됩니다.</p>
+                    </div>
+
                     <div className="input-group">
                         <label htmlFor="nickname">닉네임</label>
                         <input
@@ -63,31 +115,6 @@ const UserEditModal = ({ user, onSave, onClose, onPasswordReset, onDisableUser, 
                             value={formData.phone}
                             onChange={handleChange}
                         />
-                    </div>
-                    <div className="input-group">
-                        <label htmlFor="birthdate">생년월일</label>
-                        <input
-                            type="text"
-                            id="birthdate"
-                            name="birthdate"
-                            value={formData.birthdate}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className="input-group">
-                        <label htmlFor="gender">성별</label>
-                        <select
-                            id="gender"
-                            name="gender"
-                            value={formData.gender}
-                            onChange={handleChange}
-                            className="role-select"
-                            style={{ width: '100%', padding: '10px' }}
-                        >
-                            <option value="none">선택 안함</option>
-                            <option value="male">남성</option>
-                            <option value="female">여성</option>
-                        </select>
                     </div>
                     
                     <div className="modal-buttons">

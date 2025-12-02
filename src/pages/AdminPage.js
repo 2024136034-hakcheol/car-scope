@@ -5,6 +5,7 @@ import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContai
 import UserList from '../components/admin/UserList'; 
 import EmergencyList from '../components/admin/EmergencyList';
 import InquiryList from '../components/admin/InquiryList'; 
+import CouponManager from '../components/admin/CouponManager'; // 추가
 import '../styles/AdminPage.css';
 
 const AdminPage = () => {
@@ -105,6 +106,8 @@ const AdminPage = () => {
                 <EmergencyList />
                 
                 <InquiryList />
+
+                <CouponManager />
 
                 <UserList />
             </div>
