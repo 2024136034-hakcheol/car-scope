@@ -30,7 +30,7 @@ const ContactPage = () => {
             setFormData(prev => ({
                 ...prev,
                 name: dbUser.name || '',
-                contact: currentUser.email || dbUser.phone || ''
+                contact: dbUser.phone || '' 
             }));
         }
     }, [currentUser, dbUser]);
@@ -101,13 +101,13 @@ const ContactPage = () => {
                     </div>
 
                     <div className="form-group">
-                        <label>연락처 (이메일) <span className="req">*</span></label>
+                        <label>연락처 <span className="req">*</span></label>
                         <input 
                             type="text" 
                             name="contact" 
                             value={formData.contact} 
                             onChange={handleChange} 
-                            placeholder="연락처" 
+                            placeholder="전화번호" 
                             disabled 
                             style={{ backgroundColor: '#f5f5f5', color: '#666', cursor: 'not-allowed' }}
                         />
