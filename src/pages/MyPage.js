@@ -42,11 +42,18 @@ const MyPage = () => {
 
           const inqQuery = query(
             collection(db, "inquiries"),
-            where("userId", "==", currentUser.uid),
-            orderBy("createdAt", "desc")
+            where("userId", "==", currentUser.uid)
           );
           const inqSnap = await getDocs(inqQuery);
-          setInquiryList(inqSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+          
+          const sortedInq = inqSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                                      .sort((a, b) => {
+                                          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+                                          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+                                          return dateB - dateA;
+                                      });
+                                      
+          setInquiryList(sortedInq);
 
         } catch (error) {
           console.error(error);
@@ -183,8 +190,8 @@ const MyPage = () => {
                       {inquiryList.map((inq) => (
                         <div key={inq.id} className="inquiry-card" onClick={() => handleOpenInquiry(inq)}>
                           <div className="inq-top">
-                            <span className={`inq-status ${inq.answer ? 'answered' : 'waiting'}`}>
-                                {inq.answer ? '답변완료' : '답변대기'}
+                            <span className={`inq-status ${inq.status === '답변완료' || inq.answer ? 'answered' : 'waiting'}`}>
+                                {inq.status || (inq.answer ? '답변완료' : '답변대기')}
                             </span>
                             <span className="inq-date">
                                 {inq.createdAt?.toDate ? inq.createdAt.toDate().toLocaleDateString() : '날짜 없음'}
