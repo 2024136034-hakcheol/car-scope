@@ -19,18 +19,17 @@ const ContactPage = () => {
     });
 
     useEffect(() => {
-        if (!loading && !currentUser) {
-            alert("로그인이 필요한 서비스입니다.\n로그인 페이지로 이동합니다.");
-            navigate('/login');
-        }
-    }, [currentUser, loading, navigate]);
-
-    useEffect(() => {
         if (currentUser && dbUser) {
             setFormData(prev => ({
                 ...prev,
                 name: dbUser.name || '',
                 contact: dbUser.phone || '' 
+            }));
+        } else if (!currentUser) {
+            setFormData(prev => ({
+                ...prev,
+                name: '',
+                contact: ''
             }));
         }
     }, [currentUser, dbUser]);
@@ -44,12 +43,6 @@ const ContactPage = () => {
         e.preventDefault();
         if (isLoading) return;
 
-        if (!currentUser) {
-            alert("로그인 세션이 만료되었습니다. 다시 로그인해주세요.");
-            navigate('/login');
-            return;
-        }
-
         if (!formData.name || !formData.contact || !formData.title || !formData.content) {
             alert("모든 필수 정보를 입력해주세요.");
             return;
@@ -59,15 +52,21 @@ const ContactPage = () => {
         try {
             await addDoc(collection(db, "inquiries"), {
                 ...formData,
-                userId: currentUser.uid, 
-                userEmail: currentUser.email,
+                userId: currentUser ? currentUser.uid : 'guest', 
+                userEmail: currentUser ? currentUser.email : null,
+                isGuest: !currentUser,
                 status: '답변대기',
                 createdAt: new Date(),
                 answer: '' 
             });
             
-            alert("문의가 정상적으로 접수되었습니다.\n마이페이지에서 내역을 확인하실 수 있습니다.");
-            navigate('/mypage');
+            if (currentUser) {
+                alert("문의가 정상적으로 접수되었습니다.\n마이페이지에서 내역을 확인하실 수 있습니다.");
+                navigate('/mypage');
+            } else {
+                alert("비회원 문의가 접수되었습니다.\n답변은 기재해주신 연락처로 개별 안내될 수 있습니다.");
+                navigate('/');
+            }
         } catch (error) {
             console.error(error);
             alert("접수 중 오류가 발생했습니다.");
@@ -76,7 +75,7 @@ const ContactPage = () => {
         }
     };
 
-    if (loading || !currentUser) return null; 
+    if (loading) return null; 
 
     return (
         <div className="contact-container">
@@ -95,21 +94,29 @@ const ContactPage = () => {
                             value={formData.name} 
                             onChange={handleChange} 
                             placeholder="이름" 
-                            disabled 
-                            style={{ backgroundColor: '#f5f5f5', color: '#666', cursor: 'not-allowed' }}
+                            disabled={!!currentUser} 
+                            style={{ 
+                                backgroundColor: currentUser ? '#f5f5f5' : 'white', 
+                                color: currentUser ? '#666' : '#333', 
+                                cursor: currentUser ? 'not-allowed' : 'text' 
+                            }}
                         />
                     </div>
 
                     <div className="form-group">
-                        <label>연락처 <span className="req">*</span></label>
+                        <label>연락처 (전화번호) <span className="req">*</span></label>
                         <input 
                             type="text" 
                             name="contact" 
                             value={formData.contact} 
                             onChange={handleChange} 
                             placeholder="전화번호" 
-                            disabled 
-                            style={{ backgroundColor: '#f5f5f5', color: '#666', cursor: 'not-allowed' }}
+                            disabled={!!currentUser} 
+                            style={{ 
+                                backgroundColor: currentUser ? '#f5f5f5' : 'white', 
+                                color: currentUser ? '#666' : '#333', 
+                                cursor: currentUser ? 'not-allowed' : 'text' 
+                            }}
                         />
                     </div>
 

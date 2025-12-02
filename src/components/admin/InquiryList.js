@@ -80,6 +80,7 @@ const InquiryList = () => {
                             <th>상태</th>
                             <th>유형</th>
                             <th>작성자</th>
+                            <th>연락처</th>
                             <th>제목</th>
                             <th>내용</th>
                             <th>관리</th>
@@ -87,7 +88,7 @@ const InquiryList = () => {
                     </thead>
                     <tbody>
                         {inquiries.length === 0 ? (
-                            <tr><td colSpan="7" style={{textAlign:'center', padding:'20px'}}>접수된 문의가 없습니다.</td></tr>
+                            <tr><td colSpan="8" style={{textAlign:'center', padding:'20px'}}>접수된 문의가 없습니다.</td></tr>
                         ) : (
                             inquiries.map(item => (
                                 <tr key={item.id}>
@@ -98,7 +99,11 @@ const InquiryList = () => {
                                         </span>
                                     </td>
                                     <td>{item.category}</td>
-                                    <td>{item.name}</td>
+                                    <td>
+                                        {item.name}
+                                        {item.isGuest && <span style={{fontSize: '0.8rem', color: '#e74c3c', marginLeft: '4px', fontWeight:'bold'}}>(비회원)</span>}
+                                    </td>
+                                    <td>{item.contact}</td>
                                     <td>{item.title}</td>
                                     <td title={item.content}>
                                         {item.content.length > 15 ? item.content.substring(0, 15) + '...' : item.content}

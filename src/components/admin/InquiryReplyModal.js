@@ -19,7 +19,11 @@ const InquiryReplyModal = ({ inquiry, onSave, onClose }) => {
                 <h2>문의 답변 작성</h2>
                 
                 <div style={{textAlign: 'left', marginBottom: '20px', paddingBottom: '15px', borderBottom: '1px solid #eee'}}>
-                    <p style={{margin: '5px 0', color: '#666'}}><strong>작성자:</strong> {inquiry.name} ({inquiry.contact})</p>
+                    <p style={{margin: '5px 0', color: '#666'}}>
+                        <strong>작성자:</strong> {inquiry.name} 
+                        {inquiry.isGuest && <span style={{color: '#e74c3c', fontWeight:'bold', marginLeft:'5px'}}>(비회원)</span>} 
+                        <span style={{color:'#999', marginLeft:'5px'}}>({inquiry.contact})</span>
+                    </p>
                     <p style={{margin: '5px 0', color: '#333'}}><strong>제목:</strong> {inquiry.title}</p>
                     <div style={{marginTop: '10px', padding: '10px', backgroundColor: '#f8f9fa', borderRadius: '4px', whiteSpace: 'pre-wrap', fontSize: '0.95rem', color: '#555'}}>
                         {inquiry.content}
