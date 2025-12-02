@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase';
-import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy } from 'firebase/firestore';
+import { collection, addDoc, deleteDoc, doc, query, orderBy, onSnapshot } from 'firebase/firestore';
 import '../../styles/AdminPage.css';
 
 const CouponManager = () => {
@@ -17,21 +17,19 @@ const CouponManager = () => {
         isUnlimited: false
     });
 
-    const fetchCoupons = async () => {
-        setLoading(true);
-        try {
-            const q = query(collection(db, "coupons"), orderBy("createdAt", "desc"));
-            const snapshot = await getDocs(q);
-            setCoupons(snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-        } catch (error) {
-            console.error(error);
-        } finally {
-            setLoading(false);
-        }
-    };
-
     useEffect(() => {
-        fetchCoupons();
+        const q = query(collection(db, "coupons"), orderBy("createdAt", "desc"));
+        
+        const unsubscribe = onSnapshot(q, (snapshot) => {
+            const list = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            setCoupons(list);
+            setLoading(false);
+        }, (error) => {
+            console.error(error);
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
     }, []);
 
     const generateRandomCode = () => {
@@ -74,7 +72,6 @@ const CouponManager = () => {
                 name: '', discount: '', description: '', expiryDate: '', code: '', 
                 maxUses: 100, isUnlimited: false 
             });
-            fetchCoupons();
         } catch (error) {
             alert("생성 실패: " + error.message);
         }
@@ -84,7 +81,6 @@ const CouponManager = () => {
         if (!window.confirm("이 쿠폰을 삭제하시겠습니까?")) return;
         try {
             await deleteDoc(doc(db, "coupons", id));
-            setCoupons(prev => prev.filter(c => c.id !== id));
         } catch (error) {
             alert("삭제 실패: " + error.message);
         }

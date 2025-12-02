@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../styles/MyPage.css';
 import { AuthContext } from '../AuthContext';
 import { db } from '../firebase';
-import { doc, updateDoc, collection, query, where, getDocs, orderBy } from 'firebase/firestore';
+import { doc, updateDoc, collection, query, where, getDocs, orderBy, getDoc } from 'firebase/firestore';
 import InquiryDetailModal from '../components/InquiryDetailModal';
 import CouponListModal from '../components/CouponListModal';
 
@@ -22,11 +22,14 @@ const MyPage = () => {
 
   const [editData, setEditData] = useState({ nickname: '', phone: '' });
   const [carInput, setCarInput] = useState({ carNumber: '', carModel: '' });
+  
+  const [localCouponsCount, setLocalCouponsCount] = useState(0);
 
   useEffect(() => {
     if (dbUser) {
       setEditData({ nickname: dbUser.nickname || '', phone: dbUser.phone || '' });
       setCarInput({ carNumber: dbUser.carNumber || '', carModel: dbUser.carModel || '' });
+      setLocalCouponsCount(dbUser.coupons || 0);
     }
   }, [dbUser]);
 
@@ -36,11 +39,16 @@ const MyPage = () => {
         try {
           const resQuery = query(
             collection(db, "reservations"),
-            where("userId", "==", currentUser.uid),
-            orderBy("createdAt", "desc")
+            where("userId", "==", currentUser.uid)
           );
           const resSnap = await getDocs(resQuery);
-          setReservationList(resSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+          const sortedRes = resSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                                      .sort((a, b) => {
+                                          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+                                          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+                                          return dateB - dateA;
+                                      });
+          setReservationList(sortedRes);
 
           const inqQuery = query(
             collection(db, "inquiries"),
@@ -89,6 +97,15 @@ const MyPage = () => {
     setIsInquiryModalOpen(true);
   };
 
+  const updateCouponsCount = async () => {
+    if (currentUser) {
+        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
+        if (userDoc.exists()) {
+            setLocalCouponsCount(userDoc.data().coupons || 0);
+        }
+    }
+  };
+
   if (!dbUser) return <div className="loading">로딩 중...</div>;
 
   return (
@@ -129,7 +146,7 @@ const MyPage = () => {
         <div className="stats-container">
           <div className="stat-box"><p>보유 마일리지</p><h3>{dbUser.mileage ? dbUser.mileage.toLocaleString() : 0} P</h3></div>
           <div className="stat-box clickable" onClick={() => setIsCouponModalOpen(true)}>
-            <p>할인 쿠폰</p><h3>{dbUser.coupons ? dbUser.coupons : 0} 장</h3>
+            <p>할인 쿠폰</p><h3>{localCouponsCount} 장</h3>
           </div>
           <div className="stat-box car-box">
             <p>등록된 차량</p>
@@ -238,6 +255,7 @@ const MyPage = () => {
         isOpen={isCouponModalOpen}
         onClose={() => setIsCouponModalOpen(false)}
         userId={currentUser.uid}
+        onUpdate={updateCouponsCount}
       />
     </div>
   );

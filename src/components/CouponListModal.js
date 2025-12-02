@@ -3,7 +3,7 @@ import { db } from '../firebase';
 import { collection, query, where, getDocs, addDoc, doc, updateDoc, increment } from 'firebase/firestore';
 import '../styles/MyPage.css';
 
-const CouponListModal = ({ isOpen, onClose, userId }) => {
+const CouponListModal = ({ isOpen, onClose, userId, onUpdate }) => {
     const [couponCode, setCouponCode] = useState('');
     const [myCoupons, setMyCoupons] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -42,7 +42,14 @@ const CouponListModal = ({ isOpen, onClose, userId }) => {
                 return;
             }
 
-            const couponData = couponSnapshot.docs[0].data();
+            const couponDoc = couponSnapshot.docs[0];
+            const couponData = couponDoc.data();
+
+            if (!couponData.isUnlimited && couponData.currentUses >= couponData.maxUses) {
+                alert("선착순 마감된 쿠폰입니다.");
+                setLoading(false);
+                return;
+            }
             
             const myCouponQuery = query(collection(db, "users", userId, "coupons"), where("code", "==", couponCode));
             const myCouponSnapshot = await getDocs(myCouponQuery);
@@ -64,9 +71,17 @@ const CouponListModal = ({ isOpen, onClose, userId }) => {
                 coupons: increment(1)
             });
 
+            const couponRef = doc(db, "coupons", couponDoc.id);
+            await updateDoc(couponRef, {
+                currentUses: increment(1)
+            });
+
             alert("쿠폰이 정상적으로 등록되었습니다.");
             setCouponCode('');
-            fetchMyCoupons(); 
+            fetchMyCoupons();
+            
+            if (onUpdate) onUpdate(); 
+
         } catch (error) {
             console.error(error);
             alert("쿠폰 등록 중 오류가 발생했습니다.");
@@ -98,7 +113,7 @@ const CouponListModal = ({ isOpen, onClose, userId }) => {
                         disabled={loading}
                         style={{padding: '0 20px', backgroundColor: '#1E90FF', color: 'white', border: 'none', borderRadius: '6px', fontWeight: 'bold', cursor: 'pointer'}}
                     >
-                        등록
+                        {loading ? "확인" : "등록"}
                     </button>
                 </div>
 
