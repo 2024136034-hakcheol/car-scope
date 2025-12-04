@@ -146,7 +146,16 @@ const CouponManager = () => {
                             borderRadius: '4px',
                             padding: '0 10px'
                         }}>
-                            <label style={{display: 'flex', alignItems: 'center', gap: '6px', cursor: 'pointer', margin: 0, fontWeight: 'normal', fontSize: '0.95rem'}}>
+                            <label style={{
+                                display: 'flex', 
+                                alignItems: 'center', 
+                                gap: '6px', 
+                                cursor: 'pointer', 
+                                margin: 0, 
+                                fontWeight: 'normal', 
+                                fontSize: '0.95rem',
+                                whiteSpace: 'nowrap'
+                            }}>
                                 <input 
                                     type="checkbox" 
                                     name="isUnlimited" 
@@ -176,7 +185,7 @@ const CouponManager = () => {
                                                 height: 'auto'
                                             }}
                                         />
-                                        <span style={{fontSize: '0.9rem', color: '#666'}}>명</span>
+                                        <span style={{fontSize: '0.9rem', color: '#666', whiteSpace: 'nowrap'}}>명</span>
                                     </div>
                                 </>
                             )}
