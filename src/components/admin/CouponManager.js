@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { db } from '../../firebase';
-import { collection, addDoc, deleteDoc, doc, query, orderBy, onSnapshot, writeBatch, collectionGroup, where, getDocs, increment } from 'firebase/firestore';
+import { collection, addDoc, getDocs, deleteDoc, doc, query, orderBy, onSnapshot, writeBatch, collectionGroup, where, increment } from 'firebase/firestore';
 import '../../styles/AdminPage.css';
 
 const CouponManager = () => {
@@ -104,7 +104,11 @@ const CouponManager = () => {
             alert("쿠폰이 삭제되고 사용자들에게서 회수되었습니다.");
         } catch (error) {
             console.error(error);
-            alert("삭제 실패: " + error.message);
+            if (error.message.includes("index")) {
+                alert("⚠️ 시스템 설정(Index)이 필요합니다.\n\n키보드의 [F12]를 눌러 'Console' 탭을 확인하세요.\n표시된 링크를 클릭하여 '색인 만들기'를 진행하면 바로 해결됩니다.");
+            } else {
+                alert("삭제 실패: " + error.message);
+            }
         } finally {
             setLoading(false);
         }
