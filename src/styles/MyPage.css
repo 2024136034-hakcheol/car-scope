@@ -165,17 +165,17 @@
   border-radius: 16px;
   border: 1px solid #eee;
   text-align: center;
+  transition: all 0.2s;
+}
+
+.stat-box:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  border-color: #007bff;
 }
 
 .stat-box.clickable {
   cursor: pointer;
-  transition: all 0.2s;
-}
-
-.stat-box.clickable:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
-  border-color: #007bff;
 }
 
 .stat-box p {
