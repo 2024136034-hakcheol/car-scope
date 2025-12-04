@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../styles/MyPage.css';
 import { AuthContext } from '../AuthContext';
 import { db } from '../firebase';
-import { doc, updateDoc, collection, query, where, getDocs, orderBy, getDoc } from 'firebase/firestore';
+import { doc, updateDoc, collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
 import InquiryDetailModal from '../components/InquiryDetailModal';
 import CouponListModal from '../components/CouponListModal';
 
@@ -23,15 +23,46 @@ const MyPage = () => {
   const [editData, setEditData] = useState({ nickname: '', phone: '' });
   const [carInput, setCarInput] = useState({ carNumber: '', carModel: '' });
   
-  const [localCouponsCount, setLocalCouponsCount] = useState(0);
+  const [realtimeMileage, setRealtimeMileage] = useState(0);
+  const [realtimeCoupons, setRealtimeCoupons] = useState(0);
 
   useEffect(() => {
     if (dbUser) {
       setEditData({ nickname: dbUser.nickname || '', phone: dbUser.phone || '' });
       setCarInput({ carNumber: dbUser.carNumber || '', carModel: dbUser.carModel || '' });
-      setLocalCouponsCount(dbUser.coupons || 0);
+      setRealtimeMileage(dbUser.mileage || 0);
+      setRealtimeCoupons(dbUser.coupons || 0);
     }
   }, [dbUser]);
+
+  useEffect(() => {
+    if (currentUser) {
+      const userRef = doc(db, "users", currentUser.uid);
+      const unsubscribe = onSnapshot(userRef, (docSnapshot) => {
+        if (docSnapshot.exists()) {
+          const userData = docSnapshot.data();
+          setRealtimeMileage(userData.mileage || 0);
+          setRealtimeCoupons(userData.coupons || 0);
+          
+          if (!isEditing) {
+             setEditData(prev => ({
+                 ...prev,
+                 nickname: userData.nickname || prev.nickname,
+                 phone: userData.phone || prev.phone
+             }));
+          }
+          if (!isRegisteringCar) {
+             setCarInput(prev => ({
+                 ...prev,
+                 carNumber: userData.carNumber || prev.carNumber,
+                 carModel: userData.carModel || prev.carModel
+             }));
+          }
+        }
+      });
+      return () => unsubscribe();
+    }
+  }, [currentUser, isEditing, isRegisteringCar]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -80,7 +111,7 @@ const MyPage = () => {
     if (!currentUser) return;
     try {
       await updateDoc(doc(db, "users", currentUser.uid), { nickname: editData.nickname, phone: editData.phone });
-      alert("회원 정보가 수정되었습니다."); setIsEditing(false); window.location.reload();
+      alert("회원 정보가 수정되었습니다."); setIsEditing(false);
     } catch (error) { alert("오류: " + error.message); }
   };
 
@@ -88,22 +119,13 @@ const MyPage = () => {
     if (!currentUser) return;
     try {
       await updateDoc(doc(db, "users", currentUser.uid), { carNumber: carInput.carNumber, carModel: carInput.carModel });
-      alert("차량 정보가 등록되었습니다."); setIsRegisteringCar(false); window.location.reload();
+      alert("차량 정보가 등록되었습니다."); setIsRegisteringCar(false);
     } catch (error) { alert("오류: " + error.message); }
   };
 
   const handleOpenInquiry = (inquiry) => {
     setSelectedInquiry(inquiry);
     setIsInquiryModalOpen(true);
-  };
-
-  const updateCouponsCount = async () => {
-    if (currentUser) {
-        const userDoc = await getDoc(doc(db, "users", currentUser.uid));
-        if (userDoc.exists()) {
-            setLocalCouponsCount(userDoc.data().coupons || 0);
-        }
-    }
   };
 
   if (!dbUser) return <div className="loading">로딩 중...</div>;
@@ -115,7 +137,7 @@ const MyPage = () => {
 
         <div className="profile-card">
           <div className="profile-left">
-            <div className="avatar">{dbUser.nickname ? dbUser.nickname[0] : '유'}</div>
+            <div className="avatar">{editData.nickname ? editData.nickname[0] : '유'}</div>
             <div className="user-text">
               {isEditing ? (
                  <div className="edit-mode-inputs">
@@ -125,11 +147,11 @@ const MyPage = () => {
               ) : (
                 <>
                   <div className="name-row">
-                    <h2>{dbUser.nickname}님</h2>
+                    <h2>{editData.nickname}님</h2>
                     <span className="badge-level">{dbUser.membershipLevel === 'premium' ? 'PREMIUM' : 'MEMBER'}</span>
                   </div>
                   <p className="user-email">{dbUser.email}</p>
-                  <p className="user-phone">{dbUser.phone || '전화번호 미등록'}</p>
+                  <p className="user-phone">{editData.phone || '전화번호 미등록'}</p>
                 </>
               )}
             </div>
@@ -144,9 +166,9 @@ const MyPage = () => {
         </div>
 
         <div className="stats-container">
-          <div className="stat-box"><p>보유 마일리지</p><h3>{dbUser.mileage ? dbUser.mileage.toLocaleString() : 0} P</h3></div>
+          <div className="stat-box"><p>보유 마일리지</p><h3>{realtimeMileage.toLocaleString()} P</h3></div>
           <div className="stat-box clickable" onClick={() => setIsCouponModalOpen(true)}>
-            <p>할인 쿠폰</p><h3>{localCouponsCount} 장</h3>
+            <p>할인 쿠폰</p><h3>{realtimeCoupons} 장</h3>
           </div>
           <div className="stat-box car-box">
             <p>등록된 차량</p>
@@ -157,7 +179,7 @@ const MyPage = () => {
                 <div className="car-btn-row"><button className="btn-car-save" onClick={handleSaveCar}>완료</button><button className="btn-car-cancel" onClick={() => setIsRegisteringCar(false)}>취소</button></div>
               </div>
             ) : (
-              <>{dbUser.carNumber ? (<><h3>{dbUser.carNumber}</h3><span className="sub-text">{dbUser.carModel}</span><button className="btn-text-small" onClick={() => setIsRegisteringCar(true)}>변경</button></>) : (<><h3 className="no-car">등록된 차량 없음</h3><button className="btn-register-car" onClick={() => setIsRegisteringCar(true)}>+ 차량 등록하기</button></>)}</>
+              <>{carInput.carNumber ? (<><h3>{carInput.carNumber}</h3><span className="sub-text">{carInput.carModel}</span><button className="btn-text-small" onClick={() => setIsRegisteringCar(true)}>변경</button></>) : (<><h3 className="no-car">등록된 차량 없음</h3><button className="btn-register-car" onClick={() => setIsRegisteringCar(true)}>+ 차량 등록하기</button></>)}</>
             )}
           </div>
         </div>
@@ -255,7 +277,6 @@ const MyPage = () => {
         isOpen={isCouponModalOpen}
         onClose={() => setIsCouponModalOpen(false)}
         userId={currentUser.uid}
-        onUpdate={updateCouponsCount}
       />
     </div>
   );
