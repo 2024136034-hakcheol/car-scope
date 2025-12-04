@@ -161,20 +161,13 @@
     color: var(--text-secondary);
     padding: 5px;
     border-radius: 5px;
-    transition: color 0.2s;
+    transition: all 0.2s;
     line-height: 1;
 }
 
 .like-button .heart-icon {
-    display: inline-block;
-    width: 16px;
-    height: 16px;
-    background-size: contain;
-    background-repeat: no-repeat;
-    background-position: center;
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9JyM2NjYnIHN0cm9rZS13aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJz48cGF0aCBkPSdNMjAuODQgNC42MWExLjUgMS41IDAgMCAwLTcuNzggMEwxMiA1LjY3bC0xLjA2LTEuMDZhMS41IDEuNSAwIDAgMC03Ljc4IDcuNzZsMS4wNiAxLjA2TDEyIDIxLjIzbDcuNzgtNy43OCAxLjA2LTEuMDZhMS41IDEuNSAwIDAgMCAwLTcuNzhaJz48L3BhdGg+PC9zdmc+");
-    transition: all 0.1s ease-in-out;
-    vertical-align: middle;
+    font-size: 1.1rem;
+    transition: color 0.2s ease-in-out;
 }
 
 .like-button:hover {
@@ -182,7 +175,7 @@
 }
 
 .like-button:hover .heart-icon {
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPSdub25lJyBzdHJva2U9JyNmZjRkNmQnIHN0cm9rZS11aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJz48cGF0aCBkPSdNMjAuODQgNC42MWExLjUgMS41IDAgMCAwLTcuNzggMEwxMiA1LjY3bC0xLjA2LTEuMDZhMS41IDEuNSAwIDAgMC03Ljc4IDcuNzZsMS4wNiAxLjA2TDEyIDIxLjIzbDcuNzgtNy43OCAxLjA2LTEuMDZhMS41IDEuNSAwIDAgMCAwLTcuNzhaJz48L3BhdGg+PC9zdmc+");
+    color: #ff4d6d;
 }
 
 .like-button.liked {
@@ -190,7 +183,7 @@
 }
 
 .like-button.liked .heart-icon {
-    background-image: url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0naHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmcnIHdpZHRoPScyNCcgaGVpZ2h0PScyNCcgdmlld0JveD0nMCAwIDI0IDI0JyBmaWxsPScjZmY0ZDZkJyBzdHJva2U9JyNmZjRkNmQnIHN0cm9rZS11aWR0aD0nMicgc3Ryb2tlLWxpbmVjYXA9J3JvdW5kJyBzdHJva2UtbGluZWpvaW49J3JvdW5kJz48cGF0aCBkPSdNMjAuODQgNC42MWExLjUgMS41IDAgMCAwLTcuNzggMEwxMiA1LjY3bC0xLjA2LTEuMDZhMS41IDEuNSAwIDAgMC03Ljc4IDcuNzZsMS4wNiAxLjA2TDEyIDIxLjIzbDcuNzgtNy43OCAxLjA2LTEuMDZhMS41IDEuNSAwIDAgMCAwLTcuNzhaJz48L3BhdGg+PC9zdmc+");
+    color: #ff4d6d;
 }
 
 .pagination-container {

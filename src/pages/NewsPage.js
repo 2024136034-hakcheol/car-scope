@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import '../styles/NewsPage.css';
 
 const initialNewsData = [
@@ -134,7 +135,7 @@ const NewsPage = () => {
                                     className={`like-button ${item.liked ? 'liked' : ''}`}
                                     onClick={() => handleLikeClick(item.id)}
                                 >
-                                    <span className="heart-icon"></span>
+                                    {item.liked ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
                                     {item.likes.toLocaleString()}
                                 </button>
                             </div>
