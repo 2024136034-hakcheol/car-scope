@@ -1,8 +1,9 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
-import { doc, getDoc, deleteDoc } from 'firebase/firestore';
+import { doc, deleteDoc, onSnapshot, updateDoc, arrayUnion, arrayRemove, increment } from 'firebase/firestore';
 import { AuthContext } from '../AuthContext';
+import { FaHeart, FaRegHeart } from 'react-icons/fa';
 import '../styles/NewsDetailPage.css';
 
 const NewsDetailPage = () => {
@@ -13,29 +14,51 @@ const NewsDetailPage = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const fetchNews = async () => {
-            try {
-                const docRef = doc(db, "news", id);
-                const docSnap = await getDoc(docRef);
-                
-                if (docSnap.exists()) {
-                    setNews({ id: docSnap.id, ...docSnap.data() });
-                } else {
-                    alert("존재하지 않는 게시글입니다.");
-                    navigate('/news');
-                }
-            } catch (error) {
-                console.error(error);
-            } finally {
-                setLoading(false);
+        const docRef = doc(db, "news", id);
+        const unsubscribe = onSnapshot(docRef, (docSnap) => {
+            if (docSnap.exists()) {
+                const data = docSnap.data();
+                setNews({ 
+                    id: docSnap.id, 
+                    ...data,
+                    isLiked: data.likedBy ? data.likedBy.includes(currentUser?.uid) : false
+                });
+            } else {
+                alert("존재하지 않는 게시글입니다.");
+                navigate('/news');
             }
-        };
-        fetchNews();
-    }, [id, navigate]);
+            setLoading(false);
+        });
+
+        return () => unsubscribe();
+    }, [id, navigate, currentUser]);
+
+    const handleLike = async () => {
+        if (!currentUser) {
+            alert("로그인이 필요한 서비스입니다.");
+            return;
+        }
+        
+        const newsRef = doc(db, "news", id);
+        try {
+            if (news.isLiked) {
+                await updateDoc(newsRef, {
+                    likes: increment(-1),
+                    likedBy: arrayRemove(currentUser.uid)
+                });
+            } else {
+                await updateDoc(newsRef, {
+                    likes: increment(1),
+                    likedBy: arrayUnion(currentUser.uid)
+                });
+            }
+        } catch (error) {
+            console.error(error);
+        }
+    };
 
     const handleDelete = async () => {
         if (!window.confirm("정말로 이 기사를 삭제하시겠습니까?")) return;
-
         try {
             await deleteDoc(doc(db, "news", id));
             alert("삭제되었습니다.");
@@ -67,6 +90,16 @@ const NewsDetailPage = () => {
 
             <div className="detail-content">
                 <div dangerouslySetInnerHTML={{ __html: news.content }} />
+            </div>
+
+            <div className="detail-like-section">
+                <button 
+                    className={`detail-like-btn ${news.isLiked ? 'liked' : ''}`} 
+                    onClick={handleLike}
+                >
+                    {news.isLiked ? <FaHeart /> : <FaRegHeart />}
+                    <span>{news.likes ? news.likes.toLocaleString() : 0}</span>
+                </button>
             </div>
 
             <div className="detail-actions">

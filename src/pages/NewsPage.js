@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaHeart, FaRegHeart, FaPen } from 'react-icons/fa';
 import { db } from '../firebase';
-import { collection, query, orderBy, onSnapshot, where } from 'firebase/firestore';
+import { collection, query, orderBy, onSnapshot, where, doc, updateDoc, arrayUnion, arrayRemove, increment } from 'firebase/firestore';
 import { AuthContext } from '../AuthContext';
 import '../styles/NewsPage.css';
 
@@ -25,7 +25,7 @@ const NewsPage = () => {
         const unsubscribe = onSnapshot(q, (snapshot) => {
             const newsList = snapshot.docs.map(doc => {
                 const data = doc.data();
-                const plainText = data.content.replace(/<[^>]+>/g, '');
+                const plainText = data.content ? data.content.replace(/<[^>]+>/g, '') : '';
                 return {
                     id: doc.id,
                     ...data,
@@ -40,10 +40,33 @@ const NewsPage = () => {
         return () => unsubscribe();
     }, [category, currentUser]);
 
-    const handleLikeClick = (e, id) => {
-        e.preventDefault();
+    const handleLikeClick = async (e, id, likedBy) => {
+        e.preventDefault(); 
         e.stopPropagation();
-        alert("좋아요 기능은 상세 페이지에서 가능합니다.");
+
+        if (!currentUser) {
+            alert("로그인이 필요한 서비스입니다.");
+            return;
+        }
+
+        const newsRef = doc(db, "news", id);
+        const isLiked = likedBy ? likedBy.includes(currentUser.uid) : false;
+
+        try {
+            if (isLiked) {
+                await updateDoc(newsRef, {
+                    likes: increment(-1),
+                    likedBy: arrayRemove(currentUser.uid)
+                });
+            } else {
+                await updateDoc(newsRef, {
+                    likes: increment(1),
+                    likedBy: arrayUnion(currentUser.uid)
+                });
+            }
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     const handleCategoryChange = (newCategory) => {
@@ -119,7 +142,7 @@ const NewsPage = () => {
                                     <span className="news-views">조회수 {item.views.toLocaleString()}</span>
                                     <button 
                                         className={`like-button ${item.liked ? 'liked' : ''}`}
-                                        onClick={(e) => handleLikeClick(e, item.id)}
+                                        onClick={(e) => handleLikeClick(e, item.id, item.likedBy)}
                                     >
                                         {item.liked ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
                                         {item.likes.toLocaleString()}
