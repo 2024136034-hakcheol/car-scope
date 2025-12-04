@@ -100,23 +100,26 @@
     border-top: 1px solid #f0f0f0;
 }
 
-.cancel-btn {
+.cancel-btn, .submit-btn {
     appearance: none;
     -webkit-appearance: none;
-    background-color: white;
-    border: 1px solid #ced4da;
-    color: #495057;
-    padding: 12px 24px;
-    font-size: 1rem;
-    font-weight: 600;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    display: inline-flex;
+    display: flex;
     align-items: center;
     justify-content: center;
     height: 48px;
+    padding: 0 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
     box-sizing: border-box;
+}
+
+.cancel-btn {
+    background-color: white;
+    border: 1px solid #ced4da;
+    color: #495057;
 }
 
 .cancel-btn:hover {
@@ -126,23 +129,11 @@
 }
 
 .submit-btn {
-    appearance: none;
-    -webkit-appearance: none;
     background-color: #1E90FF;
     border: 1px solid #1E90FF;
     color: white;
-    padding: 12px 36px;
-    font-size: 1rem;
-    font-weight: 700;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.2s ease-in-out;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    height: 48px;
-    box-sizing: border-box;
     box-shadow: 0 4px 6px rgba(30, 144, 255, 0.2);
+    padding: 0 36px;
 }
 
 .submit-btn:hover {
