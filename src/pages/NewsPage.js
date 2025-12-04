@@ -15,11 +15,15 @@ const NewsPage = () => {
 
     useEffect(() => {
         setLoading(true);
+        setNews([]);
         
-        let q = query(collection(db, "news"), orderBy("createdAt", "desc"));
-        
-        if (category !== 'all') {
-            q = query(collection(db, "news"), where("category", "==", category), orderBy("createdAt", "desc"));
+        let q;
+        const newsRef = collection(db, "news");
+
+        if (category === 'all') {
+            q = query(newsRef, orderBy("createdAt", "desc"));
+        } else {
+            q = query(newsRef, where("category", "==", category), orderBy("createdAt", "desc"));
         }
 
         const unsubscribe = onSnapshot(q, (snapshot) => {
@@ -34,6 +38,9 @@ const NewsPage = () => {
                 };
             });
             setNews(newsList);
+            setLoading(false);
+        }, (error) => {
+            console.error(error);
             setLoading(false);
         });
 
@@ -123,7 +130,20 @@ const NewsPage = () => {
             ) : (
                 <div className="news-list">
                     {news.length === 0 ? (
-                        <div style={{gridColumn: '1/-1', textAlign: 'center', padding: '50px'}}>등록된 뉴스가 없습니다.</div>
+                        <div style={{
+                            gridColumn: '1/-1', 
+                            textAlign: 'center', 
+                            padding: '60px 0', 
+                            color: '#888',
+                            fontSize: '1.1rem',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            alignItems: 'center',
+                            gap: '10px'
+                        }}>
+                            <div style={{fontSize: '3rem'}}>📭</div>
+                            <div>등록된 뉴스가 없습니다.</div>
+                        </div>
                     ) : (
                         news.map((item) => (
                             <div key={item.id} className="news-card">
@@ -139,13 +159,13 @@ const NewsPage = () => {
                                     </div>
                                 </Link>
                                 <div className="news-card-stats">
-                                    <span className="news-views">조회수 {item.views.toLocaleString()}</span>
+                                    <span className="news-views">조회수 {item.views ? item.views.toLocaleString() : 0}</span>
                                     <button 
                                         className={`like-button ${item.liked ? 'liked' : ''}`}
                                         onClick={(e) => handleLikeClick(e, item.id, item.likedBy)}
                                     >
                                         {item.liked ? <FaHeart className="heart-icon" /> : <FaRegHeart className="heart-icon" />}
-                                        {item.likes.toLocaleString()}
+                                        {item.likes ? item.likes.toLocaleString() : 0}
                                     </button>
                                 </div>
                             </div>
