@@ -80,7 +80,7 @@ const UserList = () => {
         
         try {
             await updateDoc(userDocRef, roleData);
-            setUsers(users.map(user => 
+            setUsers(prev => prev.map(user => 
                 user.uid === uid ? { ...user, ...roleData } : user
             ));
         } catch (error) {
@@ -98,7 +98,7 @@ const UserList = () => {
 
         try {
             await updateDoc(userDocRef, { membershipLevel: newLevel });
-            setUsers(users.map(user => 
+            setUsers(prev => prev.map(user => 
                 user.uid === uid ? { ...user, membershipLevel: newLevel } : user
             ));
         } catch (error) {
@@ -115,7 +115,7 @@ const UserList = () => {
 
         try {
             await updateDoc(userDocRef, userData);
-            setUsers(users.map(user => 
+            setUsers(prev => prev.map(user => 
                 user.uid === uid ? updatedUser : user
             ));
             setEditingUser(null);
@@ -140,14 +140,14 @@ const UserList = () => {
     };
 
     const handleDisableUser = async (uid, email) => {
-        if (!window.confirm(`${email} 사용자의 계정을 사용 중지하시겠습니까?`)) {
+        if (!window.confirm(`${email} 사용자의 계정을 사용 중지하시겠습니까?\n(사용자가 로그인할 수 없게 됩니다.)`)) {
             return;
         }
         setIsUpdating(uid);
         const userDocRef = doc(db, "users", uid);
         try {
             await updateDoc(userDocRef, { disabled: true });
-            setUsers(users.map(user => 
+            setUsers(prev => prev.map(user => 
                 user.uid === uid ? { ...user, disabled: true } : user
             ));
             alert("계정이 사용 중지되었습니다.");
@@ -166,7 +166,7 @@ const UserList = () => {
         const userDocRef = doc(db, "users", uid);
         try {
             await updateDoc(userDocRef, { disabled: false });
-            setUsers(users.map(user => 
+            setUsers(prev => prev.map(user => 
                 user.uid === uid ? { ...user, disabled: false } : user
             ));
             alert("계정이 활성화되었습니다.");
@@ -185,7 +185,9 @@ const UserList = () => {
         const userDocRef = doc(db, "users", uid);
         try {
             await deleteDoc(userDocRef);
-            setUsers(users.filter(user => user.uid !== uid));
+            
+            setUsers(prevUsers => prevUsers.filter(user => user.uid !== uid));
+            
             setEditingUser(null); 
             alert("사용자 데이터가 삭제되었습니다.");
         } catch (error) {
