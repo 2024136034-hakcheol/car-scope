@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
@@ -10,6 +10,7 @@ import '../styles/NewsWritePage.css';
 const NewsWritePage = () => {
     const { currentUser, dbUser } = useContext(AuthContext);
     const navigate = useNavigate();
+    const quillRef = useRef(null); 
     
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('domestic');
@@ -21,17 +22,49 @@ const NewsWritePage = () => {
         return null;
     }
 
-    const modules = {
-        toolbar: [
-            [{ 'header': [1, 2, 3, false] }],
-            ['bold', 'italic', 'underline', 'strike'],
-            [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-            [{ 'color': [] }, { 'background': [] }],
-            [{ 'align': [] }],
-            ['link', 'image'],
-            ['clean']
-        ],
+    const imageHandler = () => {
+        const input = document.createElement('input');
+        input.setAttribute('type', 'file');
+        input.setAttribute('accept', 'image/*');
+        input.click();
+
+        input.onchange = async () => {
+            const file = input.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const range = quillRef.current.getEditor().getSelection(true);
+                    const imgUrl = reader.result;
+                    
+                    quillRef.current.getEditor().insertEmbed(range.index, 'image', imgUrl);
+                    
+                    quillRef.current.getEditor().setSelection(range.index + 1);
+                    
+                    quillRef.current.getEditor().insertText(range.index + 1, "\n");
+                };
+                reader.readAsDataURL(file);
+            }
+        };
     };
+
+    const modules = useMemo(() => {
+        return {
+            toolbar: {
+                container: [
+                    [{ 'header': [1, 2, 3, false] }],
+                    ['bold', 'italic', 'underline', 'strike'],
+                    [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+                    [{ 'color': [] }, { 'background': [] }],
+                    [{ 'align': [] }],
+                    ['link', 'image'],
+                    ['clean']
+                ],
+                handlers: {
+                    image: imageHandler
+                }
+            }
+        };
+    }, []);
 
     const handleSubmit = async () => {
         if (!title || !content) {
@@ -92,6 +125,7 @@ const NewsWritePage = () => {
 
                 <div className="editor-wrapper">
                     <ReactQuill 
+                        ref={quillRef}
                         theme="snow" 
                         value={content} 
                         onChange={setContent} 

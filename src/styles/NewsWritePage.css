@@ -56,6 +56,13 @@
     min-height: 400px;
 }
 
+.ql-editor img {
+    max-width: 100%;
+    height: auto;
+    margin: 10px 0;
+    display: block;
+}
+
 .button-group {
     display: flex;
     justify-content: flex-end;
