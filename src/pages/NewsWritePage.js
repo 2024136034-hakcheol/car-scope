@@ -7,6 +7,12 @@ import { collection, addDoc } from 'firebase/firestore';
 import { AuthContext } from '../AuthContext';
 import '../styles/NewsWritePage.css';
 
+const resizeObserverLoopErr = window.console.error;
+window.console.error = (...args) => {
+    if (args[0] && typeof args[0] === 'string' && args[0].includes('ResizeObserver loop')) return;
+    resizeObserverLoopErr(...args);
+};
+
 const NewsWritePage = () => {
     const { currentUser, dbUser } = useContext(AuthContext);
     const navigate = useNavigate();
@@ -45,9 +51,7 @@ const NewsWritePage = () => {
                                     const imgUrl = reader.result;
                                     
                                     editor.insertEmbed(range.index, 'image', imgUrl);
-                                    
                                     editor.insertText(range.index + 1, "\n");
-                                    
                                     editor.setSelection(range.index + 2);
                                 };
                                 reader.readAsDataURL(file);
