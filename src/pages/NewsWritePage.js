@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef, useMemo } from 'react';
+import React, { useState, useContext, useRef, useMemo, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import ReactQuill from 'react-quill-new';
 import 'react-quill-new/dist/quill.snow.css';
@@ -15,12 +15,6 @@ const NewsWritePage = () => {
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState('domestic');
     const [content, setContent] = useState('');
-
-    if (!currentUser || (!dbUser?.isAdmin && !dbUser?.isJournalist)) {
-        alert("권한이 없습니다.");
-        navigate('/news');
-        return null;
-    }
 
     const modules = useMemo(() => {
         return {
@@ -64,6 +58,17 @@ const NewsWritePage = () => {
             }
         };
     }, []);
+
+    useEffect(() => {
+        if (!currentUser || (!dbUser?.isAdmin && !dbUser?.isJournalist)) {
+            alert("권한이 없습니다.");
+            navigate('/news');
+        }
+    }, [currentUser, dbUser, navigate]);
+
+    if (!currentUser || (!dbUser?.isAdmin && !dbUser?.isJournalist)) {
+        return null;
+    }
 
     const handleSubmit = async () => {
         if (!title || !content) {
