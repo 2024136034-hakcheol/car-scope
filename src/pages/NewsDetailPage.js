@@ -14,6 +14,20 @@ const NewsDetailPage = () => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const addView = async () => {
+            try {
+                const newsRef = doc(db, "news", id);
+                await updateDoc(newsRef, {
+                    views: increment(1)
+                });
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        addView();
+    }, [id]);
+
+    useEffect(() => {
         const docRef = doc(db, "news", id);
         const unsubscribe = onSnapshot(docRef, (docSnap) => {
             if (docSnap.exists()) {
