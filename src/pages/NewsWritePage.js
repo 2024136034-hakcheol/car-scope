@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ReactQuill from 'react-quill-new';
-import 'react-quill-new/dist/quill.snow.css';
+import ReactQuill from 'react-quill'; // 수정됨
+import 'react-quill/dist/quill.snow.css'; // 수정됨
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { AuthContext } from '../AuthContext';
@@ -22,6 +22,7 @@ const NewsWritePage = () => {
         return null;
     }
 
+    // 이미지 핸들러 (이미지 삽입 후 커서 자동 줄바꿈)
     const imageHandler = () => {
         const input = document.createElement('input');
         input.setAttribute('type', 'file');
@@ -36,10 +37,11 @@ const NewsWritePage = () => {
                     const range = quillRef.current.getEditor().getSelection(true);
                     const imgUrl = reader.result;
                     
+                    // 이미지 삽입
                     quillRef.current.getEditor().insertEmbed(range.index, 'image', imgUrl);
                     
+                    // 커서를 이미지 다음으로 이동시키고 엔터(줄바꿈) 넣기
                     quillRef.current.getEditor().setSelection(range.index + 1);
-                    
                     quillRef.current.getEditor().insertText(range.index + 1, "\n");
                 };
                 reader.readAsDataURL(file);
@@ -47,6 +49,7 @@ const NewsWritePage = () => {
         };
     };
 
+    // 모듈 설정 (메모이제이션 필수)
     const modules = useMemo(() => {
         return {
             toolbar: {
