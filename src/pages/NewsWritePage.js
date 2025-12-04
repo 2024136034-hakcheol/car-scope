@@ -1,7 +1,7 @@
 import React, { useState, useContext, useRef, useMemo } from 'react';
 import { useNavigate } from 'react-router-dom';
-import ReactQuill from 'react-quill'; // 수정됨
-import 'react-quill/dist/quill.snow.css'; // 수정됨
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 import { db } from '../firebase';
 import { collection, addDoc } from 'firebase/firestore';
 import { AuthContext } from '../AuthContext';
@@ -22,34 +22,6 @@ const NewsWritePage = () => {
         return null;
     }
 
-    // 이미지 핸들러 (이미지 삽입 후 커서 자동 줄바꿈)
-    const imageHandler = () => {
-        const input = document.createElement('input');
-        input.setAttribute('type', 'file');
-        input.setAttribute('accept', 'image/*');
-        input.click();
-
-        input.onchange = async () => {
-            const file = input.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const range = quillRef.current.getEditor().getSelection(true);
-                    const imgUrl = reader.result;
-                    
-                    // 이미지 삽입
-                    quillRef.current.getEditor().insertEmbed(range.index, 'image', imgUrl);
-                    
-                    // 커서를 이미지 다음으로 이동시키고 엔터(줄바꿈) 넣기
-                    quillRef.current.getEditor().setSelection(range.index + 1);
-                    quillRef.current.getEditor().insertText(range.index + 1, "\n");
-                };
-                reader.readAsDataURL(file);
-            }
-        };
-    };
-
-    // 모듈 설정 (메모이제이션 필수)
     const modules = useMemo(() => {
         return {
             toolbar: {
@@ -63,7 +35,31 @@ const NewsWritePage = () => {
                     ['clean']
                 ],
                 handlers: {
-                    image: imageHandler
+                    image: () => {
+                        const input = document.createElement('input');
+                        input.setAttribute('type', 'file');
+                        input.setAttribute('accept', 'image/*');
+                        input.click();
+
+                        input.onchange = async () => {
+                            const file = input.files[0];
+                            if (file) {
+                                const reader = new FileReader();
+                                reader.onload = () => {
+                                    const editor = quillRef.current.getEditor();
+                                    const range = editor.getSelection();
+                                    const imgUrl = reader.result;
+                                    
+                                    editor.insertEmbed(range.index, 'image', imgUrl);
+                                    
+                                    editor.insertText(range.index + 1, "\n");
+                                    
+                                    editor.setSelection(range.index + 2);
+                                };
+                                reader.readAsDataURL(file);
+                            }
+                        };
+                    }
                 }
             }
         };
