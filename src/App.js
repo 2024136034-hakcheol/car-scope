@@ -16,6 +16,7 @@ import ParkingPage from './pages/ParkingPage';
 import NotFoundPage from './pages/NotFoundPage';
 import EmergencyBanner from './components/EmergencyBanner';
 import MyPage from './pages/MyPage';
+import NewsWritePage from './pages/NewsWritePage';
 import ContactPage from './pages/ContactPage';
 import EmergencyPage from './pages/EmergencyPage';
 
@@ -52,6 +53,7 @@ function App() {
         <Route path="/mypage" element={<MyPage />} />
         <Route path="/emergency" element={<EmergencyPage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/news/write" element={<NewsWritePage />} />
         
         <Route 
           path="/admin" 

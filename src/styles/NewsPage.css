@@ -207,3 +207,35 @@
     background-color: var(--primary-color);
     color: white;
 }
+
+.write-news-btn {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    background-color: #333;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+}
+
+.write-news-btn:hover {
+    background-color: #1E90FF;
+}
+
+@media (max-width: 768px) {
+    .write-news-btn {
+        position: static;
+        margin: 0 auto 20px auto;
+        transform: none;
+        width: 100%;
+        justify-content: center;
+    }
+}
