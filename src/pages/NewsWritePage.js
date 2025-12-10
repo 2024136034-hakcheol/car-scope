@@ -45,13 +45,9 @@ const NewsWritePage = () => {
                         input.onchange = async () => {
                             const file = input.files[0];
                             if (file) {
-                                const maxSize = 5 * 1024 * 1024; // 5MB
-                                console.log("선택된 파일 크기:", file.size); 
-                                console.log("제한 용량:", maxSize);
-
-                                if (file.size > maxSize) {
+                                if (file.size > 5 * 1024 * 1024) {
                                     const currentSize = (file.size / (1024 * 1024)).toFixed(2);
-                                    alert(`현재 파일 용량은 ${currentSize}MB이고, 제한 용량은 5MB까지입니다.`);
+                                    alert(`현재 용량은 ${currentSize}MB 입니다. 5MB 용량까지 업로드 됩니다.`);
                                     return;
                                 }
 
