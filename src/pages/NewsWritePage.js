@@ -44,38 +44,41 @@ const NewsWritePage = () => {
 
                         input.onchange = async () => {
                             const file = input.files[0];
-                            if (file) {
-                                if (file.size > 5 * 1024 * 1024) {
-                                    const currentSize = (file.size / (1024 * 1024)).toFixed(2);
-                                    alert(`현재 용량은 ${currentSize}MB 입니다. 5MB 용량까지 업로드 됩니다.`);
-                                    return;
-                                }
+                            if (!file) return;
 
-                                try {
-                                    const options = {
-                                        maxSizeMB: 0.5, 
-                                        maxWidthOrHeight: 1920,
-                                        useWebWorker: true
-                                    };
+                            const maxSize = 5 * 1024 * 1024;
+                            
+                            if (file.size > maxSize) {
+                                const currentSize = (file.size / (1024 * 1024)).toFixed(2);
+                                alert(`현재 용량은 ${currentSize}MB 입니다. 5MB 용량까지 업로드 됩니다.`);
+                                input.value = '';
+                                return;
+                            }
+
+                            try {
+                                const options = {
+                                    maxSizeMB: 0.5, 
+                                    maxWidthOrHeight: 1920,
+                                    useWebWorker: true
+                                };
+                                
+                                const compressedFile = await imageCompression(file, options);
+
+                                const reader = new FileReader();
+                                reader.onload = () => {
+                                    const editor = quillRef.current.getEditor();
+                                    const range = editor.getSelection();
+                                    const imgUrl = reader.result;
                                     
-                                    const compressedFile = await imageCompression(file, options);
+                                    editor.insertEmbed(range.index, 'image', imgUrl);
+                                    editor.insertText(range.index + 1, "\n");
+                                    editor.setSelection(range.index + 2);
+                                };
+                                reader.readAsDataURL(compressedFile);
 
-                                    const reader = new FileReader();
-                                    reader.onload = () => {
-                                        const editor = quillRef.current.getEditor();
-                                        const range = editor.getSelection();
-                                        const imgUrl = reader.result;
-                                        
-                                        editor.insertEmbed(range.index, 'image', imgUrl);
-                                        editor.insertText(range.index + 1, "\n");
-                                        editor.setSelection(range.index + 2);
-                                    };
-                                    reader.readAsDataURL(compressedFile);
-
-                                } catch (error) {
-                                    console.error(error);
-                                    alert("이미지 업로드 중 오류가 발생했습니다.");
-                                }
+                            } catch (error) {
+                                console.error(error);
+                                alert("이미지 업로드 중 오류가 발생했습니다.");
                             }
                         };
                     }
