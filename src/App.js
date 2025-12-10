@@ -19,6 +19,7 @@ import MyPage from './pages/MyPage';
 import NewsDetailPage from './pages/NewsDetailPage';
 import NewsEditPage from './pages/NewsEditPage';
 import NewsWritePage from './pages/NewsWritePage';
+import FAQPage from './pages/FAQPage';
 import ContactPage from './pages/ContactPage';
 import EmergencyPage from './pages/EmergencyPage';
 
@@ -58,6 +59,7 @@ function App() {
         <Route path="/news/write" element={<NewsWritePage />} />
         <Route path="/news/:id" element={<NewsDetailPage />} />
         <Route path="/news/edit/:id" element={<NewsEditPage />} />
+        <Route path="/faq" element={<FAQPage />} />
         
         <Route 
           path="/admin" 
