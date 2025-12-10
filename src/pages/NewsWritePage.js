@@ -49,6 +49,7 @@ const NewsWritePage = () => {
                                 if (file.size > maxSize) {
                                     const currentSize = (file.size / (1024 * 1024)).toFixed(2);
                                     alert(`현재 파일 용량은 ${currentSize}MB이고, 제한 용량은 5MB까지입니다.`);
+                                    input.value = '';
                                     return;
                                 }
 
