@@ -125,7 +125,7 @@ const NewsWritePage = () => {
         } catch (error) {
             console.error(error);
             if (error.message.includes("larger than 1 MB")) {
-                alert("사진 용량이 너무 큽니다. 더 작은 사진을 사용해주세요.");
+                alert("사진 용량이 너무 큽니다. (압축 실패)");
             } else {
                 alert("발행 실패: " + error.message);
             }

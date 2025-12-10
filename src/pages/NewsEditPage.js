@@ -5,6 +5,7 @@ import 'react-quill-new/dist/quill.snow.css';
 import { db } from '../firebase';
 import { doc, getDoc, updateDoc } from 'firebase/firestore';
 import { AuthContext } from '../AuthContext';
+import imageCompression from 'browser-image-compression';
 import '../styles/NewsWritePage.css';
 
 const NewsEditPage = () => {
@@ -63,17 +64,36 @@ const NewsEditPage = () => {
                         input.onchange = async () => {
                             const file = input.files[0];
                             if (file) {
-                                const reader = new FileReader();
-                                reader.onload = () => {
-                                    const editor = quillRef.current.getEditor();
-                                    const range = editor.getSelection();
-                                    const imgUrl = reader.result;
+                                if (file.size > 5 * 1024 * 1024) {
+                                    alert("이미지 용량이 너무 큽니다. (5MB 이하만 가능)");
+                                    return;
+                                }
+
+                                try {
+                                    const options = {
+                                        maxSizeMB: 0.5, 
+                                        maxWidthOrHeight: 1920,
+                                        useWebWorker: true
+                                    };
                                     
-                                    editor.insertEmbed(range.index, 'image', imgUrl);
-                                    editor.insertText(range.index + 1, "\n");
-                                    editor.setSelection(range.index + 2);
-                                };
-                                reader.readAsDataURL(file);
+                                    const compressedFile = await imageCompression(file, options);
+
+                                    const reader = new FileReader();
+                                    reader.onload = () => {
+                                        const editor = quillRef.current.getEditor();
+                                        const range = editor.getSelection();
+                                        const imgUrl = reader.result;
+                                        
+                                        editor.insertEmbed(range.index, 'image', imgUrl);
+                                        editor.insertText(range.index + 1, "\n");
+                                        editor.setSelection(range.index + 2);
+                                    };
+                                    reader.readAsDataURL(compressedFile);
+
+                                } catch (error) {
+                                    console.error(error);
+                                    alert("이미지 업로드 중 오류가 발생했습니다.");
+                                }
                             }
                         };
                     }
@@ -106,7 +126,11 @@ const NewsEditPage = () => {
             navigate(`/news/${id}`);
         } catch (error) {
             console.error(error);
-            alert("수정 중 오류가 발생했습니다.");
+            if (error.message.includes("larger than 1 MB")) {
+                alert("사진 용량이 너무 큽니다. (압축 실패)");
+            } else {
+                alert("수정 중 오류가 발생했습니다.");
+            }
         }
     };
 
