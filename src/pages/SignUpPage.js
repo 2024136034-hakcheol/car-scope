@@ -489,8 +489,8 @@ const SignUpPage = () => {
                         </div>
 
                         <div className="input-group">
-                            <div className="gender-options">
-                                <label className="gender-label">
+                            <div className="gender-options" style={{ display: 'flex', gap: '20px', alignItems: 'center', padding: '0 5px' }}>
+                                <label className="gender-label" style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                                     <input 
                                         type="radio" 
                                         name="gender" 
@@ -500,7 +500,7 @@ const SignUpPage = () => {
                                     />
                                     남성
                                 </label>
-                                <label className="gender-label">
+                                <label className="gender-label" style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
                                     <input 
                                         type="radio" 
                                         name="gender" 
@@ -509,6 +509,16 @@ const SignUpPage = () => {
                                         onChange={handleInputChange} 
                                     />
                                     여성
+                                </label>
+                                <label className="gender-label" style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                                    <input 
+                                        type="radio" 
+                                        name="gender" 
+                                        value="none" 
+                                        checked={formData.gender === 'none'} 
+                                        onChange={handleInputChange} 
+                                    />
+                                    선택 안함
                                 </label>
                             </div>
                         </div>
