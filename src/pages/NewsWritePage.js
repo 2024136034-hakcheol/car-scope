@@ -46,10 +46,10 @@ const NewsWritePage = () => {
                             const file = input.files[0];
                             if (file) {
                                 const maxSize = 5 * 1024 * 1024;
+                                
                                 if (file.size > maxSize) {
                                     const currentSize = (file.size / (1024 * 1024)).toFixed(2);
                                     alert(`현재 파일 용량은 ${currentSize}MB이고, 제한 용량은 5MB까지입니다.`);
-                                    input.value = '';
                                     return;
                                 }
 
@@ -127,11 +127,7 @@ const NewsWritePage = () => {
             navigate('/news');
         } catch (error) {
             console.error(error);
-            if (error.message.includes("larger than 1 MB")) {
-                alert("사진 용량이 너무 큽니다. (압축 실패)");
-            } else {
-                alert("발행 실패: " + error.message);
-            }
+            alert("발행 중 오류가 발생했습니다.");
         }
     };
 
