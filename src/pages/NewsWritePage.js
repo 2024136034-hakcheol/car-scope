@@ -45,6 +45,11 @@ const NewsWritePage = () => {
                         input.onchange = async () => {
                             const file = input.files[0];
                             if (file) {
+                                if (file.size > 5 * 1024 * 1024) {
+                                    alert("이미지 용량이 너무 큽니다. (5MB 이하만 가능)");
+                                    return;
+                                }
+
                                 try {
                                     const options = {
                                         maxSizeMB: 0.5, 
@@ -120,7 +125,7 @@ const NewsWritePage = () => {
         } catch (error) {
             console.error(error);
             if (error.message.includes("larger than 1 MB")) {
-                alert("이미지가 너무 많거나 큽니다. 사진을 줄여주세요.");
+                alert("사진 용량이 너무 큽니다. 더 작은 사진을 사용해주세요.");
             } else {
                 alert("발행 실패: " + error.message);
             }
