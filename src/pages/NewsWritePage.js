@@ -45,8 +45,10 @@ const NewsWritePage = () => {
                         input.onchange = async () => {
                             const file = input.files[0];
                             if (file) {
-                                if (file.size > 5 * 1024 * 1024) {
-                                    alert("이미지 용량이 너무 큽니다. (5MB 이하만 가능)");
+                                const maxSize = 5 * 1024 * 1024;
+                                if (file.size > maxSize) {
+                                    const currentSize = (file.size / (1024 * 1024)).toFixed(2);
+                                    alert(`현재 파일 용량은 ${currentSize}MB이고, 제한 용량은 5MB까지입니다.`);
                                     return;
                                 }
 
