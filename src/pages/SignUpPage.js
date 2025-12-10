@@ -490,7 +490,7 @@ const SignUpPage = () => {
 
                         <div className="input-group">
                             <div className="gender-options" style={{ display: 'flex', gap: '20px', alignItems: 'center', padding: '0 5px' }}>
-                                <label className="gender-label" style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                                <label className="gender-label" style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                                     <input 
                                         type="radio" 
                                         name="gender" 
@@ -500,7 +500,7 @@ const SignUpPage = () => {
                                     />
                                     남성
                                 </label>
-                                <label className="gender-label" style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                                <label className="gender-label" style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                                     <input 
                                         type="radio" 
                                         name="gender" 
@@ -510,7 +510,7 @@ const SignUpPage = () => {
                                     />
                                     여성
                                 </label>
-                                <label className="gender-label" style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer' }}>
+                                <label className="gender-label" style={{ display: 'flex', alignItems: 'center', gap: '5px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
                                     <input 
                                         type="radio" 
                                         name="gender" 
