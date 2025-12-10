@@ -1,5 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { collection, getDocs } from 'firebase/firestore';
+import { db } from '../firebase';
 import '../styles/HomePage.css';
 
 const AnimatedCounter = ({ end, suffix }) => {
@@ -48,33 +50,66 @@ const AnimatedCounter = ({ end, suffix }) => {
 };
 
 const HomePage = () => {
+    const navigate = useNavigate();
     const [currentSlide, setCurrentSlide] = useState(0);
-    
-    const bannerSlides = [
+    const [bannerSlides, setBannerSlides] = useState([]);
+    const [loading, setLoading] = useState(true);
+
+    const defaultBanners = [
         {
-            id: 1,
+            id: 'default1',
             title: "CarScope 첫 오픈 기념!",
             desc: "프리미엄 리뷰를 7일간 무료로 경험하세요.",
             color: "#5c84ff",
-            link: "/membership"
+            linkUrl: "/membership",
+            imageUrl: null 
         },
         {
-            id: 2,
+            id: 'default2',
             title: "2024 신차 트렌드 리포트",
             desc: "올해 주목해야 할 전기차, 하이브리드 모델 분석!",
             color: "#6c5ce7",
-            link: "/news"
+            linkUrl: "/news",
+            imageUrl: null
         },
         {
-            id: 3,
+            id: 'default3',
             title: "주차장 예약 최대 50% 할인!",
             desc: "지금 바로 가까운 주차장을 예약하세요.",
             color: "#00b894",
-            link: "/parking"
+            linkUrl: "/parking",
+            imageUrl: null
         }
     ];
 
     useEffect(() => {
+        const fetchBanners = async () => {
+            try {
+                const querySnapshot = await getDocs(collection(db, 'banners'));
+                const loadedBanners = [];
+                
+                querySnapshot.forEach((doc) => {
+                    loadedBanners.push({ id: doc.id, ...doc.data() });
+                });
+
+                if (loadedBanners.length > 0) {
+                    loadedBanners.sort((a, b) => a.id.localeCompare(b.id));
+                    setBannerSlides(loadedBanners);
+                } else {
+                    setBannerSlides(defaultBanners);
+                }
+            } catch (error) {
+                console.error(error);
+                setBannerSlides(defaultBanners);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchBanners();
+    }, []);
+
+    useEffect(() => {
+        if (bannerSlides.length === 0) return;
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
         }, 5000);
@@ -93,6 +128,17 @@ const HomePage = () => {
         setCurrentSlide(index);
     };
 
+    const handleBannerClick = (link) => {
+        if (!link) return;
+        if (link.startsWith('http')) {
+            window.open(link, '_blank');
+        } else {
+            navigate(link);
+        }
+    };
+
+    if (loading) return null;
+
     return (
         <div className="homepage-container">
             <div className="main-banner-slider-wrapper">
@@ -105,31 +151,42 @@ const HomePage = () => {
                             <div 
                                 key={slide.id} 
                                 className="slide-item" 
-                                style={{ backgroundColor: slide.color }}
+                                style={{ 
+                                    backgroundColor: slide.imageUrl ? 'transparent' : slide.color,
+                                    backgroundImage: slide.imageUrl ? `url(${slide.imageUrl})` : 'none',
+                                    cursor: slide.linkUrl ? 'pointer' : 'default'
+                                }}
+                                onClick={() => handleBannerClick(slide.linkUrl)}
                             >
                                 <div className="banner-content">
-                                    <h2>{slide.title}</h2>
-                                    <p>{slide.desc}</p>
-                                    <Link to={slide.link} className="banner-cta">자세히 보기</Link>
+                                    {slide.title && <h2>{slide.title}</h2>}
+                                    {slide.desc && <p>{slide.desc}</p>}
+                                    {slide.linkUrl && !slide.imageUrl && (
+                                        <span className="banner-cta">자세히 보기</span>
+                                    )}
                                 </div>
                             </div>
                         ))}
                     </div>
                     
-                    <div className="slider-nav-arrows">
-                        <button className="arrow prev" onClick={prevSlide}>&lt;</button>
-                        <button className="arrow next" onClick={nextSlide}>&gt;</button>
-                    </div>
+                    {bannerSlides.length > 1 && (
+                        <>
+                            <div className="slider-nav-arrows">
+                                <button className="arrow prev" onClick={(e) => { e.stopPropagation(); prevSlide(); }}>&lt;</button>
+                                <button className="arrow next" onClick={(e) => { e.stopPropagation(); nextSlide(); }}>&gt;</button>
+                            </div>
 
-                    <div className="slider-dots">
-                        {bannerSlides.map((_, idx) => (
-                            <span 
-                                key={idx} 
-                                className={`dot ${currentSlide === idx ? 'active' : ''}`}
-                                onClick={() => handleDotClick(idx)}
-                            ></span>
-                        ))}
-                    </div>
+                            <div className="slider-dots">
+                                {bannerSlides.map((_, idx) => (
+                                    <span 
+                                        key={idx} 
+                                        className={`dot ${currentSlide === idx ? 'active' : ''}`}
+                                        onClick={(e) => { e.stopPropagation(); handleDotClick(idx); }}
+                                    ></span>
+                                ))}
+                            </div>
+                        </>
+                    )}
                 </div>
             </div>
 
