@@ -391,7 +391,6 @@ const SignUpPage = () => {
                     <form className="signup-form" onSubmit={e => e.preventDefault()}>
                         
                         <div className="input-group">
-                            <label>아이디</label>
                             <div className="input-row">
                                 <div className="input-wrapper">
                                     <input 
@@ -428,7 +427,6 @@ const SignUpPage = () => {
                         </div>
 
                         <div className="input-group">
-                            <label>비밀번호</label>
                             <div className="password-wrapper">
                                 <input 
                                     type={showPassword ? "text" : "password"} 
@@ -457,7 +455,6 @@ const SignUpPage = () => {
                         </div>
 
                         <div className="input-group">
-                            <label>비밀번호 확인</label>
                             <div className="password-wrapper">
                                 <input 
                                     type={showConfirmPassword ? "text" : "password"} 
@@ -478,12 +475,10 @@ const SignUpPage = () => {
                         </div>
 
                         <div className="input-group">
-                            <label>이름</label>
                             <input type="text" name="name" placeholder="이름 입력" value={formData.name} onChange={handleInputChange} />
                         </div>
 
                         <div className="input-group">
-                            <label>생년월일</label>
                             <input 
                                 type="text" 
                                 name="birthdate" 
@@ -494,7 +489,6 @@ const SignUpPage = () => {
                         </div>
 
                         <div className="input-group">
-                            <label>성별</label>
                             <div className="gender-options">
                                 <label className="gender-label">
                                     <input 
@@ -520,12 +514,10 @@ const SignUpPage = () => {
                         </div>
 
                         <div className="input-group">
-                            <label>휴대폰 번호</label>
-                            <input type="tel" name="phone" placeholder="'-' 없이 입력" value={formData.phone} onChange={handleInputChange} maxLength={11} />
+                            <input type="tel" name="phone" placeholder="휴대폰 번호 ('-' 없이 입력)" value={formData.phone} onChange={handleInputChange} maxLength={11} />
                         </div>
 
                         <div className="input-group">
-                            <label>이메일</label>
                             <div className="input-row email-row">
                                 <div className="input-wrapper">
                                     <input 
@@ -563,7 +555,6 @@ const SignUpPage = () => {
                         </div>
 
                         <div className="input-group">
-                            <label>닉네임</label>
                             <div className="input-row">
                                 <div className="input-wrapper">
                                     <input 
