@@ -81,21 +81,35 @@ const HomePage = () => {
     ];
 
     useEffect(() => {
-        const fetchBanners = async () => {
+        const fetchData = async () => {
             try {
-                const querySnapshot = await getDocs(collection(db, 'banners'));
-                const loadedBanners = [];
-                
-                querySnapshot.forEach((doc) => {
-                    loadedBanners.push({ id: doc.id, ...doc.data() });
+                const bannerQuery = await getDocs(collection(db, 'banners'));
+                const banners = [];
+                bannerQuery.forEach((doc) => {
+                    banners.push({ id: doc.id, ...doc.data() });
                 });
 
-                if (loadedBanners.length > 0) {
-                    loadedBanners.sort((a, b) => a.id.localeCompare(b.id));
-                    setBannerSlides(loadedBanners);
+                if (banners.length > 0) {
+                    banners.sort((a, b) => a.id.localeCompare(b.id));
+                    setBannerSlides(banners);
                 } else {
                     setBannerSlides(defaultBanners);
                 }
+
+                const newsRef = collection(db, "news");
+
+                const trendQuery = query(newsRef, orderBy("views", "desc"), limit(5));
+                const trendSnap = await getDocs(trendQuery);
+                setTrends(trendSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+                const latestQuery = query(newsRef, orderBy("createdAt", "desc"), limit(3));
+                const latestSnap = await getDocs(latestQuery);
+                setLatestNews(latestSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+                const popularQuery = query(newsRef, orderBy("likes", "desc"), limit(3));
+                const popularSnap = await getDocs(popularQuery);
+                setPopularReviews(popularSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
             } catch (error) {
                 console.error(error);
                 setBannerSlides(defaultBanners);
@@ -103,31 +117,7 @@ const HomePage = () => {
                 setLoading(false);
             }
         };
-        fetchBanners();
-    }, []);
-
-    useEffect(() => {
-        const fetchContent = async () => {
-            try {
-                const newsRef = collection(db, "news");
-
-                const trendQuery = query(newsRef, orderBy("views", "desc"), limit(5));
-                const trendSnap = await getDocs(trendQuery);
-                setTrends(trendSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-
-                const newsQuery = query(newsRef, orderBy("createdAt", "desc"), limit(3));
-                const newsSnap = await getDocs(newsQuery);
-                setLatestNews(newsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-
-                const reviewQuery = query(newsRef, orderBy("likes", "desc"), limit(3));
-                const reviewSnap = await getDocs(reviewQuery);
-                setPopularReviews(reviewSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
-
-            } catch (error) {
-                console.error(error);
-            }
-        };
-        fetchContent();
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -227,7 +217,9 @@ const HomePage = () => {
                                 </div>
                             ))
                         ) : (
-                            <p style={{color: '#999'}}>데이터 집계 중입니다...</p>
+                            <div style={{color: '#999', padding: '20px'}}>
+                                아직 데이터가 충분하지 않습니다.<br/>뉴스 기사를 먼저 작성해주세요.
+                            </div>
                         )}
                     </div>
                 </div>
@@ -264,7 +256,7 @@ const HomePage = () => {
                                 popularReviews.map((item) => (
                                     <li key={item.id} onClick={() => navigate(`/news/${item.id}`)} style={{cursor: 'pointer'}}>
                                         <span className="info-title">{item.title}</span>
-                                        <span className="info-rating">♥ {item.likes || 0}</span>
+                                        <span className="info-rating" style={{color: '#e74c3c'}}>♥ {item.likes || 0}</span>
                                     </li>
                                 ))
                             ) : (
