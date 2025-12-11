@@ -58,6 +58,7 @@ const HomePage = () => {
     const [trends, setTrends] = useState([]);
     const [latestNews, setLatestNews] = useState([]);
     const [popularReviews, setPopularReviews] = useState([]);
+    const [recommendParking, setRecommendParking] = useState([]); // 주차장 데이터 상태 추가
 
     const defaultBanners = [
         {
@@ -83,6 +84,7 @@ const HomePage = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
+                // 1. 배너 불러오기
                 const bannerQuery = await getDocs(collection(db, 'banners'));
                 const banners = [];
                 bannerQuery.forEach((doc) => {
@@ -96,6 +98,7 @@ const HomePage = () => {
                     setBannerSlides(defaultBanners);
                 }
 
+                // 2. 뉴스 & 리뷰 & 트렌드 불러오기
                 const newsRef = collection(db, "news");
 
                 const trendQuery = query(newsRef, orderBy("views", "desc"), limit(5));
@@ -109,6 +112,12 @@ const HomePage = () => {
                 const popularQuery = query(newsRef, orderBy("likes", "desc"), limit(3));
                 const popularSnap = await getDocs(popularQuery);
                 setPopularReviews(popularSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+                // 3. 추천 주차장 불러오기 (최근 등록순 3개)
+                const parkingRef = collection(db, "parkingLots");
+                const parkingQuery = query(parkingRef, orderBy("createdAt", "desc"), limit(3));
+                const parkingSnap = await getDocs(parkingQuery);
+                setRecommendParking(parkingSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
 
             } catch (error) {
                 console.error(error);
@@ -153,6 +162,14 @@ const HomePage = () => {
         if (!timestamp) return '';
         const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
         return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+    };
+
+    // 주소에서 '구' 이름만 추출하는 함수 (예: 서울 강남구... -> 강남구)
+    const getDistrict = (address) => {
+        if (!address) return '지역정보';
+        const parts = address.split(' ');
+        // 보통 두 번째 단어가 '구'인 경우가 많음 (서울시 강남구)
+        return parts.length > 1 ? parts[1] : parts[0];
     };
 
     if (loading) return null;
@@ -272,30 +289,22 @@ const HomePage = () => {
                 <p>내 주변 제휴 주차장을 최저가로 예약하고 편하게 주차하세요.</p>
                 
                 <div className="parking-spot-grid">
-                    <div className="parking-spot-card">
-                        <div className="spot-header">
-                            <span className="spot-area">강남구</span>
-                            <span className="spot-price">500원/10분</span>
+                    {recommendParking.length > 0 ? (
+                        recommendParking.map(spot => (
+                            <div key={spot.id} className="parking-spot-card">
+                                <div className="spot-header">
+                                    <span className="spot-area">{getDistrict(spot.address)}</span>
+                                    <span className="spot-price">{Number(spot.price).toLocaleString()}원/시간</span>
+                                </div>
+                                <h4 className="spot-name">{spot.name}</h4>
+                                <Link to="/parking" className="spot-cta">예약/정보 확인 &gt;</Link>
+                            </div>
+                        ))
+                    ) : (
+                        <div style={{gridColumn: "1 / -1", textAlign: 'center', color: '#999', padding: '20px'}}>
+                            등록된 추천 주차장이 없습니다.<br/>관리자 페이지에서 주차장을 등록해주세요.
                         </div>
-                        <h4 className="spot-name">강남 N 타워 주차장</h4>
-                        <Link to="/parking" className="spot-cta">예약/정보 확인 &gt;</Link>
-                    </div>
-                    <div className="parking-spot-card">
-                        <div className="spot-header">
-                            <span className="spot-area">마포구</span>
-                            <span className="spot-price">3,000원/1시간</span>
-                        </div>
-                        <h4 className="spot-name">홍대입구역 링크</h4>
-                        <Link to="/parking" className="spot-cta">예약/정보 확인 &gt;</Link>
-                    </div>
-                    <div className="parking-spot-card">
-                        <div className="spot-header">
-                            <span className="spot-area">영등포구</span>
-                            <span className="spot-price">4,000원/30분</span>
-                        </div>
-                        <h4 className="spot-name">여의도 더현대 파크</h4>
-                        <Link to="/parking" className="spot-cta">예약/정보 확인 &gt;</Link>
-                    </div>
+                    )}
                 </div>
                 <Link to="/parking" className="parking-more-link">다른 지역 주차장 찾기 &gt;</Link>
             </section>
