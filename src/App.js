@@ -22,6 +22,7 @@ import NewsWritePage from './pages/NewsWritePage';
 import FAQPage from './pages/FAQPage';
 import ContactPage from './pages/ContactPage';
 import EmergencyPage from './pages/EmergencyPage';
+import AdminBannerPage from './pages/AdminBannerPage';
 
 function App() {
   return (
@@ -60,6 +61,7 @@ function App() {
         <Route path="/news/:id" element={<NewsDetailPage />} />
         <Route path="/news/edit/:id" element={<NewsEditPage />} />
         <Route path="/faq" element={<FAQPage />} />
+        <Route path="/admin/banner" element={<AdminBannerPage />} />
         
         <Route 
           path="/admin" 
