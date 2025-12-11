@@ -2,7 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import '../styles/MyPage.css';
 import { AuthContext } from '../AuthContext';
 import { db } from '../firebase';
-import { doc, updateDoc, collection, query, where, getDocs, onSnapshot } from 'firebase/firestore';
+import { doc, updateDoc, collection, query, where, getDocs, onSnapshot, deleteDoc } from 'firebase/firestore';
 import InquiryDetailModal from '../components/InquiryDetailModal';
 import CouponListModal from '../components/CouponListModal';
 
@@ -74,11 +74,11 @@ const MyPage = () => {
           );
           const resSnap = await getDocs(resQuery);
           const sortedRes = resSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-                                      .sort((a, b) => {
-                                          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
-                                          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
-                                          return dateB - dateA;
-                                      });
+                                        .sort((a, b) => {
+                                            const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+                                            const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+                                            return dateB - dateA;
+                                        });
           setReservationList(sortedRes);
 
           const inqQuery = query(
@@ -88,12 +88,12 @@ const MyPage = () => {
           const inqSnap = await getDocs(inqQuery);
           
           const sortedInq = inqSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }))
-                                      .sort((a, b) => {
-                                          const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
-                                          const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
-                                          return dateB - dateA;
-                                      });
-                                      
+                                        .sort((a, b) => {
+                                            const dateA = a.createdAt?.toDate ? a.createdAt.toDate() : new Date(0);
+                                            const dateB = b.createdAt?.toDate ? b.createdAt.toDate() : new Date(0);
+                                            return dateB - dateA;
+                                        });
+                                        
           setInquiryList(sortedInq);
 
         } catch (error) {
@@ -121,6 +121,20 @@ const MyPage = () => {
       await updateDoc(doc(db, "users", currentUser.uid), { carNumber: carInput.carNumber, carModel: carInput.carModel });
       alert("차량 정보가 등록되었습니다."); setIsRegisteringCar(false);
     } catch (error) { alert("오류: " + error.message); }
+  };
+
+  // ▼▼▼ 예약 취소 기능 추가됨 ▼▼▼
+  const handleCancelReservation = async (reservationId) => {
+    if (!window.confirm("정말 예약을 취소하시겠습니까?")) return;
+
+    try {
+      await deleteDoc(doc(db, "reservations", reservationId));
+      setReservationList(prev => prev.filter(res => res.id !== reservationId));
+      alert("예약이 취소되었습니다.");
+    } catch (error) {
+      console.error(error);
+      alert("취소 중 오류가 발생했습니다.");
+    }
   };
 
   const handleOpenInquiry = (inquiry) => {
@@ -215,7 +229,15 @@ const MyPage = () => {
                           <p className="res-time">{res.startTime}부터 ({res.hours}시간)</p>
                           <div className="res-bottom">
                             <span className="res-price">{res.price.toLocaleString()}원</span>
-                            {res.status === '이용예정' && <button className="btn-cancel">예약취소</button>}
+                            {/* ▼▼▼ onClick 연결됨 ▼▼▼ */}
+                            {res.status === '이용예정' && (
+                                <button 
+                                    className="btn-cancel" 
+                                    onClick={() => handleCancelReservation(res.id)}
+                                >
+                                    예약취소
+                                </button>
+                            )}
                           </div>
                         </div>
                       ))}
