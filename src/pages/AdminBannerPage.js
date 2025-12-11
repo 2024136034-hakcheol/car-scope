@@ -12,9 +12,9 @@ const AdminBannerPage = () => {
     const [loading, setLoading] = useState(true);
     
     const [banners, setBanners] = useState({
-        slot1: { imageUrl: '', linkUrl: '', title: '', desc: '' },
-        slot2: { imageUrl: '', linkUrl: '', title: '', desc: '' },
-        slot3: { imageUrl: '', linkUrl: '', title: '', desc: '' }
+        slot1: { imageUrl: '', linkUrl: '' },
+        slot2: { imageUrl: '', linkUrl: '' },
+        slot3: { imageUrl: '', linkUrl: '' }
     });
 
     useEffect(() => {
@@ -55,7 +55,7 @@ const AdminBannerPage = () => {
 
         try {
             const options = {
-                maxSizeMB: 0.5, 
+                maxSizeMB: 0.8,
                 maxWidthOrHeight: 1920,
                 useWebWorker: true
             };
@@ -75,10 +75,10 @@ const AdminBannerPage = () => {
         }
     };
 
-    const handleInputChange = (e, slot, field) => {
+    const handleLinkChange = (e, slot) => {
         setBanners(prev => ({
             ...prev,
-            [slot]: { ...prev[slot], [field]: e.target.value }
+            [slot]: { ...prev[slot], linkUrl: e.target.value }
         }));
     };
 
@@ -93,14 +93,12 @@ const AdminBannerPage = () => {
             await setDoc(doc(db, 'banners', slot), {
                 imageUrl: data.imageUrl,
                 linkUrl: data.linkUrl || '',
-                title: data.title || '',
-                desc: data.desc || '',
                 updatedAt: new Date()
             });
             alert(`[${slot}] 배너가 홈 화면에 적용되었습니다.`);
         } catch (error) {
             console.error(error);
-            alert("저장 실패 (용량 초과 등)");
+            alert("저장 실패");
         }
     };
 
@@ -111,7 +109,7 @@ const AdminBannerPage = () => {
             await deleteDoc(doc(db, 'banners', slot));
             setBanners(prev => ({
                 ...prev,
-                [slot]: { imageUrl: '', linkUrl: '', title: '', desc: '' }
+                [slot]: { imageUrl: '', linkUrl: '' }
             }));
             alert("삭제되었습니다.");
         } catch (error) {
@@ -125,7 +123,7 @@ const AdminBannerPage = () => {
     return (
         <div className="admin-banner-container page-content">
             <h2>메인 배너 관리</h2>
-            <p className="banner-guide">※ 1920px * 600px 사이즈 권장 (용량 자동 압축됨)</p>
+            <p className="banner-guide">※ 1920px * 600px 사이즈 권장 (이미지 위주 배너)</p>
 
             <div className="banner-slots">
                 {['slot1', 'slot2', 'slot3'].map((slot, index) => (
@@ -148,28 +146,12 @@ const AdminBannerPage = () => {
                                 onChange={(e) => handleImageChange(e, slot)} 
                             />
                             
-                            <label>배너 제목 (선택)</label>
-                            <input 
-                                type="text" 
-                                value={banners[slot].title} 
-                                onChange={(e) => handleInputChange(e, slot, 'title')}
-                                placeholder="예: CarScope 오픈 이벤트"
-                            />
-
-                            <label>배너 설명 (선택)</label>
-                            <input 
-                                type="text" 
-                                value={banners[slot].desc} 
-                                onChange={(e) => handleInputChange(e, slot, 'desc')}
-                                placeholder="예: 지금 가입하면 혜택 증정"
-                            />
-
                             <label>클릭 시 이동 주소 (선택)</label>
                             <input 
                                 type="text" 
                                 placeholder="예: /news 또는 https://naver.com" 
                                 value={banners[slot].linkUrl} 
-                                onChange={(e) => handleInputChange(e, slot, 'linkUrl')} 
+                                onChange={(e) => handleLinkChange(e, slot)} 
                             />
                         </div>
 
