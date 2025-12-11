@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { db } from '../firebase';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
@@ -9,6 +10,7 @@ import CouponManager from '../components/admin/CouponManager';
 import '../styles/AdminPage.css';
 
 const AdminPage = () => {
+    const navigate = useNavigate();
     const [totalUsers, setTotalUsers] = useState(0);
     const [newUsersToday, setNewUsersToday] = useState(0);
     const [pingData, setPingData] = useState([]);
@@ -56,6 +58,15 @@ const AdminPage = () => {
     return (
         <div className="admin-page-container page-content">
             <h1 className="admin-title">관리자 대시보드</h1>
+            
+            <div className="admin-top-actions">
+                <button 
+                    className="admin-action-btn banner-manage-btn" 
+                    onClick={() => navigate('/admin/banner')}
+                >
+                    🖼️ 메인 배너 관리 (슬롯 1, 2, 3)
+                </button>
+            </div>
             
             <div className="admin-widgets-grid-single">
                 <div className="admin-widget">

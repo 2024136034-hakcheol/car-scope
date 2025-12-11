@@ -7,7 +7,34 @@
     color: var(--text-primary);
     border-bottom: 2px solid var(--border-color);
     padding-bottom: 10px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+.admin-top-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 20px;
+}
+
+.admin-action-btn {
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 700;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    color: white;
+}
+
+.admin-action-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.15);
+}
+
+.banner-manage-btn {
+    background: linear-gradient(135deg, #6c5ce7 0%, #a29bfe 100%);
 }
 
 .admin-widgets-grid-single {
