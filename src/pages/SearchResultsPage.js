@@ -6,7 +6,7 @@ import '../styles/SearchResultsPage.css';
 
 const SearchResultsPage = () => {
     const [searchParams] = useSearchParams();
-    const searchQuery = searchParams.get('q'); // URL에서 검색어 가져오기
+    const searchQuery = searchParams.get('q'); 
     const navigate = useNavigate();
     
     const [results, setResults] = useState([]);
@@ -21,28 +21,41 @@ const SearchResultsPage = () => {
 
             setLoading(true);
             try {
-                // Firebase는 부분 텍스트 검색(LIKE)을 지원하지 않으므로, 
-                // 전체 데이터를 가져와서 클라이언트(JS)에서 필터링하는 방식을 사용합니다.
-                // (데이터가 수천 건이 넘어가면 Algolia 같은 검색 서비스를 붙여야 하지만, 지금은 이 방식이 가장 빠릅니다.)
-                
                 const newsRef = collection(db, "news");
-                const q = query(newsRef, orderBy("createdAt", "desc"));
-                const querySnapshot = await getDocs(q);
+                const newsQ = query(newsRef, orderBy("createdAt", "desc"));
+                const newsSnapshot = await getDocs(newsQ);
 
-                const allNews = querySnapshot.docs.map(doc => ({
+                const parkingRef = collection(db, "parkingLots");
+                const parkingQ = query(parkingRef, orderBy("createdAt", "desc"));
+                const parkingSnapshot = await getDocs(parkingQ);
+
+                const allNews = newsSnapshot.docs.map(doc => ({
                     id: doc.id,
+                    type: 'news',
                     ...doc.data()
                 }));
 
-                // 검색어 필터링 (제목 또는 내용에 포함된 경우)
-                const filtered = allNews.filter(news => 
-                    news.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                    news.content.replace(/<[^>]+>/g, '').toLowerCase().includes(searchQuery.toLowerCase())
+                const allParking = parkingSnapshot.docs.map(doc => ({
+                    id: doc.id,
+                    type: 'parking',
+                    ...doc.data()
+                }));
+
+                const filteredNews = allNews.filter(item => 
+                    item.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                    item.content.replace(/<[^>]+>/g, '').toLowerCase().includes(searchQuery.toLowerCase())
                 );
 
-                setResults(filtered);
+                const filteredParking = allParking.filter(item => 
+                    item.name.toLowerCase().includes(searchQuery.toLowerCase()) || 
+                    item.address.toLowerCase().includes(searchQuery.toLowerCase())
+                );
+
+                const combinedResults = [...filteredNews, ...filteredParking];
+                setResults(combinedResults);
+
             } catch (error) {
-                console.error("검색 중 오류 발생:", error);
+                console.error(error);
             } finally {
                 setLoading(false);
             }
@@ -69,27 +82,45 @@ const SearchResultsPage = () => {
                 <div className="search-results-list">
                     {results.length > 0 ? (
                         results.map((item) => (
-                            <div key={item.id} className="search-item-card" onClick={() => navigate(`/news/${item.id}`)}>
+                            <div 
+                                key={item.id} 
+                                className="search-item-card" 
+                                onClick={() => item.type === 'news' ? navigate(`/news/${item.id}`) : navigate('/parking')}
+                            >
                                 <div className="result-img">
-                                    <img src={item.imageUrl} alt={item.title} />
+                                    <img src={item.imageUrl} alt={item.title || item.name} />
                                 </div>
                                 <div className="result-info">
-                                    <span className="result-category">
-                                        {item.category === 'domestic' ? '국내' : 
-                                         item.category === 'international' ? '해외' : '산업'}
+                                    <span className={`result-category ${item.type}`}>
+                                        {item.type === 'news' ? (
+                                            item.category === 'domestic' ? '뉴스 - 국내' : 
+                                            item.category === 'international' ? '뉴스 - 해외' : '뉴스 - 산업'
+                                        ) : (
+                                            '주차장'
+                                        )}
                                     </span>
-                                    <h3>{item.title}</h3>
+                                    
+                                    <h3>{item.type === 'news' ? item.title : item.name}</h3>
+                                    
                                     <p className="result-snippet">
-                                        {item.content.replace(/<[^>]+>/g, '').substring(0, 100)}...
+                                        {item.type === 'news' ? (
+                                            item.content.replace(/<[^>]+>/g, '').substring(0, 100) + '...'
+                                        ) : (
+                                            `주소: ${item.address} | 가격: ${Number(item.price).toLocaleString()}원/시간`
+                                        )}
                                     </p>
-                                    <span className="result-date">{formatDate(item.createdAt)}</span>
+                                    
+                                    <span className="result-date">
+                                        {item.type === 'news' ? formatDate(item.createdAt) : 
+                                         item.availableSpots > 0 ? `잔여 ${item.availableSpots}대` : '만차'}
+                                    </span>
                                 </div>
                             </div>
                         ))
                     ) : (
                         <div className="no-results">
                             <p>검색 결과가 없습니다.</p>
-                            <button onClick={() => navigate('/news')}>전체 뉴스 보러가기</button>
+                            <button onClick={() => navigate('/')}>홈으로 돌아가기</button>
                         </div>
                     )}
                 </div>

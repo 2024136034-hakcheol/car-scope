@@ -119,3 +119,12 @@
         height: 200px;
     }
 }
+
+.result-category.news {
+    color: #007bff;
+}
+
+.result-category.parking {
+    color: #2ecc71; 
+    font-weight: 800;
+}
