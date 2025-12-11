@@ -17,9 +17,6 @@ const AdminBannerPage = () => {
         slot3: { imageUrl: '', linkUrl: '', title: '', desc: '' }
     });
 
-    const REQUIRED_WIDTH = 1920;
-    const REQUIRED_HEIGHT = 600;
-
     useEffect(() => {
         if (!dbUser || !dbUser.isAdmin) {
             alert('관리자만 접근 가능합니다.');
@@ -56,37 +53,26 @@ const AdminBannerPage = () => {
         const file = e.target.files[0];
         if (!file) return;
 
-        const img = new Image();
-        img.src = URL.createObjectURL(file);
-        
-        img.onload = async () => {
-            if (img.width !== REQUIRED_WIDTH || img.height !== REQUIRED_HEIGHT) {
-                alert(`이미지 사이즈는 반드시 ${REQUIRED_WIDTH}x${REQUIRED_HEIGHT}이어야 합니다.\n(현재: ${img.width}x${img.height})`);
-                e.target.value = '';
-                return;
-            }
-
-            try {
-                const options = {
-                    maxSizeMB: 0.7,
-                    maxWidthOrHeight: 1920,
-                    useWebWorker: true
-                };
-                const compressedFile = await imageCompression(file, options);
-                
-                const reader = new FileReader();
-                reader.onload = () => {
-                    setBanners(prev => ({
-                        ...prev,
-                        [slot]: { ...prev[slot], imageUrl: reader.result }
-                    }));
-                };
-                reader.readAsDataURL(compressedFile);
-            } catch (error) {
-                console.error(error);
-                alert("이미지 처리 중 오류가 발생했습니다.");
-            }
-        };
+        try {
+            const options = {
+                maxSizeMB: 0.5, 
+                maxWidthOrHeight: 1920,
+                useWebWorker: true
+            };
+            const compressedFile = await imageCompression(file, options);
+            
+            const reader = new FileReader();
+            reader.onload = () => {
+                setBanners(prev => ({
+                    ...prev,
+                    [slot]: { ...prev[slot], imageUrl: reader.result }
+                }));
+            };
+            reader.readAsDataURL(compressedFile);
+        } catch (error) {
+            console.error(error);
+            alert("이미지 처리 중 오류가 발생했습니다.");
+        }
     };
 
     const handleInputChange = (e, slot, field) => {
@@ -106,20 +92,20 @@ const AdminBannerPage = () => {
         try {
             await setDoc(doc(db, 'banners', slot), {
                 imageUrl: data.imageUrl,
-                linkUrl: data.linkUrl || '/',
+                linkUrl: data.linkUrl || '',
                 title: data.title || '',
                 desc: data.desc || '',
                 updatedAt: new Date()
             });
-            alert(`${slot} 배너가 저장되었습니다.`);
+            alert(`[${slot}] 배너가 홈 화면에 적용되었습니다.`);
         } catch (error) {
             console.error(error);
-            alert("저장 중 오류가 발생했습니다.");
+            alert("저장 실패 (용량 초과 등)");
         }
     };
 
     const deleteBanner = async (slot) => {
-        if (!window.confirm("정말 삭제하시겠습니까?")) return;
+        if (!window.confirm("삭제하시겠습니까? 홈 화면에서 즉시 사라집니다.")) return;
         
         try {
             await deleteDoc(doc(db, 'banners', slot));
@@ -139,12 +125,12 @@ const AdminBannerPage = () => {
     return (
         <div className="admin-banner-container page-content">
             <h2>메인 배너 관리</h2>
-            <p className="banner-guide">이미지 규격 필수: 1920px * 600px</p>
+            <p className="banner-guide">※ 1920px * 600px 사이즈 권장 (용량 자동 압축됨)</p>
 
             <div className="banner-slots">
                 {['slot1', 'slot2', 'slot3'].map((slot, index) => (
                     <div key={slot} className="banner-card">
-                        <h3>배너 슬롯 {index + 1}</h3>
+                        <h3>Banner Slot {index + 1}</h3>
                         
                         <div className="preview-area">
                             {banners[slot].imageUrl ? (
@@ -155,7 +141,7 @@ const AdminBannerPage = () => {
                         </div>
 
                         <div className="input-area">
-                            <label>이미지 파일 선택</label>
+                            <label>이미지 파일 (필수)</label>
                             <input 
                                 type="file" 
                                 accept="image/*" 
@@ -167,7 +153,7 @@ const AdminBannerPage = () => {
                                 type="text" 
                                 value={banners[slot].title} 
                                 onChange={(e) => handleInputChange(e, slot, 'title')}
-                                placeholder="배너 위에 띄울 제목"
+                                placeholder="예: CarScope 오픈 이벤트"
                             />
 
                             <label>배너 설명 (선택)</label>
@@ -175,10 +161,10 @@ const AdminBannerPage = () => {
                                 type="text" 
                                 value={banners[slot].desc} 
                                 onChange={(e) => handleInputChange(e, slot, 'desc')}
-                                placeholder="배너 위에 띄울 설명"
+                                placeholder="예: 지금 가입하면 혜택 증정"
                             />
 
-                            <label>클릭 시 이동할 주소 (링크)</label>
+                            <label>클릭 시 이동 주소 (선택)</label>
                             <input 
                                 type="text" 
                                 placeholder="예: /news 또는 https://naver.com" 
@@ -188,8 +174,8 @@ const AdminBannerPage = () => {
                         </div>
 
                         <div className="btn-area">
-                            <button className="save-btn" onClick={() => saveBanner(slot)}>저장하기</button>
-                            <button className="del-btn" onClick={() => deleteBanner(slot)}>삭제하기</button>
+                            <button className="save-btn" onClick={() => saveBanner(slot)}>저장 및 적용</button>
+                            <button className="del-btn" onClick={() => deleteBanner(slot)}>삭제</button>
                         </div>
                     </div>
                 ))}

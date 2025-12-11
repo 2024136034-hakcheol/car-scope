@@ -154,6 +154,9 @@ const HomePage = () => {
                                 style={{ 
                                     backgroundColor: slide.imageUrl ? 'transparent' : slide.color,
                                     backgroundImage: slide.imageUrl ? `url(${slide.imageUrl})` : 'none',
+                                    backgroundSize: 'cover',
+                                    backgroundPosition: 'center',
+                                    backgroundRepeat: 'no-repeat',
                                     cursor: slide.linkUrl ? 'pointer' : 'default'
                                 }}
                                 onClick={() => handleBannerClick(slide.linkUrl)}
