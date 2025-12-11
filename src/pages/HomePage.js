@@ -62,24 +62,18 @@ const HomePage = () => {
     const defaultBanners = [
         {
             id: 'default1',
-            title: "CarScope 첫 오픈 기념!",
-            desc: "프리미엄 리뷰를 7일간 무료로 경험하세요.",
             color: "#5c84ff",
             linkUrl: "/membership",
             imageUrl: null 
         },
         {
             id: 'default2',
-            title: "2024 신차 트렌드 리포트",
-            desc: "올해 주목해야 할 전기차, 하이브리드 모델 분석!",
             color: "#6c5ce7",
             linkUrl: "/news",
             imageUrl: null
         },
         {
             id: 'default3',
-            title: "주차장 예약 최대 50% 할인!",
-            desc: "지금 바로 가까운 주차장을 예약하세요.",
             color: "#00b894",
             linkUrl: "/parking",
             imageUrl: null
@@ -195,13 +189,6 @@ const HomePage = () => {
                                 }}
                                 onClick={() => handleBannerClick(slide.linkUrl)}
                             >
-                                <div className="banner-content">
-                                    {slide.title && <h2>{slide.title}</h2>}
-                                    {slide.desc && <p>{slide.desc}</p>}
-                                    {slide.linkUrl && !slide.imageUrl && (
-                                        <span className="banner-cta">자세히 보기</span>
-                                    )}
-                                </div>
                             </div>
                         ))}
                     </div>
