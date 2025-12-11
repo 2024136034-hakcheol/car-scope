@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { collection, getDocs } from 'firebase/firestore';
+import { collection, getDocs, query, orderBy, limit } from 'firebase/firestore';
 import { db } from '../firebase';
 import '../styles/HomePage.css';
 
@@ -55,21 +55,31 @@ const HomePage = () => {
     const [bannerSlides, setBannerSlides] = useState([]);
     const [loading, setLoading] = useState(true);
 
+    const [trends, setTrends] = useState([]);
+    const [latestNews, setLatestNews] = useState([]);
+    const [popularReviews, setPopularReviews] = useState([]);
+
     const defaultBanners = [
         {
             id: 'default1',
+            title: "CarScope 첫 오픈 기념!",
+            desc: "프리미엄 리뷰를 7일간 무료로 경험하세요.",
             color: "#5c84ff",
             linkUrl: "/membership",
             imageUrl: null 
         },
         {
             id: 'default2',
+            title: "2024 신차 트렌드 리포트",
+            desc: "올해 주목해야 할 전기차, 하이브리드 모델 분석!",
             color: "#6c5ce7",
             linkUrl: "/news",
             imageUrl: null
         },
         {
             id: 'default3',
+            title: "주차장 예약 최대 50% 할인!",
+            desc: "지금 바로 가까운 주차장을 예약하세요.",
             color: "#00b894",
             linkUrl: "/parking",
             imageUrl: null
@@ -103,6 +113,30 @@ const HomePage = () => {
     }, []);
 
     useEffect(() => {
+        const fetchContent = async () => {
+            try {
+                const newsRef = collection(db, "news");
+
+                const trendQuery = query(newsRef, orderBy("views", "desc"), limit(5));
+                const trendSnap = await getDocs(trendQuery);
+                setTrends(trendSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+                const newsQuery = query(newsRef, orderBy("createdAt", "desc"), limit(3));
+                const newsSnap = await getDocs(newsQuery);
+                setLatestNews(newsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+                const reviewQuery = query(newsRef, orderBy("likes", "desc"), limit(3));
+                const reviewSnap = await getDocs(reviewQuery);
+                setPopularReviews(reviewSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+
+            } catch (error) {
+                console.error(error);
+            }
+        };
+        fetchContent();
+    }, []);
+
+    useEffect(() => {
         if (bannerSlides.length === 0) return;
         const timer = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % bannerSlides.length);
@@ -131,6 +165,12 @@ const HomePage = () => {
         }
     };
 
+    const formatDate = (timestamp) => {
+        if (!timestamp) return '';
+        const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp);
+        return `${date.getFullYear()}.${String(date.getMonth() + 1).padStart(2, '0')}.${String(date.getDate()).padStart(2, '0')}`;
+    };
+
     if (loading) return null;
 
     return (
@@ -155,6 +195,13 @@ const HomePage = () => {
                                 }}
                                 onClick={() => handleBannerClick(slide.linkUrl)}
                             >
+                                <div className="banner-content">
+                                    {slide.title && <h2>{slide.title}</h2>}
+                                    {slide.desc && <p>{slide.desc}</p>}
+                                    {slide.linkUrl && !slide.imageUrl && (
+                                        <span className="banner-cta">자세히 보기</span>
+                                    )}
+                                </div>
                             </div>
                         ))}
                     </div>
@@ -185,12 +232,16 @@ const HomePage = () => {
                     <h2>실시간 인기 검색어</h2>
                     <p>지금 CarScope 사용자들은 무엇에 관심이 있을까요?</p>
                     <div className="trend-list-container">
-                        {['카니발 하이브리드', '쏘렌토 플러그인', 'GV80 페이스리프트', '전기차 보조금', '테슬라 모델 Y'].map((item, index) => (
-                            <div key={index} className="trend-item-card">
-                                <span className="trend-rank">{index + 1}</span>
-                                {item}
-                            </div>
-                        ))}
+                        {trends.length > 0 ? (
+                            trends.map((item, index) => (
+                                <div key={item.id} className="trend-item-card" onClick={() => navigate(`/news/${item.id}`)}>
+                                    <span className="trend-rank">{index + 1}</span>
+                                    {item.title}
+                                </div>
+                            ))
+                        ) : (
+                            <p style={{color: '#999'}}>데이터 집계 중입니다...</p>
+                        )}
                     </div>
                 </div>
 
@@ -203,39 +254,35 @@ const HomePage = () => {
                             <Link to="/news" className="more-link">더보기 &gt;</Link>
                         </div>
                         <ul className="info-list">
-                            <li>
-                                <span className="info-title">현대차, 신형 전기차 플랫폼 공개</span>
-                                <span className="info-date">2025.11.12</span>
-                            </li>
-                            <li>
-                                <span className="info-title">테슬라 모델 Y, 국내 판매 가격 인하</span>
-                                <span className="info-date">2025.11.11</span>
-                            </li>
-                            <li>
-                                <span className="info-title">정부, 전기차 충전소 확대 계획 발표</span>
-                                <span className="info-date">2025.11.10</span>
-                            </li>
+                            {latestNews.length > 0 ? (
+                                latestNews.map((item) => (
+                                    <li key={item.id} onClick={() => navigate(`/news/${item.id}`)} style={{cursor: 'pointer'}}>
+                                        <span className="info-title">{item.title}</span>
+                                        <span className="info-date">{formatDate(item.createdAt)}</span>
+                                    </li>
+                                ))
+                            ) : (
+                                <li style={{justifyContent: 'center', color: '#999'}}>등록된 뉴스가 없습니다.</li>
+                            )}
                         </ul>
                     </div>
 
                     <div className="info-column">
                         <div className="column-header">
                             <h3>인기 리뷰</h3>
-                            <Link to="/reviews" className="more-link">더보기 &gt;</Link>
+                            <Link to="/news" className="more-link">더보기 &gt;</Link>
                         </div>
                         <ul className="info-list">
-                            <li>
-                                <span className="info-title">제네시스 GV80: 압도적인 디자인과 성능</span>
-                                <span className="info-rating">★★★★★</span>
-                            </li>
-                            <li>
-                                <span className="info-title">기아 EV9: 완벽한 밸런스를 갖춘 전기차</span>
-                                <span className="info-rating">★★★★☆</span>
-                            </li>
-                            <li>
-                                <span className="info-title">벤츠 E클래스: 시대를 소유하는 품격</span>
-                                <span className="info-rating">★★★★★</span>
-                            </li>
+                            {popularReviews.length > 0 ? (
+                                popularReviews.map((item) => (
+                                    <li key={item.id} onClick={() => navigate(`/news/${item.id}`)} style={{cursor: 'pointer'}}>
+                                        <span className="info-title">{item.title}</span>
+                                        <span className="info-rating">♥ {item.likes || 0}</span>
+                                    </li>
+                                ))
+                            ) : (
+                                <li style={{justifyContent: 'center', color: '#999'}}>등록된 리뷰가 없습니다.</li>
+                            )}
                         </ul>
                     </div>
                 </div>
