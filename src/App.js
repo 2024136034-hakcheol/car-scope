@@ -20,6 +20,7 @@ import NewsDetailPage from './pages/NewsDetailPage';
 import NewsEditPage from './pages/NewsEditPage';
 import NewsWritePage from './pages/NewsWritePage';
 import FAQPage from './pages/FAQPage';
+import SearchResultsPage from './pages/SearchResultsPage'
 import ContactPage from './pages/ContactPage';
 import EmergencyPage from './pages/EmergencyPage';
 import AdminBannerPage from './pages/AdminBannerPage';
@@ -62,6 +63,7 @@ function App() {
         <Route path="/news/edit/:id" element={<NewsEditPage />} />
         <Route path="/faq" element={<FAQPage />} />
         <Route path="/admin/banner" element={<AdminBannerPage />} />
+        <Route path="/search" element={<SearchResultsPage />} />
         
         <Route 
           path="/admin" 
